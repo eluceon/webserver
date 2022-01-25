@@ -20,7 +20,7 @@ namespace ft
 
 			Socket& operator=(const Socket& other);
 
-			~Socket();
+			virtual ~Socket();
 
 			int	getSocket();
 

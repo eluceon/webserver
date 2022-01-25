@@ -34,7 +34,7 @@ namespace ft
 	public:
 		Server();
 		Server(const Server& other);
-		~Server();
+		virtual ~Server();
 
 		Server&	operator=(const Server & other);
 

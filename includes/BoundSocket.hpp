@@ -13,7 +13,7 @@ namespace ft
 
 			BoundSocket& operator=(const BoundSocket& other);
 			
-			~BoundSocket();
+			virtual ~BoundSocket();
 
 		private:
 			void	bindAddressToSocket();
