@@ -1,6 +1,7 @@
 #include "Server.hpp"
 
 int main() {
-	ft::Server server; 
+	ft::Server::getInstance();
+
     return 0;
 }

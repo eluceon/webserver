@@ -10,6 +10,11 @@ ft::Server::~Server() {
 	delete _listeningSocket;
 }
 
+ft::Server&	ft::Server::getInstance() {
+	static Server singleton;
+    return singleton;
+}
+
 void	ft::Server::initialize() {
 	client[0].fd = _listeningSocket->getSocket();
 	client[0].events = POLLRDNORM;

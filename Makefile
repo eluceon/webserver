@@ -5,7 +5,7 @@ PURPLE			=	\033[0;35m
 
 CXX				=	clang++
 CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98
-# CXXFLAGS			=	-g -fsanitize=address
+CXXFLAGS			=	-g -fsanitize=address
 RM				=	rm -rf
 
 NAME_SERVER		=	server
@@ -13,7 +13,7 @@ NAME_SERVER		=	server
 OBJDIR			=	./obj/
 HEADERDIR		=	./includes/
 
-SRC_MAIN_DIR		=	./src/
+SRC_MAIN_DIR	=	./src/
 SRC_MAIN		=	webserver.cpp
 OBJ_MAIN		=	$(addprefix $(OBJDIR), $(SRC_MAIN:.cpp=.o))
 
@@ -55,7 +55,7 @@ $(OBJ_UTILS): $(OBJDIR)%.o: $(SRC_UTILS_DIR)%.cpp $(HEADER_UTILS) Makefile
 
 ############################
 ##    main compilation    ##
-############S################
+############################
 
 $(OBJ_MAIN): $(OBJDIR)%.o: $(SRC_MAIN_DIR)%.cpp Makefile
 	$(CXX) $(CXXFLAGS) -I$(HEADERDIR) -c $< -o $@

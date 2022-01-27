@@ -32,13 +32,14 @@ namespace ft
 	class Server
 	{
 	public:
+		static Server&	getInstance();
+
+	private:
 		Server();
 		Server(const Server& other);
 		virtual ~Server();
-
 		Server&	operator=(const Server & other);
 
-	private:
 		ft::ListeningSocket	*_listeningSocket;
 		struct pollfd		client[OPEN_MAX];
 
@@ -46,7 +47,6 @@ namespace ft
 		void	run();
 		void	checkConnectionsForData(int	maxIdx, int countReadyFd);
 	};
-	
 } // namespace ft
 
 #endif
