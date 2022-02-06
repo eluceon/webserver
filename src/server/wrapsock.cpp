@@ -2,20 +2,17 @@
 
 namespace ft
 {
-	int Accept(int fd, struct sockaddr *sa, socklen_t *salenptr) {
-		int		n;
+	int	Accept(int fd, struct sockaddr *sa, socklen_t *salenptr) {
+		int	n;
 
-	again:
-		if ( (n = accept(fd, sa, salenptr)) < 0) {
+		while ( (n = accept(fd, sa, salenptr)) < 0) {
 	#ifdef	EPROTO
-			if (errno == EPROTO || errno == ECONNABORTED)
+			if (errno != EPROTO && errno != ECONNABORTED)	// EPROTO protocol error
 	#else
-			if (errno == ECONNABORTED)
+			if (errno != ECONNABORTED)						// ECONNABORTED software caused connection abort
 	#endif
-				goto again;
-			else
 				ft::systemErrorExit("accept error");
 		}
-		return(n);
+		return n;
 	}
 } // namespace name
