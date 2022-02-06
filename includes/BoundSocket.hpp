@@ -1,7 +1,9 @@
 #ifndef BOUND_SOCKET_HPP
 # define BOUND_SOCKET_HPP
 
-#include "Socket.hpp"
+# include	<netinet/in.h>	// sockaddr_in{} and other Internet defns
+# include	<arpa/inet.h>	// inet(3) functions
+# include	"Socket.hpp"
 
 namespace ft
 {

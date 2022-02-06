@@ -3,9 +3,6 @@
 
 # include	<sys/types.h>	// basic system data types
 # include	<sys/socket.h>	// basic socket definitions
-# include	<netinet/in.h>	// sockaddr_in{} and other Internet defns
-# include	<arpa/inet.h>	// inet(3) functions
-# include	<string>
 
 # define	SERV_PORT	8080
 
