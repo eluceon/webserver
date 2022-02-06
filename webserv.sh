@@ -9,5 +9,3 @@ then
 else
 echo "Argument not provided"
 fi
-
-test
