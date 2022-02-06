@@ -10,12 +10,16 @@ namespace ft
 		public:
 			BoundSocket();
 			BoundSocket(const BoundSocket& other);
+			virtual ~BoundSocket();
 
 			BoundSocket& operator=(const BoundSocket& other);
 			
-			virtual ~BoundSocket();
-
 		private:
+			// _servAddr is a structure specifies a transport address
+			// and port for the AF_INET address family
+			struct sockaddr_in	_servAddr;
+			
+			void	setServerAddressStructure();
 			void	bindAddressToSocket();
 	};
 		

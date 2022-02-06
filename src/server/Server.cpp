@@ -69,7 +69,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 			if ( (n = read(sockfd, buf, MAXLINE)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 #ifdef	NOTIFICATIONS
-					std::cout << RED_COLOR << std::cout << "client[" << i << "] aborted connection" << RESET_COLOR << std::endl;
+					std::cout << RED_COLOR << "client[" << i << "] aborted connection" << RESET_COLOR << std::endl;
 #endif
 					if (close(sockfd) == -1)
 						systemErrorExit("close error");
@@ -78,7 +78,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
 #ifdef	NOTIFICATIONS
-				std::cout << RED_COLOR  << std::cout << "client[" << i << "] closed connection" << RESET_COLOR << std::endl;
+				std::cout << RED_COLOR << "client[" << i << "] closed connection" << RESET_COLOR << std::endl;
 #endif
 				if (close(sockfd) == -1)
 					systemErrorExit("close error");

@@ -10,10 +10,9 @@ namespace ft
 		public:
 			ListeningSocket();
 			ListeningSocket(const ListeningSocket& other);
-
-			ListeningSocket &operator=(const ListeningSocket& other);
 			virtual ~ListeningSocket();
 
+			ListeningSocket &operator=(const ListeningSocket& other);
 
 		private:
 			int	_listeningSocket;

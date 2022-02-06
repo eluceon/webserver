@@ -8,10 +8,12 @@
 # include <poll.h>
 # include "ListeningSocket.hpp"
 
-/* POSIX requires that an #include of <poll.h> DefinE INFTIM, but many
-   systems still DefinE it in <sys/stropts.h>.  We don't want to include
-   all the STREAMS stuff if it's not needed, so we just DefinE INFTIM here.
-   This is the standard value, but there's no guarantee it is -1. */
+/* 
+** POSIX requires that an #include of <poll.h> define INFTIM, but many
+** systems still define it in <sys/stropts.h>.  We don't want to include
+** all the STREAMS stuff if it's not needed, so we just define INFTIM here.
+** This is the standard value, but there's no guarantee it is -1. 
+*/
 
 # ifndef INFTIM
 #  define INFTIM	(-1)    // infinite poll timeout
@@ -38,6 +40,7 @@ namespace ft
 		Server();
 		Server(const Server& other);
 		virtual ~Server();
+		
 		Server&	operator=(const Server & other);
 
 		ft::ListeningSocket	*_listeningSocket;
