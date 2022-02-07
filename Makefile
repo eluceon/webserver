@@ -22,6 +22,11 @@ SRC_SERVER		=	Server.cpp Socket.cpp ListeningSocket.cpp BoundSocket.cpp wrapsock
 OBJ_SERVER		=	$(addprefix $(OBJDIR), $(SRC_SERVER:.cpp=.o))
 HEADER_SERVER	=	$(addprefix $(HEADERDIR), Server.hpp Socket.hpp ListeningSocket.hpp BoundSocket.hpp)
 
+SRC_HTTP_DIR	=	./src/http/
+SRC_HTTP		=	HttpRequest.cpp
+OBJ_HTTP		=	$(addprefix $(OBJDIR), $(SRC_HTTP:.cpp=.o))
+HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp)
+
 SRC_UTILS_DIR	=	./src/utils/
 SRC_UTILS		=	error.cpp
 OBJ_UTILS		=	$(addprefix $(OBJDIR), $(SRC_UTILS:.cpp=.o))
@@ -30,7 +35,7 @@ HEADER_UTILS	=	$(addprefix $(HEADERDIR), utils.hpp)
 
 all: $(NAME_SERVER)
 
-$(NAME_SERVER): $(OBJDIR)  $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_UTILS) $(HEADER_SERVER) $(HEADER_UTILS)
+$(NAME_SERVER): $(OBJDIR)  $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_UTILS) $(OBJ_HTTP) $(HEADER_SERVER) $(HEADER_UTILS) $(HEADERDIR)
 	$(CXX) $(CXXFLAGS) $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_UTILS) -o $@
 	@echo "$(PURPLE) $@ has been created $(NONE)"
 
@@ -44,6 +49,14 @@ $(OBJDIR):
 $(OBJ_SERVER): $(OBJDIR)%.o: $(SRC_SERVER_DIR)%.cpp $(HEADER_SERVER) Makefile
 	$(CXX) $(CXXFLAGS) -I$(HEADERDIR) -c $< -o $@
 	@echo "$(GREEN) Object file $(PURPLE)$@ $(GREEN)for server has been created $(NONE)"
+
+############################
+##    http compilation    ##
+############################
+
+$(OBJ_HTTP): $(OBJDIR)%.o: $(SRC_HTTP_DIR)%.cpp $(HEADER_HTTP) Makefile
+	$(CXX) $(CXXFLAGS) -I$(HEADERDIR) -c $< -o $@
+	@echo "$(GREEN) Object file $(PURPLE)$@ $(GREEN)for http has been created $(NONE)"
 
 ##############################
 ##    utils compilation     ##
