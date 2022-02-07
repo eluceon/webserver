@@ -10,6 +10,7 @@ namespace ft
 		public:
 			HttpRequest();
 			HttpRequest(const HttpRequest& other);
+			HttpRequest(const char* str);
 			~HttpRequest();
 
 			HttpRequest& operator=(const HttpRequest other);

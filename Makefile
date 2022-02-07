@@ -5,7 +5,7 @@ PURPLE			=	\033[0;35m
 
 CXX				=	clang++
 CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98
-CXXFLAGS			=	-g -fsanitize=address
+CXXFLAGS		=	-g -fsanitize=address
 RM				=	rm -rf
 
 NAME_SERVER		=	server
@@ -28,7 +28,7 @@ OBJ_HTTP		=	$(addprefix $(OBJDIR), $(SRC_HTTP:.cpp=.o))
 HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp)
 
 SRC_UTILS_DIR	=	./src/utils/
-SRC_UTILS		=	error.cpp
+SRC_UTILS		=	error.cpp split.cpp
 OBJ_UTILS		=	$(addprefix $(OBJDIR), $(SRC_UTILS:.cpp=.o))
 HEADER_UTILS	=	$(addprefix $(HEADERDIR), utils.hpp)
 

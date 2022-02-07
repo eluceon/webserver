@@ -1,5 +1,11 @@
 #include "HttpRequest.hpp"
 
+ft::HttpRequest::HttpRequest() {
+	// _method = setMethod("GET");
+	// _uri = "/";
+	// _version = setVersion("HTTP/1.1");
+}
+
 std::string	ft::HttpRequest::getMethodName() const {
 	switch (_method)
 	{
