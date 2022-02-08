@@ -26,7 +26,7 @@
 #define	MAXLINE		4096	// max text line length
 
 
-/* Define to 1 for notifications*/
+/* Define for notifications*/
 # define NOTIFICATIONS 1
 
 namespace ft

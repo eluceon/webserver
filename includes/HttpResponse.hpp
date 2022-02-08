@@ -11,12 +11,12 @@ namespace ft {
 			HttpResponse& operator=(const HttpResponse& other);
 
 			enum e_httpStatusCodes {
-				// Information responses
+				/* Information responses */
 				CONTINUE						= 100,
 				SWITCHING_PROTOCOLS 			= 101,
 				PROCESSING						= 102,
 				EARLY_HINTS						= 103,
-				// Successful responses
+				/* Successful responses */
 				OK								= 200,
 				CREATED							= 201,
 				ACCEPTED						= 202,
@@ -24,7 +24,7 @@ namespace ft {
 				NO_CONTENT						= 204,
 				RESET_CONTENT					= 205,
 				PARTIAL_CONTENT					= 206,
-				// Redirection messages
+				/* Redirection messages */
 				MULTIPLE_CHOICES				= 300,
 				MOVED_PERMANENTLY				= 301,
 				FOUND							= 302,
@@ -34,7 +34,7 @@ namespace ft {
 				// SWITCH_PROXY					= 306,		// No longer used
 				TEMPORARY_REDIRECT				= 307,
 				PERMANENT_REDIRECT				= 308,
-				// Client error responses
+				/* Client error responses */
 				BAD_REQUEST						= 400,
 				UNAUTHORIZED					= 401,
 				PAYMENT_REQUIRED				= 402,
@@ -54,7 +54,7 @@ namespace ft {
 				RANGE_NOT_SATISFIABLE			= 416,
 				EXPECTATION_FAILED				= 417,
 				UPGRADE_REQUIRED				= 426,
-				// Server error responses
+				/* Server error responses */
 				INTERNAL_SERVER_ERROR			= 500,
 				NOT_IMPLEMENTED					= 501,
 				BAD_GATEWAY						= 502,

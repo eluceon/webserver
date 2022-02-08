@@ -3,6 +3,7 @@
 
 # include <string>
 
+# define LINE_END "\r\n"
 
 namespace ft
 {
