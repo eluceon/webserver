@@ -23,9 +23,9 @@ OBJ_SERVER		=	$(addprefix $(OBJDIR), $(SRC_SERVER:.cpp=.o))
 HEADER_SERVER	=	$(addprefix $(HEADERDIR), Server.hpp Socket.hpp ListeningSocket.hpp BoundSocket.hpp)
 
 SRC_HTTP_DIR	=	./src/http/
-SRC_HTTP		=	HttpRequest.cpp
+SRC_HTTP		=	HttpRequest.cpp HttpResponse.cpp
 OBJ_HTTP		=	$(addprefix $(OBJDIR), $(SRC_HTTP:.cpp=.o))
-HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp)
+HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp HttpResponse.hpp)
 
 SRC_UTILS_DIR	=	./src/utils/
 SRC_UTILS		=	error.cpp split.cpp

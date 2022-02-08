@@ -17,8 +17,8 @@ namespace ft
 
 			std::string getMethodName() const;
 			std::string getVersionName() const;
-			bool setMethod(const std::string& method);
-			bool setVersion(const std::string& version);
+			bool setMethod(const std::string& requestMethod);
+			bool setVersion(const std::string& protocolVersion);
 
 		private:
 			enum e_methods {
@@ -30,15 +30,16 @@ namespace ft
 			};
 			enum e_versions
 			{
+				HTTP_0_9,
     			HTTP_1_0,
     			HTTP_1_1,
     			HTTP_2_0,
 				NUMBER_OF_VERSIONS
 			};
 
-			int			_method;
-			int			_version;
-			std::string	_uri;			
+			int			_requestMethod;
+			int			_protocolVersion;
+			std::string	_uri;
 	};
 }
 

@@ -7,7 +7,7 @@ ft::HttpRequest::HttpRequest() {
 }
 
 std::string	ft::HttpRequest::getMethodName() const {
-	switch (_method)
+	switch (_requestMethod)
 	{
 	case GET:
 		return "GET";
@@ -23,30 +23,32 @@ std::string	ft::HttpRequest::getMethodName() const {
 }
 
 std::string ft::HttpRequest::getVersionName() const {
-	switch (_version)
+	switch (_protocolVersion)
 	{
-	case HTTP_1_0:
-		return "HTTP/1.0";
-	case HTTP_1_1:
-		return "HTTP/1.1";
-	case HTTP_2_0:
-		return "HTTP/2.0";
-	default:
-		return "";
+		case HTTP_0_9:
+			return "HTTP/0.9";
+		case HTTP_1_0:
+			return "HTTP/1.0";
+		case HTTP_1_1:
+			return "HTTP/1.1";
+		case HTTP_2_0:
+			return "HTTP/2.0";
+		default:
+			return "";
 	}
 }
 
-bool ft::HttpRequest::setMethod(const std::string& method) {
+bool ft::HttpRequest::setMethod(const std::string& requestMethod) {
 	for(int i = 0; i < NUMBER_OF_METHODS; ++i) {
-		if(method.compare(getMethodName()) == 0)
+		if(requestMethod.compare(getMethodName()) == 0)
 			return true;
 	}
 	return false;
 }
 
-bool ft::HttpRequest::setVersion(const std::string& version) {
+bool ft::HttpRequest::setVersion(const std::string& protocolVersion) {
 	for(int i = 0; i < NUMBER_OF_VERSIONS; ++i) {
-		if(version.compare(getVersionName()) == 0)
+		if(protocolVersion.compare(getVersionName()) == 0)
 			return true;
 	}
 	return false;
