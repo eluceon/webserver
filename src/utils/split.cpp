@@ -37,12 +37,14 @@ namespace ft
     	std::vector<std::string>	splitedStrings;
 		std::string::size_type		pos = 0;
 		std::string::size_type		prev = 0;
+		std::string::size_type		len = str.length();
 
-		while ((pos = str.find(delim, prev)) != std::string::npos) {
-			splitedStrings.push_back(str.substr(prev, pos - prev));
-			prev = pos + delim.size();
-		}
-		splitedStrings.push_back(str.substr(prev));
+		do {
+			pos = str.find(delim, prev);
+			if (pos != prev)
+				splitedStrings.push_back(str.substr(prev, pos - prev));
+			prev = pos != std::string::npos ? pos + delim.size() : std::string::npos;
+		} while (prev < len);
     	return splitedStrings;
 	}
 }
