@@ -16,12 +16,15 @@ namespace ft
 
 			HttpRequest& operator=(const HttpRequest other);
 
-			std::string getMethodName() const;
-			std::string getVersionName() const;
-			bool setMethod(const std::string& requestMethod);
-			bool setVersion(const std::string& protocolVersion);
+			std::string	getMethodName() const;
+			std::string	getVersionName() const;
+			int			setBadRequest(int status);
+			void		setStatus(int status);
+			bool 		setMethod(const std::string& requestMethod);
+			bool		setVersion(const std::string& protocolVersion);
+			int			parse(const std::string& messages);
 
-		private:
+		protected:
 			enum e_methods {
 				GET,
 				POST,
@@ -41,6 +44,8 @@ namespace ft
 			int			_requestMethod;
 			int			_protocolVersion;
 			std::string	_uri;
+			bool		_parsed;
+			int			_status;
 	};
 }
 

@@ -1,4 +1,5 @@
 #include "Server.hpp"
+#include "HttpRequest.hpp"
 
 ft::Server::Server() {
 	_listeningSocket = new ft::ListeningSocket();
@@ -85,6 +86,9 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				client[i].fd = -1;
 			} else {
 				std::cout << buf << std::endl;		// print message from client
+				// HttpRequest *httpRequest = new HttpRequest();
+				// httpRequest->parse(buf);
+				// delete httpRequest;
 			}
 			if (--countReadyFd <= 0)
 				break;						// no more readable descriptors

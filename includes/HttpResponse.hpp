@@ -63,7 +63,7 @@ namespace ft {
 				HTTP_VERSION_NOT_SUPPORTED		= 505
 			};
 
-		private:
+		protected:
 	};
 	
 } // namespace ft

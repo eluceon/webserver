@@ -1,10 +1,14 @@
 #include "HttpRequest.hpp"
+#include "HttpResponse.hpp"
+#include "utils.hpp"
 
 ft::HttpRequest::HttpRequest() {
 	// _method = setMethod("GET");
 	// _uri = "/";
 	// _version = setVersion("HTTP/1.1");
 }
+
+ft::HttpRequest::~HttpRequest() {}
 
 std::string	ft::HttpRequest::getMethodName() const {
 	switch (_requestMethod)
@@ -53,3 +57,27 @@ bool ft::HttpRequest::setVersion(const std::string& protocolVersion) {
 	}
 	return false;
 }
+
+void	ft::HttpRequest::setStatus(int status) {
+	_status = status;
+}
+
+int	ft::HttpRequest::setBadRequest(int status) {
+	setStatus(status);
+	_parsed = true;
+	return status;
+}
+
+int	ft::HttpRequest::parse(const std::string& messages) {
+	std::vector<std::string> segments = ft::split(messages, std::string(LINE_END) + std::string(LINE_END));
+	if (segments.size() < 1) {
+    	return setBadRequest(HttpResponse::BAD_REQUEST);
+    }
+	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
+		std::cout << segments[i];
+	
+	return 0; 	///CHANGE ME LATER!!!!!!!
+}
+
+
+
