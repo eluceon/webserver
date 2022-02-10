@@ -69,13 +69,14 @@ int	ft::HttpRequest::setBadRequest(int status) {
 }
 
 int	ft::HttpRequest::parse(const std::string& messages) {
-	std::vector<std::string> segments = ft::split(messages, std::string(LINE_END) + std::string(LINE_END));
-	if (segments.size() < 1) {
+	std::vector<std::string> segments = ft::split(messages, LINE_DOUBLE_END);
+	if (segments.size() < 1)
     	return setBadRequest(HttpResponse::BAD_REQUEST);
-    }
+	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
+
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
-	
+	std::cout << "segments: " << segments.size() << '\n';
 	return 0; 	///CHANGE ME LATER!!!!!!!
 }
 

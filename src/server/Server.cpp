@@ -85,10 +85,10 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 					systemErrorExit("close error");
 				client[i].fd = -1;
 			} else {
-				std::cout << buf << std::endl;		// print message from client
-				// HttpRequest *httpRequest = new HttpRequest();
-				// httpRequest->parse(buf);
-				// delete httpRequest;
+				// std::cout << buf << std::endl;		// print message from client
+				HttpRequest *httpRequest = new HttpRequest();
+				httpRequest->parse(buf);
+				delete httpRequest;
 			}
 			if (--countReadyFd <= 0)
 				break;						// no more readable descriptors

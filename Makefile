@@ -28,7 +28,7 @@ OBJ_HTTP		=	$(addprefix $(OBJDIR), $(SRC_HTTP:.cpp=.o))
 HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp HttpResponse.hpp)
 
 SRC_UTILS_DIR	=	./src/utils/
-SRC_UTILS		=	error.cpp split.cpp
+SRC_UTILS		=	error.cpp stringUtils.cpp
 OBJ_UTILS		=	$(addprefix $(OBJDIR), $(SRC_UTILS:.cpp=.o))
 HEADER_UTILS	=	$(addprefix $(HEADERDIR), utils.hpp)
 
@@ -36,7 +36,7 @@ HEADER_UTILS	=	$(addprefix $(HEADERDIR), utils.hpp)
 all: $(NAME_SERVER)
 
 $(NAME_SERVER): $(OBJDIR)  $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_UTILS) $(OBJ_HTTP) $(HEADER_SERVER) $(HEADER_UTILS) $(HEADERDIR)
-	$(CXX) $(CXXFLAGS) $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_UTILS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ_MAIN) $(OBJ_SERVER) $(OBJ_HTTP) $(OBJ_UTILS) -o $@
 	@echo "$(PURPLE) $@ has been created $(NONE)"
 
 $(OBJDIR):

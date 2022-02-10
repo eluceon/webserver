@@ -4,6 +4,7 @@
 # include <string>
 
 # define LINE_END "\r\n"
+# define LINE_DOUBLE_END "\r\n\r\n"
 
 namespace ft
 {

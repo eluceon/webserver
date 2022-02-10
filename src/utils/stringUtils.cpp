@@ -47,4 +47,11 @@ namespace ft
 		} while (prev < len);
     	return splitedStrings;
 	}
+
+	/*
+	**	Converts a string to upper sase
+	*/
+	void	toUpperString(std::string& str) {
+		std::transform(str.begin(), str.end(), str.begin(), toupper);
+	}
 }

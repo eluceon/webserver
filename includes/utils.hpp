@@ -23,8 +23,7 @@ namespace ft
     int							Accept(int fd, struct sockaddr *sa, socklen_t *salenptr);
 	std::vector<std::string>	split(const std::string& str);
 	std::vector<std::string> 	split(const std::string& str, const std::string& delim);
+	void						toUpperString(std::string& str);
 } // namespace ft
-
-
 
 #endif
