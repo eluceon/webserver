@@ -73,7 +73,7 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	if (segments.size() < 1)
     	return setBadRequest(HttpResponse::BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
-	std::vector<std::string> start_line = ft::split(headerLines[0], LINE_END);
+	std::vector<std::string> start_line = ft::split(headerLines[0]);
 	if (start_line.size() < 3)
     	return setBadRequest(HttpResponse::BAD_REQUEST);
 	if (!setVersion(start_line[2]))
