@@ -42,6 +42,10 @@ namespace ft
 				NUMBER_OF_VERSIONS
 			};
 
+			enum e_limits {
+		        MAX_URI_LENGTH		= 2000,
+   			};
+
 			int			_requestMethod;
 			int			_protocolVersion;
 			std::string	_uri;

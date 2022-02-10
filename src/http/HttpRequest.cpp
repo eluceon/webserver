@@ -73,6 +73,15 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	if (segments.size() < 1)
     	return setBadRequest(HttpResponse::BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
+	std::vector<std::string> start_line = ft::split(headerLines[0], LINE_END);
+	if (start_line.size() < 3)
+    	return setBadRequest(HttpResponse::BAD_REQUEST);
+	if (!setVersion(start_line[2]))
+		return setBadRequest(HttpResponse::HTTP_VERSION_NOT_SUPPORTED);
+	if (!setMethod(start_line[0]))
+		return setBadRequest(HttpResponse::METHOD_NOT_ALLOWED);
+	if (start_line[1].length() > MAX_URI_LENGTH)
+		return setBadRequest(HttpResponse::URI_TOO_LONG);
 
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
