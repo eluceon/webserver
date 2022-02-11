@@ -27,7 +27,6 @@ namespace ft
 		return splitedStrings;
 	}
 
-
 	/*
 	**	splits std::string into std::vector<std::string> by delimeter
 	*/
@@ -90,5 +89,18 @@ namespace ft
         	return str;
    		else
         	return str.substr(0, pos);
+	}
+
+	/*
+	**	Returns true if string contains only digits
+	*/
+	bool isNumber(const std::string& str) {
+		std::string::size_type len = str.size();
+
+		for (std::string::size_type i = 0; i < len; ++i) {
+        	if (!std::isdigit(str[i]))
+				return false;
+    	}
+   		return true;
 	}
 }

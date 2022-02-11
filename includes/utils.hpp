@@ -24,6 +24,10 @@ namespace ft
 	std::vector<std::string>	split(const std::string& str);
 	std::vector<std::string> 	split(const std::string& str, const std::string& delim);
 	void						toUpperString(std::string& str);
+	void						toLowerString(std::string& str);
+	std::string					getExtension(const std::string& str, const std::string& delim);
+	std::string					getWithoutExtension(const std::string& str, const std::string& delim);
+	bool						isNumber(const std::string& str);
 } // namespace ft
 
 #endif

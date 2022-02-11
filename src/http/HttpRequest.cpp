@@ -1,11 +1,15 @@
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
 #include "utils.hpp"
+#include <string>
 
-ft::HttpRequest::HttpRequest() {
-	// _method = setMethod("GET");
-	// _uri = "/";
-	// _version = setVersion("HTTP/1.1");
+ft::HttpRequest::HttpRequest()
+	: _requestURI(""), _protocol(""), _serverName(""), _relativePath(""),
+	 _port(DEFAULT_PORT), _parsed(false), _status(ft::HttpResponse::OK)
+{
+	_requestMethod	= setMethod("GET");
+	_protocolVersion = setVersion("HTTP/1.1");
+
 }
 
 ft::HttpRequest::~HttpRequest() {}
@@ -42,7 +46,7 @@ std::string ft::HttpRequest::getVersionName() const {
 	}
 }
 
-bool ft::HttpRequest::setMethod(std::string& requestMethod) {
+bool ft::HttpRequest::setMethod(std::string requestMethod) {
 	ft::toUpperString(requestMethod);
 	for(_requestMethod = 0; _requestMethod < NUMBER_OF_METHODS; _requestMethod++) {
 		if(requestMethod.compare(getMethodName()) == 0)
@@ -51,7 +55,7 @@ bool ft::HttpRequest::setMethod(std::string& requestMethod) {
 	return false;
 }
 
-bool ft::HttpRequest::setVersion(std::string& protocolVersion) {
+bool ft::HttpRequest::setVersion(std::string protocolVersion) {
 	ft::toUpperString(protocolVersion);
 	for(_protocolVersion = 0; _protocolVersion < NUMBER_OF_VERSIONS; _protocolVersion++) {
 		if(protocolVersion.compare(getVersionName()) == 0)
@@ -74,6 +78,59 @@ int	ft::HttpRequest::setBadRequest(int status) {
 	return status;
 }
 
+bool ft::HttpRequest::setPort(const std::string& port) {
+	return ft::isNumber(port) && port.length() < 6 
+		&& (_port = atoi(port.c_str())) > -1 && _port < 65536;
+}
+
+int ft::HttpRequest::getPort() const {
+	return _port;
+}
+
+bool	ft::HttpRequest::setURI(const std::string& requestURI) {
+	std::string::size_type	pos;
+	
+	if(requestURI.size() < 1)
+		return false;
+	if (requestURI[0] == '/') {									// relative path
+		_relativePath = requestURI;
+		return true;	
+	} else if (requestURI.find("://") == std::string::npos) {
+		return false;
+	} else {													// absolute path
+		_protocol = ft::getWithoutExtension(requestURI, "://");
+		if (_protocol.compare(PROTOCOL))
+			return false;
+		std::string	tmpURI = getExtension(requestURI, "://");
+		pos = tmpURI.find(":");
+		if (pos != std::string::npos) {
+			_serverName = ft::getWithoutExtension(tmpURI, "/");
+			_relativePath = ft::getExtension(tmpURI, "/");
+			_port = DEFAULT_PORT;
+		} else {
+			_serverName = ft::getWithoutExtension(tmpURI, ":");
+			std::string::size_type end = tmpURI.find("/");			
+			if (!setPort(tmpURI.substr(pos + 1, end - pos - 1)))
+				return false;
+			_relativePath = tmpURI.substr(end);
+		}
+	}
+	return true;
+}
+
+const std::string&	ft::HttpRequest::getProtocol() const {
+	return _protocol;
+}
+
+
+const std::string&	ft::HttpRequest::getServerName() const {
+	return _serverName;
+}
+
+const std::string&	ft::HttpRequest::getRelativePath() const {
+	return _relativePath;
+}
+
 bool	ft::HttpRequest::parseStartLine(const std::string& request) {
 	std::vector<std::string> startLine = ft::split(request);
 	if (startLine.size() < 3) {
@@ -92,6 +149,11 @@ bool	ft::HttpRequest::parseStartLine(const std::string& request) {
 		setBadRequest(HttpResponse::URI_TOO_LONG);
 		return false;
 	}
+	ft::toLowerString(startLine[1]);
+	if (!setURI(startLine[1])) {
+		setBadRequest(HttpResponse::BAD_REQUEST);
+		return false;
+	}
 	return true;
 }
 
@@ -106,8 +168,12 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
-	std::cout << "segments: " << segments.size() << '\n';
-	return 0; 	///CHANGE ME LATER!!!!!!!
+	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
+				<< ", target: " << _requestURI << ", protocol version " << getVersionName()
+				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
+				<< ", server name: " << getServerName() << ", port: " << getPort()
+				<< ", relative path: " << getRelativePath() << RESET_COLOR << std::endl;  
+	return 0; 	// CHANGE ME LATER!!!!!!!
 }
 
 

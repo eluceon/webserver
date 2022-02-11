@@ -3,8 +3,10 @@
 
 # include <string>
 
-# define LINE_END "\r\n"
-# define LINE_DOUBLE_END "\r\n\r\n"
+# define LINE_END			"\r\n"
+# define LINE_DOUBLE_END	"\r\n\r\n"
+# define DEFAULT_PORT		80
+# define PROTOCOL			"http"
 
 namespace ft
 {
@@ -17,15 +19,21 @@ namespace ft
 
 			HttpRequest& operator=(const HttpRequest other);
 
-			std::string	getMethodName() const;
-			std::string	getVersionName() const;
-			int			setBadRequest(int status);
-			void		setStatus(int status);
-			int			getStatus() const;
-			bool 		setMethod(std::string& requestMethod);
-			bool		setVersion(std::string& protocolVersion);
-			int			parse(const std::string& messages);
-			bool		parseStartLine(const std::string& request);
+			bool 				setMethod(std::string requestMethod);
+			std::string			getMethodName() const;
+			bool				setVersion(std::string protocolVersion);
+			std::string			getVersionName() const;
+			int					setBadRequest(int status);
+			void				setStatus(int status);
+			int					getStatus() const;
+			int					parse(const std::string& messages);
+			bool				parseStartLine(const std::string& request);
+			bool				setURI(const std::string& requestURI);
+			const std::string&	getProtocol() const;
+			bool				setPort(const std::string& port);
+			int					getPort() const;
+			const std::string&	getServerName() const;
+			const std::string&	getRelativePath() const;
 
 		protected:
 			enum e_methods {
@@ -49,8 +57,12 @@ namespace ft
    			};
 
 			int			_requestMethod;
+			std::string	_requestURI;
 			int			_protocolVersion;
-			std::string	_uri;
+			std::string	_protocol;
+			std::string	_serverName;
+			std::string	_relativePath;
+			int			_port;
 			bool		_parsed;
 			int			_status;
 	};
