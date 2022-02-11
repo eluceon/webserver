@@ -1,8 +1,8 @@
-#include <string>
 #include <stdlib.h> // setenv
 #include <iostream>
-#include <unistd.h>
-#include <fcntl.h>
+#include <unistd.h> // close function
+#include <fcntl.h> // STDINOUT macros
+#include <string>
 
 extern char **environ;
 #define ENV_CNT 19
@@ -60,9 +60,13 @@ FILE*	CGI_caller() {
     pid_t       pid;
     int			fildes[2];
     int			fd;
-    char*       argv[3];
+    char const*       argv[3];
+    std::string		cgi_path;
+    std::string		uri;
 
     SetEnv();
+    cgi_path = "./cgi-bin/cgiscript.py";
+    uri = "webpage";
 
     pipe(fildes);
     pid = fork();
@@ -71,12 +75,16 @@ FILE*	CGI_caller() {
 		close(fildes[0]);
 		close(fildes[1]);
 		fd = fileno(res);
+		argv[0] = cgi_path.c_str();
+		argv[1] = uri.c_str();
+		argv[2] = NULL;
 		dup2(fd, STDOUT_FILENO);
-		if (execve("path_to_cgi_bin", argv, environ) == -1)
+		if (execve(cgi_path.c_str(), (char *const *)argv, environ) == -1)
 			exit(1);
     }
     else {
     	close(fildes[0]);
+//    	write(fds[1], "c_style_str_body", "body_len"");
     	close(fildes[1]);
     	waitpid(pid, NULL, 0);
     }
