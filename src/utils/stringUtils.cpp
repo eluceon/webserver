@@ -61,4 +61,34 @@ namespace ft
 	void	toLowerString(std::string& str) {
 		std::transform(str.begin(), str.end(), str.begin(), tolower);
 	}
+
+	/*
+	**	Returns remainder of the string after delimeter
+	*/
+	std::string	getExtension(const std::string& str,
+                                    const std::string& delim)
+	{
+		std::string::size_type		pos;
+
+		pos = str.find(delim);
+		if (pos == std::string::npos)
+        	return "";
+   		else
+        	return str.substr(pos + delim.size());
+	}
+
+	/*
+	**	Returns the begining of the string before delimeter
+	*/
+	std::string	getWithoutExtension(const std::string& str,
+                                    	const std::string& delim)
+	{
+		std::string::size_type		pos;
+
+		pos = str.find(delim);
+		if (pos == std::string::npos)
+        	return str;
+   		else
+        	return str.substr(0, pos);
+	}
 }
