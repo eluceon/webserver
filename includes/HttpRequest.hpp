@@ -21,9 +21,11 @@ namespace ft
 			std::string	getVersionName() const;
 			int			setBadRequest(int status);
 			void		setStatus(int status);
-			bool 		setMethod(const std::string& requestMethod);
-			bool		setVersion(const std::string& protocolVersion);
+			int			getStatus() const;
+			bool 		setMethod(std::string& requestMethod);
+			bool		setVersion(std::string& protocolVersion);
 			int			parse(const std::string& messages);
+			bool		parseStartLine(const std::string& request);
 
 		protected:
 			enum e_methods {
@@ -43,7 +45,7 @@ namespace ft
 			};
 
 			enum e_limits {
-		        MAX_URI_LENGTH		= 2000,
+		        MAX_URI_LENGTH		= 2048,
    			};
 
 			int			_requestMethod;
