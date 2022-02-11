@@ -54,4 +54,11 @@ namespace ft
 	void	toUpperString(std::string& str) {
 		std::transform(str.begin(), str.end(), str.begin(), toupper);
 	}
+
+	/*
+	**	Converts a string to lower sase
+	*/
+	void	toLowerString(std::string& str) {
+		std::transform(str.begin(), str.end(), str.begin(), tolower);
+	}
 }
