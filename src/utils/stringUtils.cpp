@@ -105,7 +105,7 @@ namespace ft
 	}
 
 	/*
-	** Parses token in the string before delim. Return true if token parsed.
+	** Parses token in the string before delim. Returns true if token parsed.
 	*/
 	bool	parseToken(const std::string& src, const std::string &delim,
 				std::string::size_type& beginPos, std::string &token,
