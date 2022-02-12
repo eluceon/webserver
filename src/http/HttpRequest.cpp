@@ -169,14 +169,27 @@ bool	ft::HttpRequest::parseStartLine(const std::string& request) {
 	return true;
 }
 
-bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headers) {
-	if (headers.size() - 1 > MAX_HEADERS) {
+bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
+	std::string::size_type pos = 0;
+	std::string headerName, headerValue;
+
+	if (headerLines.size() - 1 > MAX_HEADERS) {
 		setBadRequest(HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE);
 		return false;
 	}
-	for (size_t i = 1; i < headers.size(); ++i) {
-
+	for (size_t i = 1; i < headerLines.size(); ++i) {
+		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH)) {
+			setBadRequest(HttpResponse::BAD_REQUEST);
+			return false;
+		}
+		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_NAME_LENGTH)) {
+			setBadRequest(HttpResponse::BAD_REQUEST);
+			return false;
+		}
+		ft::toLowerString(headerName);
+		_headers.insert(std::make_pair(headerName, headerValue));
 	}
+	return true;
 }
 
 
@@ -187,7 +200,7 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
 	if (!parseStartLine(headerLines[0]))
 		return _status;
-	// if (headerLines.size() > 1 && !parseHeaders(headerLines))
+	// if (headerLines.size() > 1 && parseHeaders(headerLines) == false)
 	// 	return _status;
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
@@ -197,7 +210,12 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 				<< ", server name: " << getServerName() << ", port: " << getPort()
 				<< ", relative path: " << getRelativePath() 
 				<< ", query string: " << getQueryString() 
-				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;  
+				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;
+	std::map<std::string, std::string>::const_iterator it = _headers.begin();
+	std::cout << "HEADERS:\n";
+	// for (; it != _headers.end(); ++it) {
+	// 	std::cout << it->first << ": " << it->second << '\n';
+	// }
 	return 0; 	// CHANGE ME LATER!!!!!!!
 }
 

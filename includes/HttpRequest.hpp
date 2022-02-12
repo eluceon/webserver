@@ -3,6 +3,7 @@
 
 # include <string>
 # include <vector>
+# include <map>
 
 # define LINE_END			"\r\n"
 # define LINE_DOUBLE_END	"\r\n\r\n"
@@ -29,7 +30,7 @@ namespace ft
 			int					getStatus() const;
 			int					parse(const std::string& messages);
 			bool				parseStartLine(const std::string& request);
-			bool				parseHeaders(const std::vector<std::string>& headers);
+			bool				parseHeaders(const std::vector<std::string>& headerLines);
 			bool				setURI(const std::string& requestURI);
 			const std::string&	getProtocol() const;
 			bool				setPort(const std::string& port);
@@ -63,16 +64,17 @@ namespace ft
 				MAX_HEADER_VALUE_LENGTH	= 128
    			};
 
-			int			_requestMethod;
-			std::string	_requestURI;
-			int			_protocolVersion;
-			std::string	_protocol;
-			std::string	_serverName;
-			std::string	_relativePath;
-			std::string	_queryString;
-			int			_port;
-			bool		_parsed;
-			int			_status;
+			int									_requestMethod;
+			std::string							_requestURI;
+			int									_protocolVersion;
+			std::string							_protocol;
+			std::string							_serverName;
+			std::string							_relativePath;
+			std::string							_queryString;
+			int									_port;
+			std::map<std::string, std::string>	_headers;
+			bool								_parsed;
+			int									_status;
 	};
 }
 
