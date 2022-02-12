@@ -2,6 +2,7 @@
 # define HTTP_REQUEST_HPP
 
 # include <string>
+# include <vector>
 
 # define LINE_END			"\r\n"
 # define LINE_DOUBLE_END	"\r\n\r\n"
@@ -28,6 +29,7 @@ namespace ft
 			int					getStatus() const;
 			int					parse(const std::string& messages);
 			bool				parseStartLine(const std::string& request);
+			bool				parseHeaders(const std::vector<std::string>& headers);
 			bool				setURI(const std::string& requestURI);
 			const std::string&	getProtocol() const;
 			bool				setPort(const std::string& port);
@@ -55,7 +57,10 @@ namespace ft
 			};
 
 			enum e_limits {
-		        MAX_URI_LENGTH		= 2048,
+		        MAX_URI_LENGTH			= 2048,
+				MAX_HEADERS				= 100,
+				MAX_HEADER_NAME_LENGTH	= 40,
+				MAX_HEADER_VALUE_LENGTH	= 128
    			};
 
 			int			_requestMethod;

@@ -42,7 +42,7 @@ namespace ft
 			pos = str.find(delim, prev);
 			if (pos != prev)
 				splitedStrings.push_back(str.substr(prev, pos - prev));
-			prev = pos != std::string::npos ? pos + delim.size() : std::string::npos;
+			prev = pos != std::string::npos ? pos + delim.length() : std::string::npos;
 		} while (prev < len);
     	return splitedStrings;
 	}
@@ -73,7 +73,7 @@ namespace ft
 		if (pos == std::string::npos)
         	return "";
    		else
-        	return str.substr(pos + delim.size());
+        	return str.substr(pos + delim.length());
 	}
 
 	/*
@@ -102,5 +102,30 @@ namespace ft
 				return false;
     	}
    		return true;
+	}
+
+	/*
+	** Parses token in the string before delim. Return true if token parsed.
+	*/
+	bool	parseToken(const std::string& src, const std::string &delim,
+				std::string::size_type& beginPos, std::string &token,
+				bool skipFirstWhiteSpaces, bool isExactDelim,
+				std::string::size_type maxLen)
+	{
+		token.clear();
+		if (skipFirstWhiteSpaces)
+			beginPos = src.find_first_not_of(WHITESPACES, beginPos);
+		if (beginPos >= src.length())
+			return false;
+		std::string::size_type endPos = src.find_first_of(delim, beginPos);
+		if (endPos == std::string::npos && isExactDelim)
+			return false;
+		if (endPos == std::string::npos)
+			endPos = src.length();
+		token = src.substr(beginPos, endPos - beginPos);
+		beginPos = endPos != src.length() ? endPos + delim.length() : endPos;
+		if (token.length() > maxLen || token.length() == 0)
+			return false;
+		return true;
 	}
 }

@@ -169,6 +169,16 @@ bool	ft::HttpRequest::parseStartLine(const std::string& request) {
 	return true;
 }
 
+bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headers) {
+	if (headers.size() - 1 > MAX_HEADERS) {
+		setBadRequest(HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE);
+		return false;
+	}
+	for (size_t i = 1; i < headers.size(); ++i) {
+
+	}
+}
+
 
 int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> segments = ft::split(messages, LINE_DOUBLE_END);
@@ -177,7 +187,8 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
 	if (!parseStartLine(headerLines[0]))
 		return _status;
-
+	// if (headerLines.size() > 1 && !parseHeaders(headerLines))
+	// 	return _status;
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
@@ -189,7 +200,4 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;  
 	return 0; 	// CHANGE ME LATER!!!!!!!
 }
-
-
-
 

@@ -54,6 +54,7 @@ namespace ft {
 				RANGE_NOT_SATISFIABLE			= 416,
 				EXPECTATION_FAILED				= 417,
 				UPGRADE_REQUIRED				= 426,
+				REQUEST_HEADER_FIELDS_TOO_LARGE	= 431,
 				/* Server error responses */
 				INTERNAL_SERVER_ERROR			= 500,
 				NOT_IMPLEMENTED					= 501,

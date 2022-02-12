@@ -16,6 +16,8 @@
 # define GREEN_COLOR	"\033[0;32m"
 # define RESET_COLOR 	"\033[0;0m"
 
+# define WHITESPACES	" \t\n\v\f\r"
+
 namespace ft
 {
     void						systemErrorExit(const std::string& mesage);
@@ -28,6 +30,10 @@ namespace ft
 	std::string					getExtension(const std::string& str, const std::string& delim);
 	std::string					getWithoutExtension(const std::string& str, const std::string& delim);
 	bool						isNumber(const std::string& str);
+	bool						parseToken(const std::string& src, const std::string &delim,
+										std::string::size_type& beginPos, std::string &token,
+										bool skipFirstWhiteSpaces = true, bool isExactDelim = false,
+										std::string::size_type maxLen = std::string::npos);
 } // namespace ft
 
 #endif
