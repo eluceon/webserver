@@ -34,6 +34,8 @@ namespace ft
 			int					getPort() const;
 			const std::string&	getServerName() const;
 			const std::string&	getRelativePath() const;
+			const std::string&	getQueryString() const;
+			std::string			getFullURL() const;
 
 		protected:
 			enum e_methods {
@@ -62,6 +64,7 @@ namespace ft
 			std::string	_protocol;
 			std::string	_serverName;
 			std::string	_relativePath;
+			std::string	_queryString;
 			int			_port;
 			bool		_parsed;
 			int			_status;

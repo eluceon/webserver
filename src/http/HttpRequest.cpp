@@ -4,8 +4,9 @@
 #include <string>
 
 ft::HttpRequest::HttpRequest()
-	: _requestURI(""), _protocol(""), _serverName(""), _relativePath(""),
-	 _port(DEFAULT_PORT), _parsed(false), _status(ft::HttpResponse::OK)
+	: _requestURI(""), _protocol("http"), _serverName(""),
+	_relativePath(""), _queryString(""), _port(DEFAULT_PORT),
+	_parsed(false), _status(ft::HttpResponse::OK)
 {
 	_requestMethod	= setMethod("GET");
 	_protocolVersion = setVersion("HTTP/1.1");
@@ -94,7 +95,6 @@ bool	ft::HttpRequest::setURI(const std::string& requestURI) {
 		return false;
 	if (requestURI[0] == '/') {									// relative path
 		_relativePath = requestURI;
-		return true;	
 	} else if (requestURI.find("://") == std::string::npos) {
 		return false;
 	} else {													// absolute path
@@ -115,6 +115,10 @@ bool	ft::HttpRequest::setURI(const std::string& requestURI) {
 			_relativePath = tmpURI.substr(end);
 		}
 	}
+	if (_relativePath.find("?") != std::string::npos) {
+		_queryString = ft::getExtension(_relativePath, "?");
+		_relativePath = ft::getWithoutExtension(_relativePath, "?");
+	}
 	return true;
 }
 
@@ -129,6 +133,14 @@ const std::string&	ft::HttpRequest::getServerName() const {
 
 const std::string&	ft::HttpRequest::getRelativePath() const {
 	return _relativePath;
+}
+
+const std::string&	ft::HttpRequest::getQueryString() const {
+    return _queryString;
+}
+
+std::string ft::HttpRequest::getFullURL() const {
+	return _protocol + "://" + _serverName + ":" + std::to_string(_port) + _relativePath + _queryString;
 }
 
 bool	ft::HttpRequest::parseStartLine(const std::string& request) {
@@ -172,7 +184,9 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 				<< ", target: " << _requestURI << ", protocol version " << getVersionName()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
 				<< ", server name: " << getServerName() << ", port: " << getPort()
-				<< ", relative path: " << getRelativePath() << RESET_COLOR << std::endl;  
+				<< ", relative path: " << getRelativePath() 
+				<< ", query string: " << getQueryString() 
+				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;  
 	return 0; 	// CHANGE ME LATER!!!!!!!
 }
 
