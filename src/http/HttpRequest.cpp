@@ -170,19 +170,20 @@ bool	ft::HttpRequest::parseStartLine(const std::string& request) {
 }
 
 bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
-	std::string::size_type pos = 0;
+	std::string::size_type pos;
 	std::string headerName, headerValue;
 
-	if (headerLines.size() - 1 > MAX_HEADERS) {
+	if (headerLines.size() > MAX_HEADER_FIELDS) {
 		setBadRequest(HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE);
 		return false;
 	}
 	for (size_t i = 1; i < headerLines.size(); ++i) {
+		pos = 0;
 		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH)) {
 			setBadRequest(HttpResponse::BAD_REQUEST);
 			return false;
 		}
-		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_NAME_LENGTH)) {
+		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH)) {
 			setBadRequest(HttpResponse::BAD_REQUEST);
 			return false;
 		}
@@ -192,6 +193,31 @@ bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) 
 	return true;
 }
 
+bool	ft::HttpRequest::processHeaders() {
+	std::map<std::string ,std::string>::const_iterator it;
+	std::string::size_type	pos = 0;
+
+	it = _headers.find("host");
+	if (_serverName.empty() && it != _headers.end()) {
+		ft::parseToken(it->second, ":", pos, _serverName, true);
+		std::string strPort;
+		ft::parseToken(it->second, "\0", pos, strPort, true);
+		if (!strPort.empty() && !setPort(strPort)) {
+			setBadRequest(ft::HttpResponse::BAD_REQUEST);
+			return false;
+		}
+	} else if (_serverName.empty()) {							// server name not found
+		setBadRequest(ft::HttpResponse::BAD_REQUEST);
+		return false;
+	} else if (it == _headers.end()) {
+		_headers.insert(std::pair<std::string, std::string>("host",
+						_serverName + ":" + std::to_string(_port)));
+	}
+
+
+
+	return true;
+}
 
 int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> segments = ft::split(messages, LINE_DOUBLE_END);
@@ -200,8 +226,13 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
 	if (!parseStartLine(headerLines[0]))
 		return _status;
-	// if (headerLines.size() > 1 && parseHeaders(headerLines) == false)
-	// 	return _status;
+	if (headerLines.size() > 1 && parseHeaders(headerLines) == false)
+		return _status;
+	processHeaders();
+
+
+
+
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
@@ -213,9 +244,9 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;
 	std::map<std::string, std::string>::const_iterator it = _headers.begin();
 	std::cout << "HEADERS:\n";
-	// for (; it != _headers.end(); ++it) {
-	// 	std::cout << it->first << ": " << it->second << '\n';
-	// }
+	for (; it != _headers.end(); ++it) {
+		std::cout << it->first << ": " << it->second << '\n';
+	}
 	return 0; 	// CHANGE ME LATER!!!!!!!
 }
 

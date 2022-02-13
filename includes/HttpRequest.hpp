@@ -31,6 +31,7 @@ namespace ft
 			int					parse(const std::string& messages);
 			bool				parseStartLine(const std::string& request);
 			bool				parseHeaders(const std::vector<std::string>& headerLines);
+			bool				processHeaders(void);
 			bool				setURI(const std::string& requestURI);
 			const std::string&	getProtocol() const;
 			bool				setPort(const std::string& port);
@@ -59,9 +60,9 @@ namespace ft
 
 			enum e_limits {
 		        MAX_URI_LENGTH			= 2048,
-				MAX_HEADERS				= 100,
-				MAX_HEADER_NAME_LENGTH	= 40,
-				MAX_HEADER_VALUE_LENGTH	= 128
+				MAX_HEADER_FIELDS				= 100,
+				MAX_HEADER_NAME_LENGTH	= 100,
+				MAX_HEADER_VALUE_LENGTH	= 1000
    			};
 
 			int									_requestMethod;
