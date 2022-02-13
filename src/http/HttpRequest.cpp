@@ -194,7 +194,7 @@ bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) 
 }
 
 bool	ft::HttpRequest::processHeaders() {
-	std::map<std::string ,std::string>::const_iterator it;
+	std::map<std::string, std::string>::const_iterator it;
 	std::string::size_type	pos = 0;
 
 	it = _headers.find("host");
@@ -214,8 +214,10 @@ bool	ft::HttpRequest::processHeaders() {
 						_serverName + ":" + std::to_string(_port)));
 	}
 
-
-
+ 	it = _headers.find("Transfer-Encoding");
+ 	if (it == _headers.end()) {
+	
+	}
 	return true;
 }
 
