@@ -21,18 +21,18 @@ namespace ft
 
 			HttpRequest& operator=(const HttpRequest other);
 
-			bool 				setMethod(std::string requestMethod);
+			void 				setMethod(std::string requestMethod);
 			std::string			getMethodName() const;
-			bool				setVersion(std::string protocolVersion);
+			void				setVersion(std::string protocolVersion);
 			std::string			getVersionName() const;
 			int					setBadRequest(int status);
 			void				setStatus(int status);
 			int					getStatus() const;
 			int					parse(const std::string& messages);
-			bool				parseStartLine(const std::string& request);
-			bool				parseHeaders(const std::vector<std::string>& headerLines);
-			bool				processHeaders(void);
-			bool				setURI(const std::string& requestURI);
+			void				parseStartLine(const std::string& request);
+			void				parseHeaders(const std::vector<std::string>& headerLines);
+			void				processHeaders(void);
+			void				setURI(const std::string& requestURI);
 			const std::string&	getProtocol() const;
 			bool				setPort(const std::string& port);
 			int					getPort() const;

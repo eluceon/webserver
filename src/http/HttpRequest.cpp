@@ -8,8 +8,8 @@ ft::HttpRequest::HttpRequest()
 	_relativePath(""), _queryString(""), _port(DEFAULT_PORT),
 	_parsed(false), _status(ft::HttpResponse::OK)
 {
-	_requestMethod	= setMethod("GET");
-	_protocolVersion = setVersion("HTTP/1.1");
+	setMethod("GET");
+	setVersion("HTTP/1.1");
 
 }
 
@@ -47,22 +47,22 @@ std::string ft::HttpRequest::getVersionName() const {
 	}
 }
 
-bool ft::HttpRequest::setMethod(std::string requestMethod) {
+void ft::HttpRequest::setMethod(std::string requestMethod) {
 	ft::toUpperString(requestMethod);
 	for(_requestMethod = 0; _requestMethod < NUMBER_OF_METHODS; _requestMethod++) {
 		if(requestMethod.compare(getMethodName()) == 0)
-			return true;
+			return;
 	}
-	return false;
+	throw HttpResponse::METHOD_NOT_ALLOWED;
 }
 
-bool ft::HttpRequest::setVersion(std::string protocolVersion) {
+void ft::HttpRequest::setVersion(std::string protocolVersion) {
 	ft::toUpperString(protocolVersion);
 	for(_protocolVersion = 0; _protocolVersion < NUMBER_OF_VERSIONS; _protocolVersion++) {
 		if(protocolVersion.compare(getVersionName()) == 0)
-			return true;
+			return;
 	}
-	return false;
+	throw HttpResponse::HTTP_VERSION_NOT_SUPPORTED;
 }
 
 void	ft::HttpRequest::setStatus(int status) {
@@ -88,19 +88,19 @@ int ft::HttpRequest::getPort() const {
 	return _port;
 }
 
-bool	ft::HttpRequest::setURI(const std::string& requestURI) {
+void	ft::HttpRequest::setURI(const std::string& requestURI) {
 	std::string::size_type	pos;
 	
 	if(requestURI.size() < 1)
-		return false;
+		throw HttpResponse::BAD_REQUEST;
 	if (requestURI[0] == '/') {									// relative path
 		_relativePath = requestURI;
 	} else if (requestURI.find("://") == std::string::npos) {
-		return false;
+		throw HttpResponse::BAD_REQUEST;
 	} else {													// absolute path
 		_protocol = ft::getWithoutExtension(requestURI, "://");
 		if (_protocol.compare(PROTOCOL))
-			return false;
+			throw HttpResponse::BAD_REQUEST;
 		std::string	tmpURI = getExtension(requestURI, "://");
 		pos = tmpURI.find(":");
 		if (pos != std::string::npos) {
@@ -111,7 +111,7 @@ bool	ft::HttpRequest::setURI(const std::string& requestURI) {
 			_serverName = ft::getWithoutExtension(tmpURI, ":");
 			std::string::size_type end = tmpURI.find("/");			
 			if (!setPort(tmpURI.substr(pos + 1, end - pos - 1)))
-				return false;
+				throw HttpResponse::BAD_REQUEST;
 			_relativePath = tmpURI.substr(end);
 		}
 	}
@@ -119,7 +119,6 @@ bool	ft::HttpRequest::setURI(const std::string& requestURI) {
 		_queryString = ft::getExtension(_relativePath, "?");
 		_relativePath = ft::getWithoutExtension(_relativePath, "?");
 	}
-	return true;
 }
 
 const std::string&	ft::HttpRequest::getProtocol() const {
@@ -143,57 +142,37 @@ std::string ft::HttpRequest::getFullURL() const {
 	return _protocol + "://" + _serverName + ":" + std::to_string(_port) + _relativePath + _queryString;
 }
 
-bool	ft::HttpRequest::parseStartLine(const std::string& request) {
+void	ft::HttpRequest::parseStartLine(const std::string& request) {
 	std::vector<std::string> startLine = ft::split(request);
-	if (startLine.size() < 3) {
-    	setBadRequest(HttpResponse::BAD_REQUEST);
-		return false;
-	}
-	if (!setVersion(startLine[2])) {
-		setBadRequest(HttpResponse::HTTP_VERSION_NOT_SUPPORTED);
-		return false;
-	}
-	if (!setMethod(startLine[0])) {
-		setBadRequest(HttpResponse::METHOD_NOT_ALLOWED);
-		return false;
-	}
-	if (startLine[1].length() > MAX_URI_LENGTH) {
-		setBadRequest(HttpResponse::URI_TOO_LONG);
-		return false;
-	}
+
+	if (startLine.size() < 3)
+    	throw HttpResponse::BAD_REQUEST;
+	setVersion(startLine[2]);
+	setMethod(startLine[0]);
+	if (startLine[1].length() > MAX_URI_LENGTH)
+		throw HttpResponse::URI_TOO_LONG;
 	ft::toLowerString(startLine[1]);
-	if (!setURI(startLine[1])) {
-		setBadRequest(HttpResponse::BAD_REQUEST);
-		return false;
-	}
-	return true;
+	setURI(startLine[1]);
 }
 
-bool	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
+void	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
 	std::string::size_type pos;
 	std::string headerName, headerValue;
 
-	if (headerLines.size() > MAX_HEADER_FIELDS) {
-		setBadRequest(HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE);
-		return false;
-	}
+	if (headerLines.size() > MAX_HEADER_FIELDS)
+		throw HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE;
 	for (size_t i = 1; i < headerLines.size(); ++i) {
 		pos = 0;
-		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH)) {
-			setBadRequest(HttpResponse::BAD_REQUEST);
-			return false;
-		}
-		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH)) {
-			setBadRequest(HttpResponse::BAD_REQUEST);
-			return false;
-		}
+		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH))
+			throw HttpResponse::BAD_REQUEST;
+		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH))
+			throw HttpResponse::BAD_REQUEST;
 		ft::toLowerString(headerName);
 		_headers.insert(std::make_pair(headerName, headerValue));
 	}
-	return true;
 }
 
-bool	ft::HttpRequest::processHeaders() {
+void	ft::HttpRequest::processHeaders() {
 	std::map<std::string, std::string>::const_iterator it;
 	std::string::size_type	pos = 0;
 
@@ -202,13 +181,10 @@ bool	ft::HttpRequest::processHeaders() {
 		ft::parseToken(it->second, ":", pos, _serverName, true);
 		std::string strPort;
 		ft::parseToken(it->second, "\0", pos, strPort, true);
-		if (!strPort.empty() && !setPort(strPort)) {
-			setBadRequest(ft::HttpResponse::BAD_REQUEST);
-			return false;
-		}
+		if (!strPort.empty() && !setPort(strPort))
+			throw ft::HttpResponse::BAD_REQUEST;
 	} else if (_serverName.empty()) {							// server name not found
-		setBadRequest(ft::HttpResponse::BAD_REQUEST);
-		return false;
+		throw ft::HttpResponse::BAD_REQUEST;
 	} else if (it == _headers.end()) {
 		_headers.insert(std::pair<std::string, std::string>("host",
 						_serverName + ":" + std::to_string(_port)));
@@ -218,7 +194,6 @@ bool	ft::HttpRequest::processHeaders() {
  	if (it == _headers.end()) {
 	
 	}
-	return true;
 }
 
 int	ft::HttpRequest::parse(const std::string& messages) {
@@ -226,13 +201,15 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	if (segments.size() < 1)
     	return setBadRequest(HttpResponse::BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
-	if (!parseStartLine(headerLines[0]))
-		return _status;
-	if (headerLines.size() > 1 && parseHeaders(headerLines) == false)
-		return _status;
-	processHeaders();
-
-
+	try {
+		parseStartLine(headerLines[0]);
+		if (headerLines.size() > 1)
+			parseHeaders(headerLines);
+		processHeaders();
+	} catch (int statusCode) {
+		return setBadRequest(statusCode);			// DELETE return LATER 
+		// setBadRequest(statusCode);
+	}
 
 
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
@@ -249,6 +226,6 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	for (; it != _headers.end(); ++it) {
 		std::cout << it->first << ": " << it->second << '\n';
 	}
-	return 0; 	// CHANGE ME LATER!!!!!!!
+	return _status; 	// CHANGE ME LATER!!!!!!!
 }
 
