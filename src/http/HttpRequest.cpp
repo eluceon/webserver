@@ -4,13 +4,11 @@
 #include <string>
 
 ft::HttpRequest::HttpRequest()
-	: _requestURI(""), _protocol("http"), _serverName(""),
-	_relativePath(""), _queryString(""), _port(DEFAULT_PORT),
-	_parsed(false), _status(HTTP_OK)
-{
-	setMethod("GET");
-	setVersion("HTTP/1.1");
-}
+	: _requestMethod(GET), _requestURI(""), _protocolVersion(HTTP_1_1),
+	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
+	_port(DEFAULT_PORT), _parsed(false), _status(HTTP_OK), _chunked(false),
+	_contentLength(0)
+{}
 
 ft::HttpRequest::~HttpRequest() {}
 
@@ -189,9 +187,19 @@ void	ft::HttpRequest::processHeaders() {
 							_serverName + ":" + std::to_string(_port)));
 	}
 
- 	it = _headers.find("Transfer-Encoding");
- 	if (it == _headers.end()) {
-	
+ 	it = _headers.find("transfer-encoding");
+ 	if (it != _headers.end()) {
+		_chunked = !it->second.compare("chunked");
+	} else {
+		it = _headers.find("content-length");
+		if (it != _headers.end()) {
+			_contentLength = std::strtoul(it->second.c_str(), nullptr, 10);
+			if (errno == ERANGE)
+            	throw HTTP_PAYLOAD_TOO_LARGE;
+		} else if (_requestMethod == POST || _requestMethod == PUT) {
+			throw HTTP_LENGTH_REQUIRED;
+		}
+		_chunked = false;
 	}
 }
 
@@ -219,7 +227,9 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 				<< ", server name: " << getServerName() << ", port: " << getPort()
 				<< ", relative path: " << getRelativePath() 
 				<< ", query string: " << getQueryString() 
-				<< "\nfull uri: " << getFullURL() << RESET_COLOR << std::endl;
+				<< "\nfull uri: " << getFullURL()
+				<< "\ncontent-Length: " << _contentLength
+				<< "\nChunked: " << _chunked << RESET_COLOR << std::endl;
 	std::map<std::string, std::string>::const_iterator it = _headers.begin();
 	std::cout << "HEADERS:\n";
 	for (; it != _headers.end(); ++it) {

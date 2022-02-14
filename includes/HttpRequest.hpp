@@ -76,6 +76,8 @@ namespace ft
 			std::map<std::string, std::string>	_headers;
 			bool								_parsed;
 			int									_status;
+			bool								_chunked;
+			unsigned long						_contentLength;
 	};
 }
 
