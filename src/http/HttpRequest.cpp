@@ -6,11 +6,10 @@
 ft::HttpRequest::HttpRequest()
 	: _requestURI(""), _protocol("http"), _serverName(""),
 	_relativePath(""), _queryString(""), _port(DEFAULT_PORT),
-	_parsed(false), _status(ft::HttpResponse::OK)
+	_parsed(false), _status(HTTP_OK)
 {
 	setMethod("GET");
 	setVersion("HTTP/1.1");
-
 }
 
 ft::HttpRequest::~HttpRequest() {}
@@ -53,7 +52,7 @@ void ft::HttpRequest::setMethod(std::string requestMethod) {
 		if(requestMethod.compare(getMethodName()) == 0)
 			return;
 	}
-	throw HttpResponse::METHOD_NOT_ALLOWED;
+	throw HTTP_METHOD_NOT_ALLOWED;
 }
 
 void ft::HttpRequest::setVersion(std::string protocolVersion) {
@@ -62,7 +61,7 @@ void ft::HttpRequest::setVersion(std::string protocolVersion) {
 		if(protocolVersion.compare(getVersionName()) == 0)
 			return;
 	}
-	throw HttpResponse::HTTP_VERSION_NOT_SUPPORTED;
+	throw HTTP_VERSION_NOT_SUPPORTED;
 }
 
 void	ft::HttpRequest::setStatus(int status) {
@@ -92,15 +91,15 @@ void	ft::HttpRequest::setURI(const std::string& requestURI) {
 	std::string::size_type	pos;
 	
 	if(requestURI.size() < 1)
-		throw HttpResponse::BAD_REQUEST;
+		throw HTTP_BAD_REQUEST;
 	if (requestURI[0] == '/') {									// relative path
 		_relativePath = requestURI;
 	} else if (requestURI.find("://") == std::string::npos) {
-		throw HttpResponse::BAD_REQUEST;
+		throw HTTP_BAD_REQUEST;
 	} else {													// absolute path
 		_protocol = ft::getWithoutExtension(requestURI, "://");
 		if (_protocol.compare(PROTOCOL))
-			throw HttpResponse::BAD_REQUEST;
+			throw HTTP_BAD_REQUEST;
 		std::string	tmpURI = getExtension(requestURI, "://");
 		pos = tmpURI.find(":");
 		if (pos != std::string::npos) {
@@ -111,7 +110,7 @@ void	ft::HttpRequest::setURI(const std::string& requestURI) {
 			_serverName = ft::getWithoutExtension(tmpURI, ":");
 			std::string::size_type end = tmpURI.find("/");			
 			if (!setPort(tmpURI.substr(pos + 1, end - pos - 1)))
-				throw HttpResponse::BAD_REQUEST;
+				throw HTTP_BAD_REQUEST;
 			_relativePath = tmpURI.substr(end);
 		}
 	}
@@ -146,11 +145,11 @@ void	ft::HttpRequest::parseStartLine(const std::string& request) {
 	std::vector<std::string> startLine = ft::split(request);
 
 	if (startLine.size() < 3)
-    	throw HttpResponse::BAD_REQUEST;
+    	throw HTTP_BAD_REQUEST;
 	setVersion(startLine[2]);
 	setMethod(startLine[0]);
 	if (startLine[1].length() > MAX_URI_LENGTH)
-		throw HttpResponse::URI_TOO_LONG;
+		throw HTTP_URI_TOO_LONG;
 	ft::toLowerString(startLine[1]);
 	setURI(startLine[1]);
 }
@@ -160,13 +159,13 @@ void	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) 
 	std::string headerName, headerValue;
 
 	if (headerLines.size() > MAX_HEADER_FIELDS)
-		throw HttpResponse::REQUEST_HEADER_FIELDS_TOO_LARGE;
+		throw HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE;
 	for (size_t i = 1; i < headerLines.size(); ++i) {
 		pos = 0;
 		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH))
-			throw HttpResponse::BAD_REQUEST;
+			throw HTTP_BAD_REQUEST;
 		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH))
-			throw HttpResponse::BAD_REQUEST;
+			throw HTTP_BAD_REQUEST;
 		ft::toLowerString(headerName);
 		_headers.insert(std::make_pair(headerName, headerValue));
 	}
@@ -182,12 +181,12 @@ void	ft::HttpRequest::processHeaders() {
 		std::string strPort;
 		ft::parseToken(it->second, "\0", pos, strPort, true);
 		if (!strPort.empty() && !setPort(strPort))
-			throw ft::HttpResponse::BAD_REQUEST;
+			throw HTTP_BAD_REQUEST;
 	} else if (_serverName.empty()) {							// server name not found
-		throw ft::HttpResponse::BAD_REQUEST;
+		throw HTTP_BAD_REQUEST;
 	} else if (it == _headers.end()) {
 		_headers.insert(std::pair<std::string, std::string>("host",
-						_serverName + ":" + std::to_string(_port)));
+							_serverName + ":" + std::to_string(_port)));
 	}
 
  	it = _headers.find("Transfer-Encoding");
@@ -199,7 +198,7 @@ void	ft::HttpRequest::processHeaders() {
 int	ft::HttpRequest::parse(const std::string& messages) {
 	std::vector<std::string> segments = ft::split(messages, LINE_DOUBLE_END);
 	if (segments.size() < 1)
-    	return setBadRequest(HttpResponse::BAD_REQUEST);
+    	return setBadRequest(HTTP_BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
 	try {
 		parseStartLine(headerLines[0]);

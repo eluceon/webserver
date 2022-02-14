@@ -4,11 +4,18 @@
 # include <string>
 # include <vector>
 # include <map>
+# include "HttpResponseStatusCodes.hpp"
 
 # define LINE_END			"\r\n"
 # define LINE_DOUBLE_END	"\r\n\r\n"
 # define DEFAULT_PORT		80
 # define PROTOCOL			"http"
+
+	/* limits for requets messages */
+# define MAX_URI_LENGTH				2048
+# define MAX_HEADER_FIELDS			100
+# define MAX_HEADER_NAME_LENGTH		100
+# define MAX_HEADER_VALUE_LENGTH	1000
 
 namespace ft
 {
@@ -57,13 +64,6 @@ namespace ft
     			HTTP_2_0,
 				NUMBER_OF_VERSIONS
 			};
-
-			enum e_limits {
-		        MAX_URI_LENGTH			= 2048,
-				MAX_HEADER_FIELDS				= 100,
-				MAX_HEADER_NAME_LENGTH	= 100,
-				MAX_HEADER_VALUE_LENGTH	= 1000
-   			};
 
 			int									_requestMethod;
 			std::string							_requestURI;
