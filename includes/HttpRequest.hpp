@@ -47,6 +47,9 @@ namespace ft
 			const std::string&	getRelativePath() const;
 			const std::string&	getQueryString() const;
 			std::string			getFullURL() const;
+			bool				isParsed() const;
+			const std::map<std::string, std::string>&	getHeaders() const;
+			unsigned long		getContentLength() const;
 
 		protected:
 			enum e_methods {

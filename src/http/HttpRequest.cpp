@@ -139,6 +139,18 @@ std::string ft::HttpRequest::getFullURL() const {
 	return _protocol + "://" + _serverName + ":" + std::to_string(_port) + _relativePath + _queryString;
 }
 
+bool	ft::HttpRequest::isParsed() const {
+    return _parsed;
+}
+
+const std::map<std::string, std::string>&	ft::HttpRequest::getHeaders() const {
+    return _headers;
+}
+
+unsigned long	ft::HttpRequest::getContentLength() const {
+	return _contentLength;
+}
+
 void	ft::HttpRequest::parseStartLine(const std::string& request) {
 	std::vector<std::string> startLine = ft::split(request);
 
@@ -222,18 +234,22 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
+	
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
-				<< ", target: " << _requestURI << ", protocol version " << getHTTPVersion()
+				<< ", target: " << _requestURI << ", HTTP version " << getHTTPVersion()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
 				<< ", server name: " << getServerName() << ", port: " << getPort()
 				<< ", relative path: " << getRelativePath() 
 				<< ", query string: " << getQueryString() 
 				<< "\nfull uri: " << getFullURL()
-				<< "\ncontent-Length: " << _contentLength
-				<< "\nChunked: " << _chunked << RESET_COLOR << std::endl;
-	std::map<std::string, std::string>::const_iterator it = _headers.begin();
+				<< "\ncontent-Length: " << getContentLength()
+				<< "\nChunked: " << _chunked
+				<< "\nParsed: " << isParsed() << ", response status: " << getStatus() << RESET_COLOR << std::endl;
+	
+	std::map<std::string, std::string> tmpHeaders = getHeaders();
+	std::map<std::string, std::string>::const_iterator it = tmpHeaders.begin();
 	std::cout << "HEADERS:\n";
-	for (; it != _headers.end(); ++it) {
+	for (; it != tmpHeaders.end(); ++it) {
 		std::cout << it->first << ": " << it->second << '\n';
 	}
 	return _status; 	// CHANGE ME LATER!!!!!!!

@@ -89,7 +89,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				HttpRequest *httpRequest = new HttpRequest();
 				int tmp;
 				if ((tmp = httpRequest->parse(buf)) != 0)		//DELETE ME LATER
-					std::cout << "ERROR: " << tmp << '\n';
+					std::cout << "\nRESPONSE STATUS CODE: " << tmp << '\n';
 				delete httpRequest;
 			}
 			if (--countReadyFd <= 0)
