@@ -4,7 +4,7 @@
 #include <string>
 
 ft::HttpRequest::HttpRequest()
-	: _requestMethod(GET), _requestURI(""), _protocolVersion(HTTP_1_1),
+	: _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
 	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
 	_port(DEFAULT_PORT), _parsed(false), _status(HTTP_OK), _chunked(false),
 	_contentLength(0)
@@ -28,8 +28,8 @@ std::string	ft::HttpRequest::getMethodName() const {
 	}
 }
 
-std::string ft::HttpRequest::getVersionName() const {
-	switch (_protocolVersion)
+std::string ft::HttpRequest::getHTTPVersion() const {
+	switch (_HTTPVersion)
 	{
 		case HTTP_0_9:
 			return "HTTP/0.9";
@@ -53,10 +53,10 @@ void ft::HttpRequest::setMethod(std::string requestMethod) {
 	throw HTTP_METHOD_NOT_ALLOWED;
 }
 
-void ft::HttpRequest::setVersion(std::string protocolVersion) {
-	ft::toUpperString(protocolVersion);
-	for(_protocolVersion = 0; _protocolVersion < NUMBER_OF_VERSIONS; _protocolVersion++) {
-		if(protocolVersion.compare(getVersionName()) == 0)
+void ft::HttpRequest::setHTTPVersion(std::string HTTPVersion) {
+	ft::toUpperString(HTTPVersion);
+	for(_HTTPVersion = 0; _HTTPVersion < NUMBER_OF_VERSIONS; _HTTPVersion++) {
+		if(HTTPVersion.compare(getHTTPVersion()) == 0)
 			return;
 	}
 	throw HTTP_VERSION_NOT_SUPPORTED;
@@ -144,7 +144,7 @@ void	ft::HttpRequest::parseStartLine(const std::string& request) {
 
 	if (startLine.size() < 3)
     	throw HTTP_BAD_REQUEST;
-	setVersion(startLine[2]);
+	setHTTPVersion(startLine[2]);
 	setMethod(startLine[0]);
 	if (startLine[1].length() > MAX_URI_LENGTH)
 		throw HTTP_URI_TOO_LONG;
@@ -217,12 +217,13 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 		return setBadRequest(statusCode);			// DELETE return LATER 
 		// setBadRequest(statusCode);
 	}
+	_parsed = true;
 
 
 	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
-				<< ", target: " << _requestURI << ", protocol version " << getVersionName()
+				<< ", target: " << _requestURI << ", protocol version " << getHTTPVersion()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
 				<< ", server name: " << getServerName() << ", port: " << getPort()
 				<< ", relative path: " << getRelativePath() 

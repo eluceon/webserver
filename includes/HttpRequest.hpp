@@ -30,8 +30,8 @@ namespace ft
 
 			void 				setMethod(std::string requestMethod);
 			std::string			getMethodName() const;
-			void				setVersion(std::string protocolVersion);
-			std::string			getVersionName() const;
+			void				setHTTPVersion(std::string HTTPVersion);
+			std::string			getHTTPVersion() const;
 			int					setBadRequest(int status);
 			void				setStatus(int status);
 			int					getStatus() const;
@@ -67,7 +67,7 @@ namespace ft
 
 			int									_requestMethod;
 			std::string							_requestURI;
-			int									_protocolVersion;
+			int									_HTTPVersion;
 			std::string							_protocol;
 			std::string							_serverName;
 			std::string							_relativePath;
