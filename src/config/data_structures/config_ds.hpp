@@ -28,6 +28,8 @@ class config_ds
         t_fastcgi fastcgi_param;
         t_error error_page;
 
-        // Location parameters:
+        // Location parameters. Locations are saved in the list.
         std::list<c_location> location;
 };
+
+// TODO: Operator overloads to show the config in the terminal
