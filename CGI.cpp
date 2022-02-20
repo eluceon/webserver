@@ -1,8 +1,8 @@
 #include "CGI.hpp"
 
-ft::CGI::CGI(void) : _method(""), _query_string("") {}
+ft::CGI::CGI(void) : _body("") {}
 
-ft::CGI::CGI(HttpRequest &rec) : _method(rec.getMethodName()), _query_string(rec.getQueryString()) {}
+ft::CGI::CGI(HttpRequest &rec) : _body("") { SetEnv(rec); }
 
 ft::CGI::CGI(const CGI &x) {
 	if (this != &x) {
@@ -12,123 +12,75 @@ ft::CGI::CGI(const CGI &x) {
 
 ft::CGI	&ft::CGI::operator=(const CGI &x) {
 	if (this != &x) {
-		_method = x._method;
-		_query_string = x._query_string;
+		_body = x._body;
+		_env = x._env;
 	}
 	return *this;
 }
 
-ft::CGI::~CGI(void) {
-	UnsetEnv();
-}
+ft::CGI::~CGI(void) {}
 
 void	ft::CGI::SetEnv(HttpRequest &rec) {
-	setenv("REQUEST_METHOD", rec.getMethodName().c_str(), 1);
-	setenv("QUERY_STRING", rec.getQueryString().c_str(), 1);
-	setenv("CONTENT_LENGTH", std::to_string(rec.getContentLength()).c_str(), 1);
+
+    // == SERVER VARIABLES == //
+
+    _env["GATEWAY_INTERFACE"] = "CGI/1.1"; // CGI Interface version
+    _env["SERVER_NAME"] = rec.getServerName(); // Server IP or domain name
+    _env["SERVER_PORT"] = rec.getPort(); // Http request port
+    _env["SERVER_PROTOCOL"] = rec.getProtocol(); // Http protocol version
+    _env["SERVER_SOFTWARE"] = "Red Hat/Linux"; // Server OS name
+
+    // == REQUEST VARIABLES == //
+
+    _env["AUTH_TYPE"] = "Basic"; // Server authorization type
+    // _env["CONTENT_FILE"] = ""; Windows servers only
+    _env["CONTENT_LENGTH"] = rec.getContentLength(); // Bytes to read from stdin
+    _env["CONTENT_TYPE"] = "text/html"; // Content type sent from client to server
+    // _env["OUTPUT_FILE"] = ""; // Windows servers only
+    _env["PATH_INFO"] = ""; // Additional path eg: http://.../cgi-bin/1.cgi/dir1/dir2   Here the dir1/dir2 segment
+    _env["PATH_TRANSLATED"] = ""; // as above: /home/httpd/html/dir1/dir2
+    _env["QUERY_STRING"] = rec.getQueryString().c_str; // URL data. In htttp://.../cgi-bin/1.cgi?d=123&name=kirill Q_S will be d=123&name=kirill
+    _env["REMOTE_ADDR"] = ""; // IP address of user requesting the interface
+    _env["REMOTE_HOST"] = ""; // User DNS?
+    _env["REQUEST_METHOD"] = rec.getMethodName().c_str(); // GET POST or DELETE
+    _env["REQUEST_LINE"] = ""; // HTTP query string eg: GET /cgi-bin/1.cgi HTTP/1.0
+    _env["SCRIPT_NAME"] = ""; // Script name eg: 1.cgi
+
+    // == CLIENT VARIABLES == /
+
+    std::map<std::string, std::string> headers = rec.getHeaders(); // HTTP_ACCEPT, HTTP_USER_AGENT, HTTP_ACCEPT_ENCODING, HTTP_ACCEPT_LANGUAGE, HTTP_IF_MODIFIED_SINCE, HTTP_FROM
 }
 
-void	ft::CGI::UnsetEnv(void) {
-	unsetenv("REQUEST_METHOD");
-	unsetenv("QUERY_STRING");
-	unsetenv("CONTENT_LENGTH");
+char    **ArrayToStr(void) {
+    char **env = new char[][_env.size() + 1];
+    int i = 0;
+
+    for (std::map<std::string, std::string>::iterator it = _env.begin(); it != _env.end(); ++it, i++) {
+        std::string tmp = it->first.append('=', it->second);
+        env[i] = new char[tmp.size() + 1];
+        env[i] = tmp.c_str();
+    }
+    env[i] = NULL;
+    return env;
 }
 
-std::string ft::CGI::getContent(void) {
-	if (!_method.compare("GET"))
-		parseStrGet();
-	else if (!_method.compare("POST")) {
-		parseStrPost();
-		setLen();
-		if (_content_length > 0)
-			readLenBytes();
-		else
-			throw ft::CGI::LengthException();
-	}
-}
+FILE *ft::CGI::CGIscript(std::string& script) {
+    char **env;
 
-char ft::CGI::toUpper(char c) {
-	if ((c >= 'a') && (c <= 'z')) {
-		return 'A' + (c - 'a');
-	}
-	else
-		return c;
-}
-char ft::CGI::toDec(char c) {
-	c = toUpper(c);
-	if ((c >= '0') && (c <= '9')) { return c - '0'; }
-	if ((c >= 'A') && (c <= 'F')) { return c - 'A' + 10; }
-}
-
-char *ft::CGI::getParameter(char *buffer, char *name) {
-	if (buffer == NULL) { return NULL; }
-
-	char	*pos;
-	u_long	length = 512, i = 0, j = 0;
-	char	h1, h2, Hex;
-
-	char	*p;
-	p = (char *)malloc(length);
-	if (p == NULL) { return NULL; }
-
-	pos = strstr(buffer, name);
-	if (pos == NULL) { return NULL; }
-
-	if ((pos != buffer) && (*(pos - 1) != '&')) { return NULL; }
-
-	pos += strlen(name);
-
-	while ((*(pos + i) != '&') && (*(pos + i) != '\0')) {
-		if (*(pos + i) == '%') {
-			i++;
-			h1 = toDec(*(pos + i));
-			i++;
-			h2 = toDec(*(pos + i));
-			h1 = h1 << 4;
-			*(p + j) = h1 + h2;
-		}
-		else {
-			if (*(pos + i) != '+')
-				*(p + j) = *(pos + i);
-			else
-				*(p + j) = ' ';
-		}
-		i++;
-		j++;
-		if (j >= length) {
-			p = (char *)realloc(p, length + 20);
-			length += 20;
-		}
-		if (j < length) {
-			p = (char *)realloc(p, j + 1);
-		}
-		return p;
-	}
-}
-
-void	ft::CGI::parseStrGet(void) {}
-
-void	ft::CGI::parseStrPost(void) {}
-
-void	ft::CGI::setLen() { _content_length = std::atol(getenv("CONTENT_LENGTH")); }
-
-std::string	ft::CGI::readLenBytes(void) {
-	char	*cgi_data;
-
-	cgi_data = (char*)malloc(_content_length);
-	if (cgi_data != NULL)
-		read(_content_length, cgi_data, STDIN_FILENO);
-	else {
-		throw ft::CGI::AllocException();
-	}
-}
-
-
-
-const char *ft::CGI::LengthException::what() const throw() {
-	return "Content length is zero";
+    try {
+        env = ArrayToStr();
+    }
+    catch (ft::CGI::AllocException &e) {
+        std::cout << e.what();
+    }
 }
 
 const char *ft::CGI::AllocException::what() const throw() {
 	return "Allocation failed";
+}
+
+int main() {
+    ft::CGI cgiscript = new ft::CGI();
+    cgiscript.CGIscript("path");
+    return 0;
 }
