@@ -56,7 +56,8 @@ char    **ArrayToStr(void) {
     int i = 0;
 
     for (std::map<std::string, std::string>::iterator it = _env.begin(); it != _env.end(); ++it, i++) {
-        std::string tmp = it->first.append('=', it->second);
+        std::string tmp = it->first.append('=');
+        tmp = tmp.append(it->second);
         env[i] = new char[tmp.size() + 1];
         env[i] = tmp.c_str();
     }
