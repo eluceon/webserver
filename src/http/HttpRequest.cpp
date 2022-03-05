@@ -6,8 +6,8 @@
 ft::HttpRequest::HttpRequest()
 	: _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
 	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
-	_port(DEFAULT_PORT), _parsed(false), _status(HTTP_OK), _chunked(false),
-	_contentLength(0)
+	_port(DEFAULT_PORT), _headers(), _body(), _parsed(false), _status(HTTP_OK),
+	_chunked(false), _contentLength(0), _clientMaxBodySize(MAX_DEFAULT_BODY_SIZE)
 {}
 
 ft::HttpRequest::~HttpRequest() {}
@@ -147,6 +147,10 @@ const std::map<std::string, std::string>&	ft::HttpRequest::getHeaders() const {
     return _headers;
 }
 
+const std::string&	ft::HttpRequest::getBody() const {
+	return _body;
+}
+
 unsigned long	ft::HttpRequest::getContentLength() const {
 	return _contentLength;
 }
@@ -206,12 +210,22 @@ void	ft::HttpRequest::processHeaders() {
 		it = _headers.find("content-length");
 		if (it != _headers.end()) {
 			_contentLength = std::strtoul(it->second.c_str(), nullptr, 10);
-			if (errno == ERANGE)
+			if (errno == ERANGE || _contentLength > _clientMaxBodySize)
             	throw HTTP_PAYLOAD_TOO_LARGE;
 		} else if (_requestMethod == POST || _requestMethod == PUT) {
 			throw HTTP_LENGTH_REQUIRED;
 		}
 		_chunked = false;
+	}
+}
+
+void	ft::HttpRequest::parseBody(const std::string& body) {
+	if (!_chunked) {
+		if (body.size() != _contentLength)
+			throw HTTP_BAD_REQUEST;
+		_body = body;
+	} else {
+		
 	}
 }
 
@@ -225,6 +239,8 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 		if (headerLines.size() > 1)
 			parseHeaders(headerLines);
 		processHeaders();
+		if (segments.size() == 2 && (_chunked || _contentLength > 0))
+        	parseBody(segments[1]);
 	} catch (int statusCode) {
 		return setBadRequest(statusCode);			// DELETE return LATER 
 		// setBadRequest(statusCode);

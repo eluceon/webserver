@@ -16,6 +16,7 @@
 # define MAX_HEADER_FIELDS			100
 # define MAX_HEADER_NAME_LENGTH		100
 # define MAX_HEADER_VALUE_LENGTH	1000
+# define MAX_DEFAULT_BODY_SIZE		10000000
 
 namespace ft
 {
@@ -35,10 +36,6 @@ namespace ft
 			int					setBadRequest(int status);
 			void				setStatus(int status);
 			int					getStatus() const;
-			int					parse(const std::string& messages);
-			void				parseStartLine(const std::string& request);
-			void				parseHeaders(const std::vector<std::string>& headerLines);
-			void				processHeaders(void);
 			void				setURI(const std::string& requestURI);
 			const std::string&	getProtocol() const;
 			bool				setPort(const std::string& port);
@@ -49,7 +46,9 @@ namespace ft
 			std::string			getFullURL() const;
 			bool				isParsed() const;
 			const std::map<std::string, std::string>&	getHeaders() const;
+   			const std::string&	getBody() const;
 			unsigned long		getContentLength() const;
+			int					parse(const std::string& messages);
 
 		protected:
 			enum e_methods {
@@ -77,10 +76,17 @@ namespace ft
 			std::string							_queryString;
 			int									_port;
 			std::map<std::string, std::string>	_headers;
+			std::string							_body;
 			bool								_parsed;
 			int									_status;
 			bool								_chunked;
 			unsigned long						_contentLength;
+			unsigned long						_clientMaxBodySize;
+
+			void				parseStartLine(const std::string& request);
+			void				parseHeaders(const std::vector<std::string>& headerLines);
+			void				parseBody(const std::string& body);
+			void				processHeaders(void);
 	};
 }
 
