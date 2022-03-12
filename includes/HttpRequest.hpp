@@ -6,8 +6,8 @@
 # include <map>
 # include "HttpResponseStatusCodes.hpp"
 
-# define LINE_END			"\r\n"
-# define LINE_DOUBLE_END	"\r\n\r\n"
+# define CRLF				"\r\n"
+# define CRLF_CRLF			"\r\n\r\n"
 # define DEFAULT_PORT		80
 # define PROTOCOL			"http"
 
@@ -86,6 +86,7 @@ namespace ft
 			void				parseStartLine(const std::string& request);
 			void				parseHeaders(const std::vector<std::string>& headerLines);
 			void				parseBody(const std::string& body);
+			void				parseChunkedBody(const std::string& body);
 			void				processHeaders(void);
 	};
 }

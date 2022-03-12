@@ -220,20 +220,62 @@ void	ft::HttpRequest::processHeaders() {
 }
 
 void	ft::HttpRequest::parseBody(const std::string& body) {
+	
+	std::cout << "Before\n";
 	if (!_chunked) {
+		std::cout << "NOT CHUNK\n";
+
 		if (body.size() != _contentLength)
 			throw HTTP_BAD_REQUEST;
 		_body = body;
 	} else {
-		
+		std::cout << "CHUNK\n";
+
+
+		parseChunkedBody(body);
+		_headers.erase(_headers.find("transfer-encoding"));
+		_headers["content-length"] = std::to_string(_body.size());
+		_contentLength = _body.length();
 	}
 }
 
+void	ft::HttpRequest::parseChunkedBody(const std::string& body) {
+	size_t		pos = 0;
+	size_t		chunkSize = 0;
+	size_t		bodyLen = body.length();
+	std::string	chunkLen;
+
+	while (pos < bodyLen) {
+		if (body.find(CRLF, pos) == std::string::npos)
+			throw HTTP_BAD_REQUEST;
+		while (std::isspace(body[pos]))
+			++pos;
+		if (body.find("0\r\n", pos) == pos)
+            return;
+		while (std::isxdigit(body[pos]))
+			chunkLen += body[pos++];
+		if (body[pos] != ';' && body.find(CRLF, pos) != pos)
+        	throw HTTP_BAD_REQUEST;
+		chunkSize = std::strtoul(chunkLen.data(), NULL, 16);
+		chunkLen.clear();
+		if (chunkSize + _body.size() > _clientMaxBodySize)
+			throw HTTP_BAD_REQUEST;
+		pos = body.find(CRLF, pos) + 2;
+		if (pos < bodyLen) {
+			size_t end = chunkSize > bodyLen - pos ? bodyLen - pos : chunkSize;
+			_body.append(body, pos, end); 
+			pos += end;
+			chunkSize -= end;
+		}
+	}
+	throw HTTP_BAD_REQUEST;
+}
+
 int	ft::HttpRequest::parse(const std::string& messages) {
-	std::vector<std::string> segments = ft::split(messages, LINE_DOUBLE_END);
+	std::vector<std::string> segments = ft::split(messages, CRLF_CRLF);
 	if (segments.size() < 1)
     	return setBadRequest(HTTP_BAD_REQUEST);
-	std::vector<std::string> headerLines = ft::split(segments[0], LINE_END);
+	std::vector<std::string> headerLines = ft::split(segments[0], CRLF);
 	try {
 		parseStartLine(headerLines[0]);
 		if (headerLines.size() > 1)
@@ -268,6 +310,8 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	for (; it != tmpHeaders.end(); ++it) {
 		std::cout << it->first << ": " << it->second << '\n';
 	}
+	std::cout << "BODY:\n";
+		std::cout << _body << std::endl;
 	return _status; 	// CHANGE ME LATER!!!!!!!
 }
 
