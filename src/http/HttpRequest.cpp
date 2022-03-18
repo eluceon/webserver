@@ -1,7 +1,7 @@
+#include <string>
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
 #include "utils.hpp"
-#include <string>
 
 ft::HttpRequest::HttpRequest()
 	: _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),

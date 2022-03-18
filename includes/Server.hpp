@@ -6,7 +6,11 @@
 # include <unistd.h>
 # include <errno.h>
 # include <poll.h>
+# include <signal.h>
 # include "ListeningSocket.hpp"
+# include <fstream>
+# include <iomanip>
+# include <ctime>
 
 /* 
 ** POSIX requires that an #include of <poll.h> define INFTIM, but many
@@ -34,21 +38,26 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server&	getInstance();
+		static Server&	getInstance(const std::string& configFile = "webserver.conf");
 
 	private:
 		Server();
+		Server(const std::string& configFile);
 		Server(const Server& other);
 		virtual ~Server();
 		
 		Server&	operator=(const Server & other);
 
-		ft::ListeningSocket	*_listeningSocket;
-		struct pollfd		client[OPEN_MAX];
+		ft::ListeningSocket		*_listeningSocket;
+		struct pollfd			_client[OPEN_MAX];
 
-		void	initialize();
-		void	run();
-		void	checkConnectionsForData(int	maxIdx, int countReadyFd);
+		void		initialize();
+		void		run();
+		void		checkConnectionsForData(int	maxIdx, int countReadyFd);
+		void		registerSignals();
+		static void	handleShutdown(int signal);
+		static void	timestamp(const std::string& msg);
+		std::string	sockNtop(const struct sockaddr *sa, socklen_t salen);
 	};
 } // namespace ft
 

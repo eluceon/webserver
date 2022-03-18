@@ -5,7 +5,7 @@ PURPLE			=	\033[0;35m
 
 CXX				=	clang++
 CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98
-CXXFLAGS		=	-g -fsanitize=address
+CXXFLAGS		=	-fsanitize=address
 RM				=	rm -rf
 
 NAME_SERVER		=	server
