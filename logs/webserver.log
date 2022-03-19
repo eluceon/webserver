@@ -14,3 +14,21 @@
 19/03/2022 14:55:27> Shutting down on signal 2
 19/03/2022 14:55:34> Starting up..
 19/03/2022 15:23:05> Shutting down on signal 2
+19/03/2022 16:34:24> Starting up..
+19/03/2022 16:35:47> Shutting down on signal 2
+19/03/2022 18:06:43> Starting up..
+19/03/2022 18:10:53> Shutting down on signal 2
+19/03/2022 18:10:56> Starting up..
+19/03/2022 20:06:23> Shutting down on signal 2
+19/03/2022 20:07:34> Starting up..
+19/03/2022 20:07:41> From 127.0.0.1:64316 GET / HTTP/1.1
+19/03/2022 20:07:41> From 127.0.0.1:64316 GET /webroot/site1/images/hello_img.png HTTP/1.1
+19/03/2022 20:11:40> Shutting down on signal 2
+19/03/2022 20:11:44> Starting up..
+19/03/2022 20:11:47> From 127.0.0.1:64472 GET / HTTP/1.1  200
+19/03/2022 20:11:47> From 127.0.0.1:64472 GET /webroot/site1/images/hello_img.png HTTP/1.1  200
+19/03/2022 20:12:32> Shutting down on signal 2
+19/03/2022 20:13:48> Starting up..
+19/03/2022 20:13:52> From 127.0.0.1:64555 "GET / HTTP/1.1"  200
+19/03/2022 20:13:52> From 127.0.0.1:64555 "GET /webroot/site1/images/hello_img.png HTTP/1.1"  200
+19/03/2022 20:14:17> Shutting down on signal 2

@@ -32,7 +32,7 @@ void	ft::Server::run() {
 	int					i, connfd;
 	struct sockaddr_in	cliaddr;
 	socklen_t			clilen;
-	int					maxIdx = 0;		// max index into _client[] array
+	nfds_t				maxIdx = 0;		// max index into _client[] array
 	
 	while(true) {
 		if ( (countReadyFd = poll(_client, maxIdx + 1, INFTIM)) < 0)
@@ -55,15 +55,15 @@ void	ft::Server::run() {
 			_client[i].events = POLLRDNORM;
 			if (i > maxIdx)
 				maxIdx = i;
-
 			if (--countReadyFd <= 0)
 				continue;					// no more readable descriptors
 		}
-		checkConnectionsForData(maxIdx, countReadyFd);
+		checkConnectionsForData(maxIdx, countReadyFd, &cliaddr, clilen);
 	}
 }
 
-void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
+void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
+						struct sockaddr_in	*cliaddr, socklen_t	clilen) {
 	int		sockfd;
 	ssize_t	n;
 	char	buf[MAXLINE];
@@ -97,11 +97,11 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				int tmp;
 				if ((tmp = httpRequest->parse(buf)) != 0)		//DELETE ME LATER
 					std::cout << "\nRESPONSE STATUS CODE: " << tmp << '\n';
-				// std::string logBuffer = "From " + sockNtop((struct sockaddr *) &cliaddr, &clilen);
+				std::string logBuffer = "From " + sockNtop((struct sockaddr *) cliaddr, clilen) 
+					+ " \"" + httpRequest->getRequestLine() + "\"  " + std::to_string(httpRequest->getStatus());
+				timestamp(logBuffer);
 				HttpResponse *httpResponse = new HttpResponse(httpRequest);
 				std::string response = httpResponse->getResponse();
-
-        
 				write(sockfd, response.c_str(), response.size());
 				delete httpResponse;
 				delete httpRequest;

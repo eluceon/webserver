@@ -49,6 +49,7 @@ namespace ft
    			const std::string&	getBody() const;
 			unsigned long		getContentLength() const;
 			int					parse(const std::string& messages);
+			const std::string&	getRequestLine() const;
 
 		protected:
 			enum e_methods {
@@ -67,6 +68,7 @@ namespace ft
 				NUMBER_OF_VERSIONS
 			};
 
+			std::string							_requestLine;
 			int									_requestMethod;
 			std::string							_requestURI;
 			int									_HTTPVersion;
@@ -83,7 +85,7 @@ namespace ft
 			unsigned long						_contentLength;
 			unsigned long						_clientMaxBodySize;
 
-			void				parseStartLine(const std::string& request);
+			void				parseRequestLine(const std::string& request);
 			void				parseHeaders(const std::vector<std::string>& headerLines);
 			void				parseBody(const std::string& body);
 			void				parseChunkedBody(const std::string& body);

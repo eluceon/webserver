@@ -53,7 +53,8 @@ namespace ft
 
 		void		initialize();
 		void		run();
-		void		checkConnectionsForData(int	maxIdx, int countReadyFd);
+		void		checkConnectionsForData(int	maxIdx, int countReadyFd,
+							struct sockaddr_in	*cliaddr, socklen_t	clilen);
 		void		registerSignals();
 		static void	handleShutdown(int signal);
 		static void	timestamp(const std::string& msg);

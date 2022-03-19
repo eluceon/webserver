@@ -4,7 +4,7 @@
 #include "utils.hpp"
 
 ft::HttpRequest::HttpRequest()
-	: _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
+	: _requestLine(""), _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
 	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
 	_port(DEFAULT_PORT), _headers(), _body(), _parsed(false), _status(HTTP_OK),
 	_chunked(false), _contentLength(0), _clientMaxBodySize(MAX_DEFAULT_BODY_SIZE)
@@ -26,6 +26,10 @@ std::string	ft::HttpRequest::getMethodName() const {
 	default:
 		return "";
 	}
+}
+
+const std::string& ft::HttpRequest::getRequestLine() const {
+	return _requestLine;
 }
 
 std::string ft::HttpRequest::getHTTPVersion() const {
@@ -155,17 +159,17 @@ unsigned long	ft::HttpRequest::getContentLength() const {
 	return _contentLength;
 }
 
-void	ft::HttpRequest::parseStartLine(const std::string& request) {
-	std::vector<std::string> startLine = ft::split(request);
+void	ft::HttpRequest::parseRequestLine(const std::string& request) {
+	std::vector<std::string> requestLine = ft::split(request);
 
-	if (startLine.size() < 3)
+	if (requestLine.size() < 3)
     	throw HTTP_BAD_REQUEST;
-	setHTTPVersion(startLine[2]);
-	setMethod(startLine[0]);
-	if (startLine[1].length() > MAX_URI_LENGTH)
+	setHTTPVersion(requestLine[2]);
+	setMethod(requestLine[0]);
+	if (requestLine[1].length() > MAX_URI_LENGTH)
 		throw HTTP_URI_TOO_LONG;
-	ft::toLowerString(startLine[1]);
-	setURI(startLine[1]);
+	ft::toLowerString(requestLine[1]);
+	setURI(requestLine[1]);
 }
 
 void	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
@@ -276,8 +280,9 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	if (segments.size() < 1)
     	return setBadRequest(HTTP_BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], CRLF);
+	_requestLine = headerLines[0];
 	try {
-		parseStartLine(headerLines[0]);
+		parseRequestLine(headerLines[0]);
 		if (headerLines.size() > 1)
 			parseHeaders(headerLines);
 		processHeaders();
