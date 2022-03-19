@@ -1,5 +1,6 @@
 #include "Server.hpp"
 #include "HttpRequest.hpp"
+#include "HttpResponse.hpp"
 
 ft::Server::Server(const std::string& configFile) {
 	registerSignals();
@@ -92,10 +93,17 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 			} else {
 				// std::cout << buf << std::endl;		// print message from client
 				HttpRequest *httpRequest = new HttpRequest();
+				
 				int tmp;
 				if ((tmp = httpRequest->parse(buf)) != 0)		//DELETE ME LATER
 					std::cout << "\nRESPONSE STATUS CODE: " << tmp << '\n';
 				// std::string logBuffer = "From " + sockNtop((struct sockaddr *) &cliaddr, &clilen);
+				HttpResponse *httpResponse = new HttpResponse(httpRequest);
+				std::string response = httpResponse->getResponse();
+
+        
+				write(sockfd, response.c_str(), response.size());
+				delete httpResponse;
 				delete httpRequest;
 			}
 			if (--countReadyFd <= 0)

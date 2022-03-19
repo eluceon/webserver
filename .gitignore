@@ -1,3 +1,4 @@
 server
 obj/**
-.vscode
+.vscod*
+.DS_Store

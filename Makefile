@@ -4,7 +4,7 @@ GREEN			=	\033[0;32m
 PURPLE			=	\033[0;35m
 
 CXX				=	clang++
-CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS		=	-g -Wall -Wextra -Werror -std=c++98
 CXXFLAGS		=	-fsanitize=address
 RM				=	rm -rf
 
