@@ -17,7 +17,7 @@ namespace ft {
             CGI &operator=(const CGI &x);
 
             void    SetEnv(HttpRequest &rec);
-            FILE    *CGIscript(std::string& script);
+            std::string CGIscript(std::string& script);
             char    **ArrayToStr(void);
 
             class AllocException : public std::exception	{

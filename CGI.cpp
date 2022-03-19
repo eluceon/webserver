@@ -46,7 +46,7 @@ void	ft::CGI::SetEnv(HttpRequest &rec) {
     _env["REQUEST_LINE"] = ""; // HTTP query string eg: GET /cgi-bin/1.cgi HTTP/1.0
     _env["SCRIPT_NAME"] = ""; // Script name eg: 1.cgi
 
-    // == CLIENT VARIABLES == /
+    // == CLIENT VARIABLES == //
 
     std::map<std::string, std::string> headers = rec.getHeaders(); // HTTP_ACCEPT, HTTP_USER_AGENT, HTTP_ACCEPT_ENCODING, HTTP_ACCEPT_LANGUAGE, HTTP_IF_MODIFIED_SINCE, HTTP_FROM
 }
@@ -56,8 +56,7 @@ char    **ArrayToStr(void) {
     int i = 0;
 
     for (std::map<std::string, std::string>::iterator it = _env.begin(); it != _env.end(); ++it, i++) {
-        std::string tmp = it->first.append('=');
-        tmp = tmp.append(it->second);
+        std::string tmp = it->first + "=" + it->second;
         env[i] = new char[tmp.size() + 1];
         env[i] = tmp.c_str();
     }
@@ -65,8 +64,10 @@ char    **ArrayToStr(void) {
     return env;
 }
 
-FILE *ft::CGI::CGIscript(std::string& script) {
+std::string ft::CGI::CGIscript(std::string& script) {
     char **env;
+    int fds[2];
+    int pid;
 
     try {
         env = ArrayToStr();
@@ -74,6 +75,10 @@ FILE *ft::CGI::CGIscript(std::string& script) {
     catch (ft::CGI::AllocException &e) {
         std::cout << e.what();
     }
+    pid = fork();
+    if (!pid) {
+
+    } //child process
 }
 
 const char *ft::CGI::AllocException::what() const throw() {
