@@ -55,6 +55,7 @@ namespace ft
 		void		registerSignals();
 		static void	handleShutdown(int signal);
 		std::string	sockNtop(const struct sockaddr *sa, socklen_t salen);
+		ssize_t		readn(int fd, std::string& buffer);
 	};
 } // namespace ft
 

@@ -59,18 +59,32 @@ void	ft::Server::run() {
 	}
 }
 
+ssize_t	ft::Server::readn(int fd, std::string& buffer) {
+	ssize_t	nread;
+	char	buf[MAXLINE];
+
+	std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
+	while((nread = read(fd, buf, MAXLINE)) > 0) {
+		buffer.append(buf);
+		if  (nread < MAXLINE)
+			break;
+		std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
+	}
+	return nread == 0 ? buffer.size() : nread;
+}
+
 void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 						struct sockaddr_in	*cliaddr, socklen_t	clilen) {
 	int		sockfd;
 	ssize_t	n;
-	char	buf[MAXLINE];
+	std::string	buffer;
 
 	for (int i = 1; i <= maxIdx; i++) {		// check all clients for data
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
-			std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
-			if ( (n = read(sockfd, buf, MAXLINE)) < 0) {
+			// if ( (n = read(sockfd, buf, MAXLINE)) < 0) {
+			if ( (n = readn(sockfd, buffer)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
 					if (close(sockfd) == -1)
@@ -85,7 +99,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 				_client[i].fd = -1;
 			} else {
 				HttpRequest *httpRequest = new HttpRequest();		
-				httpRequest->parse(buf);
+				httpRequest->parse(buffer);
 				HttpResponse *httpResponse = new HttpResponse(httpRequest);
 				std::string response = httpResponse->getResponse();
 				write(sockfd, response.c_str(), response.size());
@@ -96,7 +110,6 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 				break;						// no more readable descriptors
 		}
 	}
-
 }
 
 void ft::Server::handleShutdown(int signal) {
