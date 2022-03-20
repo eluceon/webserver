@@ -40,10 +40,7 @@ void	ft::Server::run() {
 		if (_client[0].revents & POLLRDNORM) {	// new client connection
 			clilen = sizeof(cliaddr);
 			connfd = Accept(_listeningSocket->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
-#ifdef	NOTIFICATIONS
-			std::cout << GREEN_COLOR << "New client: "
-				<< sockNtop((struct sockaddr *) &cliaddr, clilen) << RESET_COLOR << std::endl;
-#endif
+			timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr, clilen));
 			for (i = 1; i < OPEN_MAX; i++)
 				if (_client[i].fd < 0) {
 					_client[i].fd = connfd;	// save descriptor
@@ -75,31 +72,20 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 			std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
 			if ( (n = read(sockfd, buf, MAXLINE)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
-#ifdef	NOTIFICATIONS
-					std::cout << RED_COLOR << "_client[" << i << "] aborted connection" << RESET_COLOR << std::endl;
-#endif
+					timestamp("_client[" + std::to_string(i) +"] aborted connection");
 					if (close(sockfd) == -1)
 						systemErrorExit("close error");
 					_client[i].fd = -1;
 				} else
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
-#ifdef	NOTIFICATIONS
-				std::cout << RED_COLOR << "_client[" << i << "] closed connection" << RESET_COLOR << std::endl;
-#endif
+				timestamp("_client[" + std::to_string(i) +"] closed connection");
 				if (close(sockfd) == -1)
 					systemErrorExit("close error");
 				_client[i].fd = -1;
 			} else {
-				// std::cout << buf << std::endl;		// print message from client
-				HttpRequest *httpRequest = new HttpRequest();
-				
-				int tmp;
-				if ((tmp = httpRequest->parse(buf)) != 0)		//DELETE ME LATER
-					std::cout << "\nRESPONSE STATUS CODE: " << tmp << '\n';
-				std::string logBuffer = "From " + sockNtop((struct sockaddr *) cliaddr, clilen) 
-					+ " \"" + httpRequest->getRequestLine() + "\"  " + std::to_string(httpRequest->getStatus());
-				timestamp(logBuffer);
+				HttpRequest *httpRequest = new HttpRequest();		
+				httpRequest->parse(buf);
 				HttpResponse *httpResponse = new HttpResponse(httpRequest);
 				std::string response = httpResponse->getResponse();
 				write(sockfd, response.c_str(), response.size());
@@ -122,24 +108,6 @@ void	ft::Server::registerSignals() {
 	signal(SIGTERM, ft::Server::handleShutdown);   // call handleShutdown when killed
    	signal(SIGINT, ft::Server::handleShutdown);   // call handleShutdown when interrupted
 }
-
-/*
-* This function writes a timestamp string to the open fileLog 
-*/ 
-void ft::Server::timestamp(const std::string& msg) {
-	std::fstream	fout("./logs/webserver.log", std::ios_base::out | std::ios_base::app);
-
-	if ((fout.rdstate() & std::ifstream::failbit) != 0 )
-	    std::cerr << "Error opening 'webserver.log'" << std::endl;
-	else {
-		std::time_t timer = time(&timer);
-		fout << std::put_time(std::localtime(&timer), "%d/%m/%Y %H:%M:%S> ")
-				<< msg << '\n';
-	}
-	if ((fout.rdstate() & std::ifstream::badbit) != 0 ) {
-		std::cerr << "Writing 'webserver.log' error" << std::endl;
-	}
-} 
 
 /*
 * The function sockNtop takes a pointer to a socket address structure,

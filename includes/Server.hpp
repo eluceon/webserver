@@ -8,9 +8,6 @@
 # include <poll.h>
 # include <signal.h>
 # include "ListeningSocket.hpp"
-# include <fstream>
-# include <iomanip>
-# include <ctime>
 
 /* 
 ** POSIX requires that an #include of <poll.h> define INFTIM, but many
@@ -57,7 +54,6 @@ namespace ft
 							struct sockaddr_in	*cliaddr, socklen_t	clilen);
 		void		registerSignals();
 		static void	handleShutdown(int signal);
-		static void	timestamp(const std::string& msg);
 		std::string	sockNtop(const struct sockaddr *sa, socklen_t salen);
 	};
 } // namespace ft

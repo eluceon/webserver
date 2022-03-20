@@ -32,3 +32,23 @@
 19/03/2022 20:13:52> From 127.0.0.1:64555 "GET / HTTP/1.1"  200
 19/03/2022 20:13:52> From 127.0.0.1:64555 "GET /webroot/site1/images/hello_img.png HTTP/1.1"  200
 19/03/2022 20:14:17> Shutting down on signal 2
+20/03/2022 17:49:29> Starting up..
+20/03/2022 17:49:34> New client: 127.0.0.1:40566
+20/03/2022 17:49:34> New client: 127.0.0.1:40570
+20/03/2022 17:49:34> _client[2] closed connection
+20/03/2022 17:50:16> New client: 127.0.0.1:40582
+20/03/2022 17:50:16> _client[1] closed connection
+20/03/2022 17:50:16> New client: 127.0.0.1:40586
+20/03/2022 17:50:16> _client[1] closed connection
+20/03/2022 17:50:48> _client[2] closed connection
+
+20/03/2022 18:26:47> Starting up..
+20/03/2022 18:26:51> New client: 127.0.0.1:49442
+20/03/2022 18:26:51> New client: 127.0.0.1:49446
+20/03/2022 18:26:59> _client[2] closed connection
+20/03/2022 18:36:37> Shutting down on signal 2
+20/03/2022 18:38:38> Starting up..
+20/03/2022 18:38:40> New client: 127.0.0.1:49548
+20/03/2022 18:38:40> New client: 127.0.0.1:49552
+20/03/2022 18:38:40> _client[2] closed connection
+20/03/2022 18:38:52> Shutting down on signal 2

@@ -34,6 +34,8 @@ namespace ft
 										std::string::size_type& beginPos, std::string &token,
 										bool skipFirstWhiteSpaces = true, bool isExactDelim = false,
 										std::string::size_type maxLen = std::string::npos);
+	void						timestamp(const std::string& msg);
+	
 } // namespace ft
 
 #endif
