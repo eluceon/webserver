@@ -40,6 +40,7 @@ void	ft::Server::run() {
 		if (_client[0].revents & POLLRDNORM) {	// new client connection
 			clilen = sizeof(cliaddr);
 			connfd = Accept(_listeningSocket->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
+			fcntl(connfd, F_SETFL, O_NONBLOCK);
 			timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr, clilen));
 			for (i = 1; i < OPEN_MAX; i++)
 				if (_client[i].fd < 0) {
@@ -61,14 +62,11 @@ void	ft::Server::run() {
 
 ssize_t	ft::Server::readn(int fd, std::string& buffer) {
 	ssize_t	nread;
-	char	buf[MAXLINE];
+	char	buf[MAXLINE + 1];
 
-	std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
-	while((nread = read(fd, buf, MAXLINE)) > 0) {
+	while((nread = recv(fd, buf, MAXLINE, 0)) > 0) {
+		buf[MAXLINE] = '\0';
 		buffer.append(buf);
-		if  (nread < MAXLINE)
-			break;
-		std::fill_n(buf, sizeof(char) * MAXLINE, '\0');
 	}
 	return nread == 0 ? buffer.size() : nread;
 }
@@ -83,8 +81,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
-			// if ( (n = read(sockfd, buf, MAXLINE)) < 0) {
-			if ( (n = readn(sockfd, buffer)) < 0) {
+			if ( (n = readn(sockfd, buffer)) < 0 && errno != EWOULDBLOCK) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
 					if (close(sockfd) == -1)
@@ -100,9 +97,13 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 			} else {
 				HttpRequest *httpRequest = new HttpRequest();		
 				httpRequest->parse(buffer);
+				if (!httpRequest->isParsed()) {
+					delete httpRequest;
+					continue;
+				}
 				HttpResponse *httpResponse = new HttpResponse(httpRequest);
 				std::string response = httpResponse->getResponse();
-				write(sockfd, response.c_str(), response.size());
+				send(sockfd, response.c_str(), response.size(), 0);
 				delete httpResponse;
 				delete httpRequest;
 			}

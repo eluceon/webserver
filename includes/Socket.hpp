@@ -6,6 +6,7 @@
 
 # define	SERV_PORT	8080
 
+# include <fcntl.h>
 # include "utils.hpp"
 	
 namespace ft

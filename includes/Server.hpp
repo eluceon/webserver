@@ -8,6 +8,7 @@
 # include <poll.h>
 # include <signal.h>
 # include "ListeningSocket.hpp"
+# include "ConfigParser.hpp"
 
 /* 
 ** POSIX requires that an #include of <poll.h> define INFTIM, but many

@@ -16,5 +16,7 @@ void ft::Socket::createSocket() {
 		ft::systemErrorExit("socket error");
 	int yes = 1;
 	if (setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) 
-    	ft::systemErrorExit("setting socket option SO_REUSEADDR"); 
+    	ft::systemErrorExit("setting socket option SO_REUSEADDR");
+	if (fcntl(_socket, F_SETFL, O_NONBLOCK) < 0)
+		ft::systemErrorExit("F_SETFL error");
 }

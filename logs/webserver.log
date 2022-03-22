@@ -240,3 +240,165 @@
 20/03/2022 23:00:58> New client: 127.0.0.1:52688
 20/03/2022 23:00:58> _client[2] closed connection
 20/03/2022 23:01:14> Shutting down on signal 2
+22/03/2022 15:59:31> Starting up..
+22/03/2022 15:59:40> New client: 127.0.0.1:35508
+22/03/2022 15:59:40> New client: 127.0.0.1:35512
+22/03/2022 15:59:44> _client[2] closed connection
+22/03/2022 15:59:44> New client: 127.0.0.1:35518
+22/03/2022 15:59:44> _client[1] closed connection
+22/03/2022 15:59:44> New client: 127.0.0.1:35522
+22/03/2022 15:59:44> _client[1] closed connection
+22/03/2022 15:59:51> Shutting down on signal 2
+22/03/2022 15:59:57> Starting up..
+22/03/2022 15:59:59> New client: 127.0.0.1:35546
+22/03/2022 15:59:59> New client: 127.0.0.1:35550
+22/03/2022 15:59:59> _client[2] closed connection
+22/03/2022 16:00:01> Shutting down on signal 2
+22/03/2022 16:00:34> Starting up..
+22/03/2022 16:00:38> Shutting down on signal 2
+22/03/2022 16:00:45> Starting up..
+22/03/2022 16:00:46> New client: 127.0.0.1:35582
+22/03/2022 16:00:46> New client: 127.0.0.1:35586
+22/03/2022 16:02:28> Starting up..
+22/03/2022 16:02:30> New client: 127.0.0.1:35626
+22/03/2022 16:02:30> New client: 127.0.0.1:35630
+22/03/2022 16:03:38> Starting up..
+22/03/2022 16:03:40> Shutting down on signal 2
+22/03/2022 16:03:54> Starting up..
+22/03/2022 16:03:56> New client: 127.0.0.1:35648
+22/03/2022 16:03:56> New client: 127.0.0.1:35652
+22/03/2022 16:04:40> Starting up..
+22/03/2022 16:04:42> New client: 127.0.0.1:35664
+22/03/2022 16:04:42> New client: 127.0.0.1:35668
+22/03/2022 16:04:45> _client[1] closed connection
+22/03/2022 16:04:45> New client: 127.0.0.1:35672
+22/03/2022 16:04:49> _client[2] closed connection
+22/03/2022 16:04:49> New client: 127.0.0.1:35678
+22/03/2022 16:04:52> Shutting down on signal 2
+22/03/2022 16:04:54> Starting up..
+22/03/2022 16:04:56> New client: 127.0.0.1:35688
+22/03/2022 16:04:56> New client: 127.0.0.1:35692
+22/03/2022 16:04:59> _client[1] closed connection
+22/03/2022 16:04:59> New client: 127.0.0.1:35696
+22/03/2022 16:05:03> Shutting down on signal 2
+22/03/2022 16:05:22> Starting up..
+22/03/2022 16:05:24> New client: 127.0.0.1:35704
+22/03/2022 16:05:24> New client: 127.0.0.1:35708
+22/03/2022 16:05:26> _client[1] closed connection
+22/03/2022 16:05:26> New client: 127.0.0.1:35712
+22/03/2022 16:05:28> Shutting down on signal 2
+22/03/2022 16:10:00> Starting up..
+22/03/2022 16:10:04> New client: 127.0.0.1:35778
+22/03/2022 16:10:04> New client: 127.0.0.1:35782
+22/03/2022 16:10:04> Syste error exit: read error
+22/03/2022 16:10:21> Starting up..
+22/03/2022 16:10:25> New client: 127.0.0.1:35792
+22/03/2022 16:10:25> New client: 127.0.0.1:35796
+22/03/2022 16:10:25> Syste error exit: read error
+22/03/2022 16:10:44> Starting up..
+22/03/2022 16:10:46> New client: 127.0.0.1:35806
+22/03/2022 16:10:46> New client: 127.0.0.1:35810
+22/03/2022 16:10:46> Syste error exit: read error
+22/03/2022 16:11:02> Starting up..
+22/03/2022 16:11:06> New client: 127.0.0.1:35822
+22/03/2022 16:11:06> New client: 127.0.0.1:35826
+22/03/2022 16:11:11> _client[1] closed connection
+22/03/2022 16:11:11> New client: 127.0.0.1:35830
+22/03/2022 16:11:13> Shutting down on signal 2
+22/03/2022 16:11:49> Starting up..
+22/03/2022 16:11:51> New client: 127.0.0.1:35856
+22/03/2022 16:11:51> New client: 127.0.0.1:35860
+22/03/2022 16:11:51> Syste error exit: read error
+22/03/2022 16:12:14> Starting up..
+22/03/2022 16:12:16> New client: 127.0.0.1:35872
+22/03/2022 16:12:16> New client: 127.0.0.1:35876
+22/03/2022 16:12:16> Syste error exit: read error
+22/03/2022 16:13:43> Starting up..
+22/03/2022 16:13:45> New client: 127.0.0.1:35922
+22/03/2022 16:13:45> New client: 127.0.0.1:35926
+22/03/2022 16:13:45> Syste error exit: read error
+22/03/2022 16:14:14> Starting up..
+22/03/2022 16:14:16> New client: 127.0.0.1:35938
+22/03/2022 16:14:16> New client: 127.0.0.1:35942
+22/03/2022 16:14:16> Syste error exit: read error
+22/03/2022 16:14:33> Starting up..
+22/03/2022 16:14:35> New client: 127.0.0.1:35962
+22/03/2022 16:14:35> New client: 127.0.0.1:35966
+22/03/2022 16:14:35> Syste error exit: read error
+22/03/2022 16:14:48> Starting up..
+22/03/2022 16:14:50> New client: 127.0.0.1:35978
+22/03/2022 16:14:50> New client: 127.0.0.1:35982
+22/03/2022 16:14:50> Syste error exit: read error
+22/03/2022 16:15:36> Starting up..
+22/03/2022 16:15:38> New client: 127.0.0.1:35996
+22/03/2022 16:15:38> New client: 127.0.0.1:36000
+22/03/2022 16:15:38> Syste error exit: read error
+22/03/2022 16:16:10> Starting up..
+22/03/2022 16:16:12> New client: 127.0.0.1:36016
+22/03/2022 16:16:12> New client: 127.0.0.1:36020
+22/03/2022 16:16:12> Syste error exit: read error
+22/03/2022 16:35:27> Starting up..
+22/03/2022 16:35:31> New client: 127.0.0.1:38478
+22/03/2022 16:35:31> New client: 127.0.0.1:38482
+22/03/2022 16:36:33> _client[2] closed connection
+22/03/2022 16:36:51> Shutting down on signal 2
+22/03/2022 16:36:55> Starting up..
+22/03/2022 16:36:58> New client: 127.0.0.1:38670
+22/03/2022 16:36:58> New client: 127.0.0.1:38674
+22/03/2022 16:36:58> _client[2] closed connection
+22/03/2022 16:37:08> Shutting down on signal 2
+22/03/2022 16:37:13> Starting up..
+22/03/2022 16:37:15> New client: 127.0.0.1:38720
+22/03/2022 16:37:15> New client: 127.0.0.1:38724
+22/03/2022 16:37:15> _client[2] closed connection
+22/03/2022 16:39:35> Shutting down on signal 2
+22/03/2022 16:39:37> Starting up..
+22/03/2022 16:39:42> New client: 127.0.0.1:39016
+22/03/2022 16:39:42> New client: 127.0.0.1:39020
+22/03/2022 16:39:42> _client[2] closed connection
+22/03/2022 16:39:43> Shutting down on signal 2
+22/03/2022 16:39:51> Starting up..
+22/03/2022 16:39:53> New client: 127.0.0.1:39070
+22/03/2022 16:39:53> New client: 127.0.0.1:39074
+22/03/2022 16:39:53> _client[2] closed connection
+22/03/2022 16:39:53> _client[1] closed connection
+22/03/2022 16:39:58> New client: 127.0.0.1:39092
+22/03/2022 16:39:58> New client: 127.0.0.1:39096
+22/03/2022 16:39:58> _client[2] closed connection
+22/03/2022 16:40:07> New client: 127.0.0.1:39106
+22/03/2022 16:40:07> _client[1] closed connection
+22/03/2022 16:40:07> New client: 127.0.0.1:39110
+22/03/2022 16:40:07> _client[1] closed connection
+22/03/2022 16:40:19> Shutting down on signal 2
+22/03/2022 16:41:39> Starting up..
+22/03/2022 16:41:41> New client: 127.0.0.1:39272
+22/03/2022 16:41:41> New client: 127.0.0.1:39276
+22/03/2022 16:41:41> _client[2] closed connection
+22/03/2022 16:41:57> New client: 127.0.0.1:39368
+22/03/2022 16:41:57> _client[1] closed connection
+22/03/2022 16:41:57> New client: 127.0.0.1:39372
+22/03/2022 16:41:57> _client[1] closed connection
+22/03/2022 16:42:01> Shutting down on signal 2
+22/03/2022 16:43:15> Starting up..
+22/03/2022 16:43:17> New client: 127.0.0.1:39516
+22/03/2022 16:43:17> New client: 127.0.0.1:39520
+22/03/2022 16:43:17> _client[2] closed connection
+22/03/2022 17:53:38> Shutting down on signal 2
+22/03/2022 19:49:57> Starting up..
+22/03/2022 19:53:08> Shutting down on signal 2
+22/03/2022 19:53:11> Starting up..
+22/03/2022 20:39:03> Shutting down on signal 2
+22/03/2022 20:39:06> Starting up..
+22/03/2022 20:39:10> Shutting down on signal 2
+22/03/2022 20:39:24> Starting up..
+22/03/2022 20:39:25> Shutting down on signal 2
+22/03/2022 20:41:48> Starting up..
+22/03/2022 20:41:50> Shutting down on signal 2
+22/03/2022 20:42:45> Starting up..
+22/03/2022 20:42:46> Shutting down on signal 2
+22/03/2022 20:44:41> Starting up..
+22/03/2022 20:44:47> Shutting down on signal 2
+22/03/2022 20:44:50> Starting up..
+22/03/2022 22:23:43> Shutting down on signal 2
+22/03/2022 22:24:04> Starting up..
+22/03/2022 22:24:17> Shutting down on signal 2
