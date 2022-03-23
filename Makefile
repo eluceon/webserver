@@ -19,10 +19,10 @@ OBJ_MAIN		=	$(addprefix $(OBJDIR), $(SRC_MAIN:.cpp=.o))
 
 SRC_SERVER_DIR	=	./src/server/
 SRC_SERVER		=	Server.cpp Socket.cpp ListeningSocket.cpp BoundSocket.cpp\
-					wrapsock.cpp ConfigParser.cpp
+					wrapsock.cpp ConfigParser.cpp VirtualHost.cpp Location.cpp
 OBJ_SERVER		=	$(addprefix $(OBJDIR), $(SRC_SERVER:.cpp=.o))
 HEADER_SERVER	=	$(addprefix $(HEADERDIR), Server.hpp Socket.hpp ListeningSocket.hpp\
-					BoundSocket.hpp ConfigParser.hpp)
+					BoundSocket.hpp ConfigParser.hpp VirtualHost.hpp Location.hpp)
 
 SRC_HTTP_DIR	=	./src/http/
 SRC_HTTP		=	HttpRequest.cpp HttpResponse.cpp

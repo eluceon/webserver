@@ -8,6 +8,8 @@
 # include <arpa/inet.h>
 # include <fstream>
 # include "utils.hpp"
+# include <unordered_map>
+# include "VirtualHost.hpp"
 
 namespace ft {
 	class ConfigParser
@@ -16,12 +18,7 @@ namespace ft {
 			ConfigParser(const std::string& configFile = "webserver.conf");
 			~ConfigParser();
 		private:
-			std::string						_serverName;
-			in_addr_t						_host;
-			int								_port;
-			unsigned long					_clientMaxBodySize;
-			// std::map<short, std::string>	_errorPages;
-			// std::map<std::string, Location> _locations;
+			std::vector<ft::VirtualHost>	_virtualHosts;
 
 			void	parse(const std::string& configFile);
 			void	splitTokens(const std::string& configFile);

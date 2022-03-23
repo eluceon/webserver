@@ -4,7 +4,7 @@
 # include <string>
 # include <vector>
 # include <map>
-# include "HttpResponseStatusCodes.hpp"
+# include "HttpConstants.hpp"
 
 # define CRLF				"\r\n"
 # define CRLF_CRLF			"\r\n\r\n"
@@ -52,13 +52,6 @@ namespace ft
 			const std::string&	getRequestLine() const;
 
 		protected:
-			enum e_methods {
-				GET,
-				POST,
-				DELETE,
-				PUT,
-				NUMBER_OF_METHODS
-			};
 			enum e_versions
 			{
 				HTTP_0_9,

@@ -53,4 +53,12 @@
 # define HTTP_GATEWAY_TIMEOUT					504
 # define HTTP_VERSION_NOT_SUPPORTED				505
 
+enum e_methods {
+	GET,
+	POST,
+	DELETE,
+	PUT,
+	NUMBER_OF_METHODS
+};
+
 #endif
