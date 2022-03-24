@@ -45,7 +45,7 @@ void ft::ConfigParser::parse(const std::string& configFile) {
 // 	for (int i = 0; i < tokens.size(); ++i) {
 // 		std::cout << tokens[i] << '\n'
 // ;	}
-
+	char *currentDir = Getcwd();
 	size_t size = tokens.size();
 	std::vector<std::string>::const_iterator it = tokens.cbegin();
 	std::vector<std::string>::const_iterator end = tokens.cend();
@@ -66,7 +66,7 @@ void ft::ConfigParser::parse(const std::string& configFile) {
             } else if (*it == "root") {
 				virtualHost.setRoot(it, end);
             } else if (*it == "error_page") {
-				virtualHost.setErrorPage(it, end);
+				virtualHost.setErrorPage(it, end, currentDir);
             } else if (*it == "client_max_body_size") {
 				virtualHost.setClientMaxBodySize(it, end);
             } else if (*it == "location") {
@@ -74,4 +74,5 @@ void ft::ConfigParser::parse(const std::string& configFile) {
         }
         // add(server);
     }
+	free(currentDir);
 }

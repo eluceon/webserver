@@ -35,7 +35,8 @@ namespace ft
 										bool skipFirstWhiteSpaces = true, bool isExactDelim = false,
 										std::string::size_type maxLen = std::string::npos);
 	void						timestamp(const std::string& msg);
+	char 						*Getcwd();
 	
-} // namespace ft
+}
 
 #endif

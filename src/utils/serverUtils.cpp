@@ -21,4 +21,13 @@ namespace ft
 			std::cerr << "Writing 'webserver.log' error" << std::endl;
 		}
 	}
+
+	char *Getcwd() {
+		char	*cwd;
+
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			ft::systemErrorExit("getcwd");
+		return cwd;
+	}
 }

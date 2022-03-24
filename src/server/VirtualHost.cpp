@@ -58,7 +58,7 @@ void	ft::VirtualHost::setClientMaxBodySize(std::vector<std::string>::const_itera
 }
 
 void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end) {
+					std::vector<std::string>::const_iterator &end, const char *curDir) {
 	int 		error_code;
 	struct stat statbuf;
 
@@ -69,12 +69,13 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 		ft::errorExit("Invalid format of error code in config file");
 	}
 	skipTokens(it, end, 1);
-    if (stat((*it).data(), &statbuf) < 0)
+	std::string fullPath = std::string(curDir) + '/' + *it;
+    if (stat(fullPath.data(), &statbuf) < 0)
 		ft::systemErrorExit("can't open error_page " 
 			+ std::to_string(error_code) + " in config file" );
 	if (!S_ISREG(statbuf.st_mode))
 		ft::errorExit("error_page :" + std::to_string(error_code) 
 			+ "in config file is not a file");
-	_errorPages.insert(std::make_pair(error_code, *it));
+	_errorPages.insert(std::make_pair(error_code, fullPath));
 	skipTokens(it, end, 1, ";");
 }

@@ -35,7 +35,7 @@ namespace ft {
 		void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);
 		void	setErrorPage(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
+					std::vector<std::string>::const_iterator &end, const char *curDir);
 
 	private:
 		in_addr_t										_host;
