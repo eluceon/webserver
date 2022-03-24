@@ -11,13 +11,6 @@
 # define DEFAULT_PORT		80
 # define PROTOCOL			"http"
 
-	/* limits for requets messages */
-# define MAX_URI_LENGTH				2048
-# define MAX_HEADER_FIELDS			100
-# define MAX_HEADER_NAME_LENGTH		100
-# define MAX_HEADER_VALUE_LENGTH	1000
-# define MAX_DEFAULT_BODY_SIZE		10000000
-
 namespace ft
 {
 	class HttpRequest {

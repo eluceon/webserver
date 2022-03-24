@@ -63,8 +63,12 @@ void ft::ConfigParser::parse(const std::string& configFile) {
 				virtualHost.setPort(it, end);
             } else if (*it == "server_name") {
 				virtualHost.setServerName(it, end);
+            } else if (*it == "root") {
+				virtualHost.setRoot(it, end);
             } else if (*it == "error_page") {
+				virtualHost.setErrorPage(it, end);
             } else if (*it == "client_max_body_size") {
+				virtualHost.setClientMaxBodySize(it, end);
             } else if (*it == "location") {
             }
         }

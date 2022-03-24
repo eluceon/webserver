@@ -53,6 +53,14 @@
 # define HTTP_GATEWAY_TIMEOUT					504
 # define HTTP_VERSION_NOT_SUPPORTED				505
 
+	/* limits for requets messages */
+# define MAX_URI_LENGTH				2048
+# define MAX_HEADER_FIELDS			100
+# define MAX_HEADER_NAME_LENGTH		100
+# define MAX_HEADER_VALUE_LENGTH	1000
+# define DEFAULT_MAX_BODY_SIZE		1048576
+# define MAXIMUM_MAX_BODY_SIZE		104857600
+
 enum e_methods {
 	GET,
 	POST,

@@ -1,1 +1,40 @@
 
+24/03/2022 10:36:08> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:37:24> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:37:37> Error exit: Invalid format of client_max_body_size
+24/03/2022 10:37:46> Error exit: Invalid format of client_max_body_size
+24/03/2022 10:37:59> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:38:14> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:38:47> Starting up..
+24/03/2022 10:38:48> Shutting down on signal 2
+24/03/2022 10:39:06> Starting up..
+24/03/2022 10:39:26> Shutting down on signal 2
+24/03/2022 10:39:32> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:45:05> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:45:21> Starting up..
+24/03/2022 10:45:28> Shutting down on signal 2
+24/03/2022 10:45:37> Starting up..
+24/03/2022 10:45:38> Shutting down on signal 2
+24/03/2022 10:45:44> Error exit: Invalid format of client_max_body_size
+24/03/2022 10:45:51> Starting up..
+24/03/2022 10:45:52> Shutting down on signal 2
+24/03/2022 10:45:59> Starting up..
+24/03/2022 10:46:00> Shutting down on signal 2
+24/03/2022 10:47:00> Starting up..
+24/03/2022 10:47:02> Shutting down on signal 2
+24/03/2022 10:47:14> Error exit: client_max_body_size exceeds the maximum value
+24/03/2022 10:47:43> Starting up..
+24/03/2022 10:47:44> Shutting down on signal 2
+24/03/2022 10:47:49> Error exit: Invalid config file
+24/03/2022 10:47:56> Error exit: Invalid config file
+24/03/2022 10:48:03> Starting up..
+24/03/2022 10:48:04> Shutting down on signal 2
+24/03/2022 12:31:33> Starting up..
+24/03/2022 12:31:34> Shutting down on signal 2
+24/03/2022 12:31:44> Syste error exit: can't open error_page 404 in config file
+24/03/2022 12:48:33> Error exit: Invalid format of error code in config file
+24/03/2022 12:48:43> Starting up..
+24/03/2022 12:48:45> Shutting down on signal 2
+24/03/2022 12:48:50> Syste error exit: can't open error_page 404 in config file
+24/03/2022 12:49:33> Starting up..
+24/03/2022 12:49:34> Shutting down on signal 2

@@ -22,7 +22,7 @@ void ft::HttpResponse::run() {
 	if (!_httpReuest->getMethodName().compare("GET")) {
 		if (_httpReuest->getStatus() == HTTP_OK ) {
 			// _httpReuest->getRelativePath();
-			std::ifstream	siteFile("./webroot/site1/index.html");
+			std::ifstream	siteFile("./www/site1/index.html");
 			if ((siteFile.rdstate() & std::ifstream::failbit) != 0 ) {
 				setErrorResponse(HTTP_NOT_FOUND, "NOT FOUND");
 			} else {

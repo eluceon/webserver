@@ -7,6 +7,9 @@
 # include <arpa/inet.h>
 # include <unordered_map>
 # include <vector>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
 # include "HttpConstants.hpp"
 # include "Location.hpp"
 # include "utils.hpp"
@@ -26,6 +29,12 @@ namespace ft {
 		void	setPort(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);
 		void	setServerName(std::vector<std::string>::const_iterator &it,
+					std::vector<std::string>::const_iterator &end);
+		void	setRoot(std::vector<std::string>::const_iterator &it,
+					std::vector<std::string>::const_iterator &end);
+		void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
+					std::vector<std::string>::const_iterator &end);
+		void	setErrorPage(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);
 
 	private:

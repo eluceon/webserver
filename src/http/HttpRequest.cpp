@@ -7,7 +7,7 @@ ft::HttpRequest::HttpRequest()
 	: _requestLine(""), _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
 	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
 	_port(DEFAULT_PORT), _headers(), _body(), _parsed(false), _status(HTTP_OK),
-	_chunked(false), _contentLength(0), _clientMaxBodySize(MAX_DEFAULT_BODY_SIZE)
+	_chunked(false), _contentLength(0), _clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
 {}
 
 ft::HttpRequest::~HttpRequest() {}
