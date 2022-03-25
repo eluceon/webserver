@@ -18,7 +18,7 @@ namespace ft {
 	class VirtualHost
 	{
 	public:
-		VirtualHost();
+		VirtualHost(const std::string &currentDir = "");
 		~VirtualHost();
 		VirtualHost(const VirtualHost& other);
 
@@ -35,9 +35,9 @@ namespace ft {
 		void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);
 		void	setErrorPage(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end, const char *curDir);
+					std::vector<std::string>::const_iterator &end);
 		void	setLocation(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end, const char *curDir);
+					std::vector<std::string>::const_iterator &end);
 		
 		in_addr_t	getHost() const; 
 		int	getPort() const;
@@ -47,6 +47,7 @@ namespace ft {
 		const std::unordered_map<std::string, ft::Location> &getLocations() const;
 
 	private:
+		std::string										_root;
 		in_addr_t										_host;
 		int												_port;
 		std::string										_serverName;

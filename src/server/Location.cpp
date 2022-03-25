@@ -1,13 +1,15 @@
 #include "Location.hpp"
 
-ft::Location::Location() {}
-ft::Location::~Location() {}
+ft::Location::Location(const std::string &currenDir)
+	: _root(currenDir)
+{}
 
+ft::Location::~Location() {}
 
 ft::Location::Location(const Location & other)
 	: _root(other._root), _methods(other._methods),
 	_autoindex(other._autoindex), _index(other._index),
-	_fastcgiPass(other._fastcgiPass), _maxBodySize(other._maxBodySize)
+	_fastcgiPass(other._fastcgiPass), _clientMaxBodySize(other._clientMaxBodySize)
 {}
 
 ft::Location&	ft::Location::operator=(const Location & other) {
@@ -17,37 +19,121 @@ ft::Location&	ft::Location::operator=(const Location & other) {
 		_autoindex = other._autoindex;
 		_index = other._index;
 		_fastcgiPass = other._fastcgiPass;
-		_maxBodySize = other._maxBodySize;
+		_clientMaxBodySize = other._clientMaxBodySize;
 
 	}
 	return *this;
 }
 
 void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end, const char *curDir) {
+						std::vector<std::string>::const_iterator &end,
+						const std::string &curDir) {
 	_root = curDir;
-	skipTokens(it, end, 1);
 	std::string	path = *it;
 	skipTokens(it, end, 1, "{");
-	skipTokens(it, end, 1);
 
-	while (it != end && *it != "}") {
+	while (++it != end && *it != "}") {
 		if (*it == "root") {
-
+			setRoot(it, end);
 		} else if (*it == "methods") {
-
+			setMethods(it, end);
 		} else if (*it == "autoindex") {
-
+			setAutoindex(it, end);
 		} else if (*it == "return") {
-
+			setReturn(it, end);
 		} else if (*it == "index") {
-
+			setIndex(it, end);
 		} else if (*it == "client_max_body_size") {
-
-		} if (!path.compare(0, 2, "0.") && *it == "fastcgi_pass") {
-		
+			setClientMaxBodySize(it, end);
+		} if (!path.compare(0, 2, "*.") && *it == "fastcgi_pass") {
+			setFastcgiPass(it, end);
 		}
 	}
 	if (it == end)
-		ft::errorExit("Invalid config file");
+		ft::errorExit("Invalid config file. Missing }");
+}
+
+void	ft::Location::setReturn(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	_return = *it;
+	ft::skipTokens(it, end, 1, ";");	
+}
+
+void	ft::Location::setRoot(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	validateDirectoryPath(*it);
+	_root = *it;
+	ft::skipTokens(it, end, 1, ";");
+}
+
+void	ft::Location::setMethods(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	_methods.assign(NUMBER_OF_METHODS, false);
+	for (int i = 0; *it != ";"; ++i) {
+		if (i == NUMBER_OF_METHODS) {
+			errorExit("Invalid method in config file");
+		} else if (*it == "GET" && !_methods[GET]) {
+			_methods[GET] = true;
+		} else if (*it == "POST" && !_methods[POST]) {
+			_methods[POST] = true;
+		} else if (*it == "DELETE" && !_methods[DELETE]) {
+			_methods[DELETE];
+		} else if (*it == "PUT" && !_methods[PUT]) {
+			_methods[PUT];
+		}
+		skipTokens(it, end, 1);
+	}
+}
+
+void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	if (*it == "on")
+		_autoindex = true;
+	else if (*it == "off")
+		_autoindex = false;
+	else
+		errorExit("Invalid autoindex valid in config file");
+}
+
+void	ft::Location::setIndex(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	for (int i = 0; *it != ";"; ++i) {
+		if (i == 10) {
+			errorExit("Too many index values in config file");
+		}
+		_index.push_back(*it);
+		skipTokens(it, end, 1);
+	}
+}
+
+void	ft::Location::setFastcgiPass(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	_fastcgiPass = *it;
+	ft::skipTokens(it, end, 1, ";");
+}
+
+
+void	ft::Location::setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::skipTokens(it, end, 1);
+	if (!ft::isNumber(*it))
+		ft::errorExit("Invalid format of client_max_body_size in config file");
+	else if (it->length() > 3
+		|| (_clientMaxBodySize = std::stoul(*it) * 1048576) > MAXIMUM_MAX_BODY_SIZE) {
+		ft::errorExit("client_max_body_size in config file exceeds the maximum value");
+	}
+	ft::skipTokens(it, end, 1, ";");
 }

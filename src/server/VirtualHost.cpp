@@ -1,11 +1,9 @@
 #include "VirtualHost.hpp"
 
-ft::VirtualHost::VirtualHost() 
-	: _host(INADDR_NONE), _port(0), _serverName(""),
-	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
-{
-
-}
+ft::VirtualHost::VirtualHost(const std::string &currentDir) 
+	: _root(currentDir + '/'), _host(INADDR_NONE), _port(80),
+	_serverName(""), _clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+{}
 
 ft::VirtualHost::~VirtualHost() {}
 
@@ -47,7 +45,7 @@ void	ft::VirtualHost::setClientMaxBodySize(std::vector<std::string>::const_itera
 }
 
 void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end, const char *curDir) {
+					std::vector<std::string>::const_iterator &end) {
 	int 		error_code;
 	struct stat statbuf;
 
@@ -58,7 +56,7 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 		ft::errorExit("Invalid format of error code in config file");
 	}
 	skipTokens(it, end, 1);
-	std::string fullPath = std::string(curDir) + '/' + *it;
+	std::string fullPath = std::string(_root + *it);
     if (stat(fullPath.data(), &statbuf) < 0)
 		ft::systemErrorExit("can't open error_page " 
 			+ std::to_string(error_code) + " in config file" );
@@ -70,12 +68,12 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 }
 
 void	ft::VirtualHost::setLocation(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end, const char *curDir) {
+					std::vector<std::string>::const_iterator &end) {
 	Location location;
 
 	skipTokens(it, end, 1);
 	std::string path = *it;
-	location.parseLocation(it, end, curDir);
+	location.parseLocation(it, end, _root);
 	_locations.insert(std::make_pair(path, location));
 }
 

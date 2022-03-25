@@ -1,156 +1,67 @@
+25/03/2022 18:27:08> Starting up..
+25/03/2022 18:27:08> Shutting down on signal 2
+25/03/2022 18:30:42> Starting up..
+25/03/2022 18:30:47> Shutting down on signal 2
+25/03/2022 18:31:16> Starting up..
+25/03/2022 18:31:27> Shutting down on signal 2
+25/03/2022 18:31:50> Error exit: Invalid config file. Missing {
+25/03/2022 18:32:07> Starting up..
+25/03/2022 18:32:08> Shutting down on signal 2
+25/03/2022 18:33:56> Starting up..
+25/03/2022 18:33:57> Shutting down on signal 2
+25/03/2022 18:50:44> Starting up..
+25/03/2022 18:50:46> Shutting down on signal 2
+25/03/2022 18:51:06> Starting up..
+25/03/2022 18:51:12> Shutting down on signal 2
+25/03/2022 18:51:34> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/other/megagosha/webserv/www/final1/
+25/03/2022 18:52:10> Starting up..
+25/03/2022 18:52:12> Shutting down on signal 2
+25/03/2022 18:52:20> Starting up..
+25/03/2022 18:52:21> Shutting down on signal 2
+25/03/2022 18:53:09> Starting up..
+25/03/2022 18:53:11> Shutting down on signal 2
+25/03/2022 18:53:15> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site10/
+25/03/2022 18:55:29> Starting up..
+25/03/2022 18:55:31> Shutting down on signal 2
+25/03/2022 18:58:00> Starting up..
+25/03/2022 18:58:02> Shutting down on signal 2
+25/03/2022 18:58:44> Starting up..
+25/03/2022 18:58:45> Shutting down on signal 2
+25/03/2022 18:58:53> Starting up..
+25/03/2022 18:58:54> Shutting down on signal 2
+25/03/2022 18:59:18> Starting up..
+25/03/2022 18:59:20> Shutting down on signal 2
+25/03/2022 18:59:30> Starting up..
+25/03/2022 18:59:31> Shutting down on signal 2
+25/03/2022 19:00:00> Error exit: Invalid config file. Missing ;
+25/03/2022 19:00:10> Error exit: Invalid config file. Missing ;
+25/03/2022 19:00:16> Starting up..
+25/03/2022 19:00:17> Shutting down on signal 2
+25/03/2022 19:01:18> Error exit: Invalid config file. Missing ;
+25/03/2022 19:01:21> Error exit: Invalid config file
+25/03/2022 19:05:44> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site2/
+25/03/2022 19:06:33> Error exit: Specify server name in config file
 
-24/03/2022 10:36:08> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:37:24> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:37:37> Error exit: Invalid format of client_max_body_size
-24/03/2022 10:37:46> Error exit: Invalid format of client_max_body_size
-24/03/2022 10:37:59> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:38:14> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:38:47> Starting up..
-24/03/2022 10:38:48> Shutting down on signal 2
-24/03/2022 10:39:06> Starting up..
-24/03/2022 10:39:26> Shutting down on signal 2
-24/03/2022 10:39:32> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:45:05> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:45:21> Starting up..
-24/03/2022 10:45:28> Shutting down on signal 2
-24/03/2022 10:45:37> Starting up..
-24/03/2022 10:45:38> Shutting down on signal 2
-24/03/2022 10:45:44> Error exit: Invalid format of client_max_body_size
-24/03/2022 10:45:51> Starting up..
-24/03/2022 10:45:52> Shutting down on signal 2
-24/03/2022 10:45:59> Starting up..
-24/03/2022 10:46:00> Shutting down on signal 2
-24/03/2022 10:47:00> Starting up..
-24/03/2022 10:47:02> Shutting down on signal 2
-24/03/2022 10:47:14> Error exit: client_max_body_size exceeds the maximum value
-24/03/2022 10:47:43> Starting up..
-24/03/2022 10:47:44> Shutting down on signal 2
-24/03/2022 10:47:49> Error exit: Invalid config file
-24/03/2022 10:47:56> Error exit: Invalid config file
-24/03/2022 10:48:03> Starting up..
-24/03/2022 10:48:04> Shutting down on signal 2
-24/03/2022 12:31:33> Starting up..
-24/03/2022 12:31:34> Shutting down on signal 2
-24/03/2022 12:31:44> Syste error exit: can't open error_page 404 in config file
-24/03/2022 12:48:33> Error exit: Invalid format of error code in config file
-24/03/2022 12:48:43> Starting up..
-24/03/2022 12:48:45> Shutting down on signal 2
-24/03/2022 12:48:50> Syste error exit: can't open error_page 404 in config file
-24/03/2022 12:49:33> Starting up..
-24/03/2022 12:49:34> Shutting down on signal 2
-24/03/2022 19:59:59> Starting up..
-24/03/2022 20:03:22> Shutting down on signal 2
-24/03/2022 20:09:44> Starting up..
-24/03/2022 20:09:46> Shutting down on signal 2
-24/03/2022 20:13:51> Syste error exit: can't open error_page 404 in config file
-24/03/2022 20:15:21> Starting up..
-24/03/2022 20:15:23> Shutting down on signal 2
-24/03/2022 21:31:58> Starting up..
-24/03/2022 21:32:02> Shutting down on signal 2
-24/03/2022 21:32:30> Starting up..
-24/03/2022 21:32:31> Shutting down on signal 2
-24/03/2022 21:33:28> Starting up..
-24/03/2022 21:33:29> Shutting down on signal 2
-25/03/2022 13:05:20> Syste error exit: can't open error_page 404 in config file
-25/03/2022 13:06:02> Syste error exit: can't open error_page 405 in config file
-25/03/2022 13:06:36> Error exit: client_max_body_size in config file exceeds the maximum value
-25/03/2022 13:06:50> Error exit: client_max_body_size in config file exceeds the maximum value
-25/03/2022 13:07:06> Error exit: client_max_body_size in config file exceeds the maximum value
-25/03/2022 13:07:15> Error exit: client_max_body_size in config file exceeds the maximum value
-25/03/2022 13:07:24> Error exit: Invalid config file
-25/03/2022 13:07:35> Error exit: Invalid config file
-25/03/2022 13:07:43> Error exit: client_max_body_size in config file exceeds the maximum value
-25/03/2022 13:08:26> Error exit: Invalid config file
-25/03/2022 13:08:34> Starting up..
-25/03/2022 13:08:37> Shutting down on signal 2
-25/03/2022 13:08:53> Error exit: Invalid config file
-25/03/2022 13:10:06> Error exit: Invalid config file
-25/03/2022 13:10:19> Error exit: Invalid config file
-25/03/2022 13:10:29> Error exit: Invalid config file
-25/03/2022 13:10:39> Error exit: Invalid config file
-25/03/2022 13:10:49> Error exit: Invalid config file
-25/03/2022 13:11:09> Starting up..
-25/03/2022 13:11:13> Shutting down on signal 2
-25/03/2022 13:11:36> Error exit: Invalid config file
-25/03/2022 13:12:46> Error exit: Invalid config file
-25/03/2022 13:13:42> Error exit: Invalid config file
-25/03/2022 13:14:53> Error exit: Invalid config file
-25/03/2022 13:15:24> Error exit: Invalid config file
-25/03/2022 13:16:50> Error exit: Invalid config file
-25/03/2022 13:17:29> Error exit: Invalid config file
-25/03/2022 13:17:45> Starting up..
-25/03/2022 13:17:52> Shutting down on signal 2
-25/03/2022 13:18:14> Starting up..
-25/03/2022 13:18:15> Shutting down on signal 2
-25/03/2022 13:18:37> Starting up..
-25/03/2022 13:18:40> Shutting down on signal 2
-25/03/2022 13:25:38> Starting up..
-25/03/2022 13:25:40> Shutting down on signal 2
-25/03/2022 13:25:45> Starting up..
-25/03/2022 13:25:46> Shutting down on signal 2
-25/03/2022 13:25:53> Syste error exit: can't open error_page 404 in config file
-25/03/2022 13:26:00> Starting up..
-25/03/2022 13:26:02> Shutting down on signal 2
-25/03/2022 13:26:12> Starting up..
-25/03/2022 13:26:13> Shutting down on signal 2
-25/03/2022 13:26:29> Syste error exit: can't open error_page 404 in config file
-25/03/2022 13:26:45> Starting up..
-25/03/2022 13:26:54> Shutting down on signal 2
-25/03/2022 13:28:01> Starting up..
-25/03/2022 13:28:03> Shutting down on signal 2
-25/03/2022 13:28:18> Starting up..
-25/03/2022 13:28:20> Shutting down on signal 2
-25/03/2022 14:32:28> Starting up..
-25/03/2022 14:32:29> Shutting down on signal 2
-25/03/2022 14:33:01> Error exit: Specify host in config file
-
-25/03/2022 14:33:18> Error exit: Invalid port in config file
-25/03/2022 14:33:59> Error exit: Invalid port in config file
-25/03/2022 14:34:05> Error exit: Invalid config file
-25/03/2022 14:34:14> Error exit: Specify server name in config file
-
-25/03/2022 14:34:24> Starting up..
-25/03/2022 14:34:38> Shutting down on signal 2
-25/03/2022 14:35:45> Error exit: Specify server name in config file
-
-25/03/2022 14:36:02> Error exit: Specify host in config file
-Specify server name in config file
-
-25/03/2022 14:39:00> Starting up..
-25/03/2022 14:39:05> Shutting down on signal 2
-25/03/2022 14:39:41> Error exit: Specify server name in config file
-
-25/03/2022 14:39:48> Starting up..
-25/03/2022 14:39:54> Shutting down on signal 2
-25/03/2022 14:40:00> Error exit: Specify server name in config file
-
-25/03/2022 14:40:28> Error exit: Invalid port in config file
-25/03/2022 14:40:37> Error exit: Invalid host in config file
-25/03/2022 14:40:54> Error exit: Invalid port in config file
-25/03/2022 14:41:07> Starting up..
-25/03/2022 14:41:10> Shutting down on signal 2
-25/03/2022 14:42:27> Starting up..
-25/03/2022 14:42:28> Shutting down on signal 2
-25/03/2022 14:43:26> Error exit: Specify host in config file
-
-25/03/2022 14:43:44> Error exit: Invalid host in config file
-25/03/2022 14:43:52> Starting up..
-25/03/2022 14:43:53> Shutting down on signal 2
-25/03/2022 14:44:06> Error exit: Specify host in config file
-Specify port in config file
-Specify server name in config file
-
-25/03/2022 15:05:32> Starting up..
-25/03/2022 15:05:34> Shutting down on signal 2
-25/03/2022 15:42:12> Starting up..
-25/03/2022 15:42:13> Shutting down on signal 2
-25/03/2022 16:07:06> Starting up..
-25/03/2022 16:07:10> New client: 127.0.0.1:50002
-25/03/2022 16:07:10> New client: 127.0.0.1:50003
-25/03/2022 16:07:10> _client[2] closed connection
-25/03/2022 16:07:12> Shutting down on signal 2
-25/03/2022 16:07:54> Error exit: Invalid config file
-25/03/2022 16:08:00> Starting up..
-25/03/2022 16:08:01> Shutting down on signal 2
-25/03/2022 16:08:08> Starting up..
-25/03/2022 16:08:09> Shutting down on signal 2
+25/03/2022 19:07:37> Starting up..
+25/03/2022 19:07:38> Shutting down on signal 2
+25/03/2022 19:07:45> Error exit: Invalid autoindex valid in config file
+25/03/2022 19:07:52> Error exit: Invalid autoindex valid in config file
+25/03/2022 19:07:56> Starting up..
+25/03/2022 19:07:57> Shutting down on signal 2
+25/03/2022 19:08:45> Starting up..
+25/03/2022 19:08:48> Starting up..
+25/03/2022 19:08:48> Syste error exit: bind error
+25/03/2022 19:08:49> Starting up..
+25/03/2022 19:08:49> Syste error exit: bind error
+25/03/2022 19:10:46> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site3/
+25/03/2022 19:11:12> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site3/
+25/03/2022 19:11:26> Starting up..
+25/03/2022 19:11:27> Shutting down on signal 2
+25/03/2022 19:11:44> Starting up..
+25/03/2022 19:11:45> Shutting down on signal 2
+25/03/2022 19:13:43> Starting up..
+25/03/2022 19:13:44> Shutting down on signal 2
+25/03/2022 19:20:41> Starting up..
+25/03/2022 19:20:42> Shutting down on signal 2
+25/03/2022 19:22:43> Starting up..
+25/03/2022 19:22:44> Shutting down on signal 2

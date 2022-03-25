@@ -22,12 +22,15 @@ namespace ft
 		}
 	}
 
-	char *Getcwd() {
-		char	*cwd;
+	std::string	Getcwd() {
+		char		*cwd;
+		std::string	currentDir;
 
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 			ft::systemErrorExit("getcwd");
-		return cwd;
+		currentDir = cwd;
+		free(cwd);
+		return currentDir;
 	}
 }
