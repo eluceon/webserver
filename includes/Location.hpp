@@ -4,6 +4,7 @@
 # include <string>
 # include <vector>
 # include "HttpConstants.hpp"
+# include "utils.hpp"
 
 namespace ft {
 	class Location {
@@ -14,12 +15,16 @@ namespace ft {
 
 			Location&	operator=(const Location & other);
 
+			void	parseLocation(std::vector<std::string>::const_iterator &it,
+						std::vector<std::string>::const_iterator &end, const char *curDir);
+
 		private:
 			std::string					_root;
-			bool						_methods[NUMBER_OF_METHODS];
+			std::vector<bool>			_methods;
 			bool						_autoindex;
 			std::vector<std::string> 	_index;
 			std::string					_fastcgiPass;
+			unsigned long     			_maxBodySize;
 
 	};
 }

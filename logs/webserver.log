@@ -51,3 +51,106 @@
 24/03/2022 21:32:31> Shutting down on signal 2
 24/03/2022 21:33:28> Starting up..
 24/03/2022 21:33:29> Shutting down on signal 2
+25/03/2022 13:05:20> Syste error exit: can't open error_page 404 in config file
+25/03/2022 13:06:02> Syste error exit: can't open error_page 405 in config file
+25/03/2022 13:06:36> Error exit: client_max_body_size in config file exceeds the maximum value
+25/03/2022 13:06:50> Error exit: client_max_body_size in config file exceeds the maximum value
+25/03/2022 13:07:06> Error exit: client_max_body_size in config file exceeds the maximum value
+25/03/2022 13:07:15> Error exit: client_max_body_size in config file exceeds the maximum value
+25/03/2022 13:07:24> Error exit: Invalid config file
+25/03/2022 13:07:35> Error exit: Invalid config file
+25/03/2022 13:07:43> Error exit: client_max_body_size in config file exceeds the maximum value
+25/03/2022 13:08:26> Error exit: Invalid config file
+25/03/2022 13:08:34> Starting up..
+25/03/2022 13:08:37> Shutting down on signal 2
+25/03/2022 13:08:53> Error exit: Invalid config file
+25/03/2022 13:10:06> Error exit: Invalid config file
+25/03/2022 13:10:19> Error exit: Invalid config file
+25/03/2022 13:10:29> Error exit: Invalid config file
+25/03/2022 13:10:39> Error exit: Invalid config file
+25/03/2022 13:10:49> Error exit: Invalid config file
+25/03/2022 13:11:09> Starting up..
+25/03/2022 13:11:13> Shutting down on signal 2
+25/03/2022 13:11:36> Error exit: Invalid config file
+25/03/2022 13:12:46> Error exit: Invalid config file
+25/03/2022 13:13:42> Error exit: Invalid config file
+25/03/2022 13:14:53> Error exit: Invalid config file
+25/03/2022 13:15:24> Error exit: Invalid config file
+25/03/2022 13:16:50> Error exit: Invalid config file
+25/03/2022 13:17:29> Error exit: Invalid config file
+25/03/2022 13:17:45> Starting up..
+25/03/2022 13:17:52> Shutting down on signal 2
+25/03/2022 13:18:14> Starting up..
+25/03/2022 13:18:15> Shutting down on signal 2
+25/03/2022 13:18:37> Starting up..
+25/03/2022 13:18:40> Shutting down on signal 2
+25/03/2022 13:25:38> Starting up..
+25/03/2022 13:25:40> Shutting down on signal 2
+25/03/2022 13:25:45> Starting up..
+25/03/2022 13:25:46> Shutting down on signal 2
+25/03/2022 13:25:53> Syste error exit: can't open error_page 404 in config file
+25/03/2022 13:26:00> Starting up..
+25/03/2022 13:26:02> Shutting down on signal 2
+25/03/2022 13:26:12> Starting up..
+25/03/2022 13:26:13> Shutting down on signal 2
+25/03/2022 13:26:29> Syste error exit: can't open error_page 404 in config file
+25/03/2022 13:26:45> Starting up..
+25/03/2022 13:26:54> Shutting down on signal 2
+25/03/2022 13:28:01> Starting up..
+25/03/2022 13:28:03> Shutting down on signal 2
+25/03/2022 13:28:18> Starting up..
+25/03/2022 13:28:20> Shutting down on signal 2
+25/03/2022 14:32:28> Starting up..
+25/03/2022 14:32:29> Shutting down on signal 2
+25/03/2022 14:33:01> Error exit: Specify host in config file
+
+25/03/2022 14:33:18> Error exit: Invalid port in config file
+25/03/2022 14:33:59> Error exit: Invalid port in config file
+25/03/2022 14:34:05> Error exit: Invalid config file
+25/03/2022 14:34:14> Error exit: Specify server name in config file
+
+25/03/2022 14:34:24> Starting up..
+25/03/2022 14:34:38> Shutting down on signal 2
+25/03/2022 14:35:45> Error exit: Specify server name in config file
+
+25/03/2022 14:36:02> Error exit: Specify host in config file
+Specify server name in config file
+
+25/03/2022 14:39:00> Starting up..
+25/03/2022 14:39:05> Shutting down on signal 2
+25/03/2022 14:39:41> Error exit: Specify server name in config file
+
+25/03/2022 14:39:48> Starting up..
+25/03/2022 14:39:54> Shutting down on signal 2
+25/03/2022 14:40:00> Error exit: Specify server name in config file
+
+25/03/2022 14:40:28> Error exit: Invalid port in config file
+25/03/2022 14:40:37> Error exit: Invalid host in config file
+25/03/2022 14:40:54> Error exit: Invalid port in config file
+25/03/2022 14:41:07> Starting up..
+25/03/2022 14:41:10> Shutting down on signal 2
+25/03/2022 14:42:27> Starting up..
+25/03/2022 14:42:28> Shutting down on signal 2
+25/03/2022 14:43:26> Error exit: Specify host in config file
+
+25/03/2022 14:43:44> Error exit: Invalid host in config file
+25/03/2022 14:43:52> Starting up..
+25/03/2022 14:43:53> Shutting down on signal 2
+25/03/2022 14:44:06> Error exit: Specify host in config file
+Specify port in config file
+Specify server name in config file
+
+25/03/2022 15:05:32> Starting up..
+25/03/2022 15:05:34> Shutting down on signal 2
+25/03/2022 15:42:12> Starting up..
+25/03/2022 15:42:13> Shutting down on signal 2
+25/03/2022 16:07:06> Starting up..
+25/03/2022 16:07:10> New client: 127.0.0.1:50002
+25/03/2022 16:07:10> New client: 127.0.0.1:50003
+25/03/2022 16:07:10> _client[2] closed connection
+25/03/2022 16:07:12> Shutting down on signal 2
+25/03/2022 16:07:54> Error exit: Invalid config file
+25/03/2022 16:08:00> Starting up..
+25/03/2022 16:08:01> Shutting down on signal 2
+25/03/2022 16:08:08> Starting up..
+25/03/2022 16:08:09> Shutting down on signal 2

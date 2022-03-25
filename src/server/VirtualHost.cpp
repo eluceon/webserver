@@ -1,16 +1,13 @@
 #include "VirtualHost.hpp"
 
-ft::VirtualHost::VirtualHost() {}
-ft::VirtualHost::~VirtualHost() {}
+ft::VirtualHost::VirtualHost() 
+	: _host(INADDR_NONE), _port(0), _serverName(""),
+	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+{
 
-void	ft::VirtualHost::skipTokens(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end,
-					size_t n, const char *neededToken) {
-	while (it != end && n-- > 0)
-		++it;
-	if (it == end || (neededToken && it->compare(neededToken)))
-		ft::errorExit("Invalid config file");
 }
+
+ft::VirtualHost::~VirtualHost() {}
 
 void	ft::VirtualHost::setHost(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end) {
@@ -24,8 +21,8 @@ void	ft::VirtualHost::setHost(std::vector<std::string>::const_iterator &it,
 void	ft::VirtualHost::setPort(std::vector<std::string>::const_iterator &it,
 					 std::vector<std::string>::const_iterator &end) {
 	skipTokens(it, end, 1);
-	if (!ft::isNumber(*it) || it->length() > 6 
-		&& (_port = std::stoi(*it)) < 1 || _port > 65535)
+	if (!ft::isNumber(*it) || it->length() > 6
+		|| (_port = std::stoi(*it)) < 1 || _port > 65535)
 		ft::errorExit("Invalid port in config file");
 	skipTokens(it, end, 1, ";");
 }
@@ -35,14 +32,6 @@ void	ft::VirtualHost::setServerName(std::vector<std::string>::const_iterator &it
 	skipTokens(it, end, 1);
 	_serverName = *it;
 	skipTokens(it, end, 1, ";");
-}
-
-void	ft::VirtualHost::setRoot(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end) {
-	skipTokens(it, end, 1);
-	_root = *it;
-	skipTokens(it, end, 1, ";");
-	
 }
 
 void	ft::VirtualHost::setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
@@ -78,4 +67,38 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 			+ "in config file is not a file");
 	_errorPages.insert(std::make_pair(error_code, fullPath));
 	skipTokens(it, end, 1, ";");
+}
+
+void	ft::VirtualHost::setLocation(std::vector<std::string>::const_iterator &it,
+					std::vector<std::string>::const_iterator &end, const char *curDir) {
+	Location location;
+
+	skipTokens(it, end, 1);
+	std::string path = *it;
+	location.parseLocation(it, end, curDir);
+	_locations.insert(std::make_pair(path, location));
+}
+
+in_addr_t	ft::VirtualHost::getHost() const {
+	return _host;
+}
+
+int	ft::VirtualHost::getPort() const {
+	return _port;
+}
+
+const std::string &ft::VirtualHost::getServerName() const {
+	return _serverName;
+}
+
+unsigned long	ft::VirtualHost::getClientMaxBodySize() const {
+	return _clientMaxBodySize;
+}
+
+const std::unordered_map<short, std::string> &ft::VirtualHost::getErrorPages() const {
+	return _errorPages;
+}
+
+const std::unordered_map<std::string, ft::Location> &ft::VirtualHost::getLocations() const {
+	return _locations;
 }

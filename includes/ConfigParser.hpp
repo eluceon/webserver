@@ -23,7 +23,8 @@ namespace ft {
 			void	parse(const std::string& configFile);
 			void	splitTokens(const std::string& configFile);
 			void	splitTokens(const std::string& configFile,
-						std::vector<std::string>& tokens);
+						std::vector<std::string>& tokens);		
+			void	hasMinimumParameters(const ft::VirtualHost &virtualHost);
 	};
 	
 }
