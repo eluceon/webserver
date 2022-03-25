@@ -49,14 +49,31 @@ void	ft::ConfigParser::hasMinimumParameters(const ft::VirtualHost &virtualHost) 
 		ft::errorExit(msg);
 }
 
+void	ft::ConfigParser::validateParentheses(const std::vector<std::string> &tokens,
+			const std::string &openParenthesis, const std::string &closingParenthesis)
+{
+	int balance = 0;
+
+	std::vector<std::string>::const_iterator it = tokens.cbegin();
+	std::vector<std::string>::const_iterator end = tokens.cend();
+	while (it != end) {
+		if (*it == openParenthesis)
+			++balance;
+		else if (*it == closingParenthesis)
+			--balance;
+		if (balance < 0)
+			ft::errorExit("Invalid parentheses");
+		++it;
+	}
+	if (balance != 0)
+		ft::errorExit("Invalid parentheses");
+}
 
 void	ft::ConfigParser::parse(const std::string& configFile) {
 	std::vector<std::string>	tokens;
 
     splitTokens(configFile, tokens);
-// 	for (int i = 0; i < tokens.size(); ++i) {
-// 		std::cout << tokens[i] << '\n'
-// ;	}
+	validateParentheses(tokens, "{", "}");
 	std::string currentDir = Getcwd();
 	size_t size = tokens.size();
 	std::vector<std::string>::const_iterator it = tokens.cbegin();
