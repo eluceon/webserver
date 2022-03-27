@@ -1,11 +1,33 @@
 #include "VirtualHost.hpp"
 
 ft::VirtualHost::VirtualHost(const std::string &currentDir) 
-	: _root(currentDir + '/'), _host(INADDR_NONE), _port(DEFAULT_PORT),
-	_serverName(""), _clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+	: _root(currentDir + '/'),
+	_host(INADDR_NONE),
+	_port(DEFAULT_PORT),
+	_serverName(""),
+	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+{}
+
+ft::VirtualHost::VirtualHost(const ft::VirtualHost &other)
+	: _root(other._root),
+	_host(other._host),
+	_port(other._port),
+	_serverName(other._serverName),
+	_clientMaxBodySize(other._clientMaxBodySize)
 {}
 
 ft::VirtualHost::~VirtualHost() {}
+
+ft::VirtualHost &ft::VirtualHost::operator=(const ft::VirtualHost &other) {
+	if (this != &other) {
+		_root = other._root;
+		_host = other._host;
+		_port = other._port;
+		_serverName = other._serverName;
+		_clientMaxBodySize = other._clientMaxBodySize;
+	}
+	return *this;
+}
 
 void	ft::VirtualHost::setHost(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end) {

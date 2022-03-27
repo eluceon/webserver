@@ -4,7 +4,18 @@ ft::ListeningSocket::ListeningSocket() {
 	startListening();
 }
 
+ft::ListeningSocket::ListeningSocket(const ListeningSocket &other)
+	: _listeningSocket(other._listeningSocket)
+{}
+
 ft::ListeningSocket::~ListeningSocket(){}
+
+ft::ListeningSocket &ft::ListeningSocket::operator=(const ft::ListeningSocket& other) {
+	if (this != &other) {
+		_listeningSocket = other._listeningSocket;
+	}
+	return *this;
+}
 
 void	ft::ListeningSocket::startListening() {
 	char	*ptr;

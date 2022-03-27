@@ -7,6 +7,17 @@ ft::BoundSocket::BoundSocket() {
 
 ft::BoundSocket::~BoundSocket() {}
 
+ft::BoundSocket::BoundSocket(const ft::BoundSocket &other)
+	: _servAddr(other._servAddr)
+{}
+
+ft::BoundSocket &ft::BoundSocket::operator=(const ft::BoundSocket &other) {
+	if (this != &other) {
+		_servAddr = other._servAddr;
+	}
+	return *this;
+}
+
 void	ft::BoundSocket::bindAddressToSocket() {
 	if (bind(_socket, (struct sockaddr *)&_servAddr, sizeof(_servAddr)) < 0)
 		ft::systemErrorExit("bind error");

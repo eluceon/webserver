@@ -168,3 +168,14 @@
 27/03/2022 10:56:18> Shutting down on signal 2
 27/03/2022 13:38:26> Starting up..
 27/03/2022 13:38:27> Shutting down on signal 2
+27/03/2022 15:49:40> Starting up..
+27/03/2022 15:49:42> Shutting down on signal 2
+27/03/2022 16:16:02> Starting up..
+27/03/2022 16:16:05> New client: 127.0.0.1:34496
+27/03/2022 16:16:05> New client: 127.0.0.1:34500
+27/03/2022 16:16:13> _client[1] closed connection
+27/03/2022 16:16:13> New client: 127.0.0.1:34504
+27/03/2022 16:16:13> _client[2] closed connection
+27/03/2022 16:16:13> New client: 127.0.0.1:34508
+27/03/2022 16:16:13> _client[2] closed connection
+27/03/2022 16:16:18> Shutting down on signal 2

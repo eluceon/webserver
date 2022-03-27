@@ -4,7 +4,18 @@ ft::Socket::Socket() {
 	createSocket();
 }
 
+ft::Socket::Socket(const ft::Socket &other)
+	: _socket(other._socket)
+{}
+
 ft::Socket::~Socket() {}
+
+ft::Socket	&ft::Socket::operator=(const ft::Socket &other) {
+	if (this != &other) {
+		_socket = other._socket;
+	}
+	return *this;
+}
 
 int	ft::Socket::getSocket() {
 	return _socket;
