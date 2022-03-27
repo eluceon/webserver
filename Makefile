@@ -30,7 +30,7 @@ OBJ_HTTP		=	$(addprefix $(OBJDIR), $(SRC_HTTP:.cpp=.o))
 HEADER_HTTP		=	$(addprefix $(HEADERDIR), HttpRequest.hpp HttpResponse.hpp)
 
 SRC_UTILS_DIR	=	./src/utils/
-SRC_UTILS		=	error.cpp stringUtils.cpp serverUtils.cpp
+SRC_UTILS		=	error.cpp stringUtils.cpp serverUtils.cpp configUtils.cpp
 OBJ_UTILS		=	$(addprefix $(OBJDIR), $(SRC_UTILS:.cpp=.o))
 HEADER_UTILS	=	$(addprefix $(HEADERDIR), utils.hpp)
 

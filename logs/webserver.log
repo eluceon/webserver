@@ -1,4 +1,48 @@
+25/03/2022 18:27:08> Starting up..
+25/03/2022 18:27:08> Shutting down on signal 2
+25/03/2022 18:30:42> Starting up..
+25/03/2022 18:30:47> Shutting down on signal 2
+25/03/2022 18:31:16> Starting up..
+25/03/2022 18:31:27> Shutting down on signal 2
+25/03/2022 18:31:50> Error exit: Invalid config file. Missing {
+25/03/2022 18:32:07> Starting up..
+25/03/2022 18:32:08> Shutting down on signal 2
+25/03/2022 18:33:56> Starting up..
+25/03/2022 18:33:57> Shutting down on signal 2
+25/03/2022 18:50:44> Starting up..
+25/03/2022 18:50:46> Shutting down on signal 2
+25/03/2022 18:51:06> Starting up..
+25/03/2022 18:51:12> Shutting down on signal 2
+25/03/2022 18:51:34> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/other/megagosha/webserv/www/final1/
+25/03/2022 18:52:10> Starting up..
+25/03/2022 18:52:12> Shutting down on signal 2
+25/03/2022 18:52:20> Starting up..
+25/03/2022 18:52:21> Shutting down on signal 2
+25/03/2022 18:53:09> Starting up..
+25/03/2022 18:53:11> Shutting down on signal 2
+25/03/2022 18:53:15> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site10/
+25/03/2022 18:55:29> Starting up..
+25/03/2022 18:55:31> Shutting down on signal 2
+25/03/2022 18:58:00> Starting up..
+25/03/2022 18:58:02> Shutting down on signal 2
+25/03/2022 18:58:44> Starting up..
+25/03/2022 18:58:45> Shutting down on signal 2
+25/03/2022 18:58:53> Starting up..
+25/03/2022 18:58:54> Shutting down on signal 2
+25/03/2022 18:59:18> Starting up..
+25/03/2022 18:59:20> Shutting down on signal 2
+25/03/2022 18:59:30> Starting up..
+25/03/2022 18:59:31> Shutting down on signal 2
+25/03/2022 19:00:00> Error exit: Invalid config file. Missing ;
+25/03/2022 19:00:10> Error exit: Invalid config file. Missing ;
+25/03/2022 19:00:16> Starting up..
+25/03/2022 19:00:17> Shutting down on signal 2
+25/03/2022 19:01:18> Error exit: Invalid config file. Missing ;
+25/03/2022 19:01:21> Error exit: Invalid config file
+25/03/2022 19:05:44> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site2/
+25/03/2022 19:06:33> Error exit: Specify server name in config file
 
+<<<<<<< HEAD
 24/03/2022 10:36:08> Error exit: client_max_body_size exceeds the maximum value
 24/03/2022 10:37:24> Error exit: client_max_body_size exceeds the maximum value
 24/03/2022 10:37:37> Error exit: Invalid format of client_max_body_size
@@ -56,3 +100,63 @@
 27/03/2022 09:40:50> New client: 127.0.0.1:56596
 27/03/2022 09:40:55> _client[2] closed connection
 27/03/2022 09:41:50> Shutting down on signal 2
+=======
+25/03/2022 19:07:37> Starting up..
+25/03/2022 19:07:38> Shutting down on signal 2
+25/03/2022 19:07:45> Error exit: Invalid autoindex valid in config file
+25/03/2022 19:07:52> Error exit: Invalid autoindex valid in config file
+25/03/2022 19:07:56> Starting up..
+25/03/2022 19:07:57> Shutting down on signal 2
+25/03/2022 19:08:45> Starting up..
+25/03/2022 19:08:48> Starting up..
+25/03/2022 19:08:48> Syste error exit: bind error
+25/03/2022 19:08:49> Starting up..
+25/03/2022 19:08:49> Syste error exit: bind error
+25/03/2022 19:10:46> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site3/
+25/03/2022 19:11:12> Syste error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site3/
+25/03/2022 19:11:26> Starting up..
+25/03/2022 19:11:27> Shutting down on signal 2
+25/03/2022 19:11:44> Starting up..
+25/03/2022 19:11:45> Shutting down on signal 2
+25/03/2022 19:13:43> Starting up..
+25/03/2022 19:13:44> Shutting down on signal 2
+25/03/2022 19:20:41> Starting up..
+25/03/2022 19:20:42> Shutting down on signal 2
+25/03/2022 19:22:43> Starting up..
+25/03/2022 19:22:44> Shutting down on signal 2
+25/03/2022 20:38:39> Error exit: Invalid parentheses
+25/03/2022 20:38:44> Error exit: Invalid parentheses
+25/03/2022 20:38:49> Starting up..
+25/03/2022 20:38:50> Shutting down on signal 2
+>>>>>>> 4614d0acaf3df2176cd30e04aa9be1beceaae704
+27/03/2022 09:43:39> System error exit: can't open dir: /Users/eluceon/projects/circle-5/ft_webserver/www/site1/
+27/03/2022 09:45:45> Starting up..
+27/03/2022 09:45:46> Shutting down on signal 2
+27/03/2022 09:48:33> Starting up..
+27/03/2022 09:48:37> New client: 127.0.0.1:56686
+27/03/2022 09:48:37> New client: 127.0.0.1:56690
+27/03/2022 09:48:37> _client[2] closed connection
+27/03/2022 09:49:39> New client: 127.0.0.1:56710
+27/03/2022 09:49:39> _client[1] closed connection
+27/03/2022 09:49:39> New client: 127.0.0.1:56714
+27/03/2022 09:49:39> _client[1] closed connection
+27/03/2022 09:50:03> New client: 127.0.0.1:56720
+27/03/2022 09:50:03> _client[2] closed connection
+27/03/2022 09:50:03> New client: 127.0.0.1:56724
+27/03/2022 09:50:03> _client[2] closed connection
+27/03/2022 09:54:00> Shutting down on signal 2
+27/03/2022 09:54:18> Starting up..
+27/03/2022 09:54:21> New client: 127.0.0.1:56772
+27/03/2022 09:54:21> New client: 127.0.0.1:56776
+27/03/2022 09:54:21> _client[2] closed connection
+27/03/2022 09:55:21> Shutting down on signal 2
+27/03/2022 09:55:30> Starting up..
+27/03/2022 09:55:34> New client: 127.0.0.1:56836
+27/03/2022 09:55:34> New client: 127.0.0.1:56840
+27/03/2022 09:55:34> _client[2] closed connection
+27/03/2022 09:57:47> Shutting down on signal 2
+27/03/2022 09:57:55> Starting up..
+27/03/2022 09:57:59> New client: 127.0.0.1:56874
+27/03/2022 09:57:59> New client: 127.0.0.1:56878
+27/03/2022 09:58:00> _client[2] closed connection
+27/03/2022 09:58:37> Shutting down on signal 2

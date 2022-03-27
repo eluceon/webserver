@@ -140,7 +140,9 @@ const std::string&	ft::HttpRequest::getQueryString() const {
 }
 
 std::string ft::HttpRequest::getFullURL() const {
-	return _protocol + "://" + _serverName + ":" + std::to_string(_port) + _relativePath + _queryString;
+	return _queryString.length()
+		? _protocol + "://" + _serverName + ':' + std::to_string(_port) + _relativePath + '?' + _queryString
+		: _protocol + "://" + _serverName + ':' + std::to_string(_port) + _relativePath;
 }
 
 bool	ft::HttpRequest::isParsed() const {

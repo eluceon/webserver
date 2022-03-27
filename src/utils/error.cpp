@@ -9,7 +9,7 @@ namespace ft
 
 	void systemErrorExit(const std::string& mesage)
 	{
-		timestamp("Syste error exit: " + mesage);
+		timestamp("System error exit: " + mesage);
 		std::cerr << RED_COLOR;
 		std::perror(mesage.c_str());
 		std::cerr << RESET_COLOR << std::endl;

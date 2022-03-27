@@ -38,14 +38,43 @@ void ft::ConfigParser::splitTokens(const std::string& configFile,
     fin.close();
 }
 
-void ft::ConfigParser::parse(const std::string& configFile) {
+void	ft::ConfigParser::hasMinimumParameters(const ft::VirtualHost &virtualHost) {
+	std::string	msg;
+
+	if (virtualHost.getHost() == INADDR_NONE)
+		msg.append("Specify host in config file\n");
+	if (virtualHost.getServerName().empty())
+		msg.append("Specify server name in config file\n");
+	if (!msg.empty())
+		ft::errorExit(msg);
+}
+
+void	ft::ConfigParser::validateParentheses(const std::vector<std::string> &tokens,
+			const std::string &openParenthesis, const std::string &closingParenthesis)
+{
+	int balance = 0;
+
+	std::vector<std::string>::const_iterator it = tokens.cbegin();
+	std::vector<std::string>::const_iterator end = tokens.cend();
+	while (it != end) {
+		if (*it == openParenthesis)
+			++balance;
+		else if (*it == closingParenthesis)
+			--balance;
+		if (balance < 0)
+			ft::errorExit("Invalid parentheses");
+		++it;
+	}
+	if (balance != 0)
+		ft::errorExit("Invalid parentheses");
+}
+
+void	ft::ConfigParser::parse(const std::string& configFile) {
 	std::vector<std::string>	tokens;
 
     splitTokens(configFile, tokens);
-// 	for (int i = 0; i < tokens.size(); ++i) {
-// 		std::cout << tokens[i] << '\n'
-// ;	}
-	char *currentDir = Getcwd();
+	validateParentheses(tokens, "{", "}");
+	std::string currentDir = Getcwd();
 	size_t size = tokens.size();
 	std::vector<std::string>::const_iterator it = tokens.cbegin();
 	std::vector<std::string>::const_iterator end = tokens.cend();
@@ -53,9 +82,9 @@ void ft::ConfigParser::parse(const std::string& configFile) {
     {
         if (*it != "server" && *(++it) != "{")
             ft::errorExit("Invalid config file");
-        ft::VirtualHost virtualHost;
+        ft::VirtualHost virtualHost(currentDir);
         std::vector<std::string>::iterator check;
-        while (++it < end && *it != "}") // parsing inside server
+        while (++it != end && *it != "}") // parsing inside server
         {
             if (*it == "host") {
 				virtualHost.setHost(it, end);
@@ -63,16 +92,16 @@ void ft::ConfigParser::parse(const std::string& configFile) {
 				virtualHost.setPort(it, end);
             } else if (*it == "server_name") {
 				virtualHost.setServerName(it, end);
-            } else if (*it == "root") {
-				virtualHost.setRoot(it, end);
             } else if (*it == "error_page") {
-				virtualHost.setErrorPage(it, end, currentDir);
+				virtualHost.setErrorPage(it, end);
             } else if (*it == "client_max_body_size") {
 				virtualHost.setClientMaxBodySize(it, end);
             } else if (*it == "location") {
+				virtualHost.setLocation(it, end);
             }
         }
-        // add(server);
+        if (it == end)
+			ft::errorExit("Invalid config file. Missing }");
+		hasMinimumParameters(virtualHost);
     }
-	free(currentDir);
 }
