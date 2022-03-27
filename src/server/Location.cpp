@@ -1,20 +1,29 @@
 #include "Location.hpp"
 
 ft::Location::Location(const std::string &currenDir)
-	: _root(currenDir)
+	: _root(currenDir),
+	_return(""),
+	_autoindex(true),
+	_fastcgiPass(""),
+	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
 {}
 
 ft::Location::~Location() {}
 
 ft::Location::Location(const Location & other)
-	: _root(other._root), _methods(other._methods),
-	_autoindex(other._autoindex), _index(other._index),
-	_fastcgiPass(other._fastcgiPass), _clientMaxBodySize(other._clientMaxBodySize)
+	: _root(other._root),
+	_return(other._return),
+	_methods(other._methods),
+	_autoindex(other._autoindex),
+	_index(other._index),
+	_fastcgiPass(other._fastcgiPass),
+	_clientMaxBodySize(other._clientMaxBodySize)
 {}
 
 ft::Location&	ft::Location::operator=(const Location & other) {
 	if (this != &other) {
 		_root = other._root;
+		_return = other._return;
 		_methods = other._methods;
 		_autoindex = other._autoindex;
 		_index = other._index;
