@@ -12,14 +12,16 @@
 # include "VirtualHost.hpp"
 
 namespace ft {
-	class ConfigParser
+	class Config
 	{
 		public:
-			ConfigParser(const std::string &configFile = "webserver.conf");
-			ConfigParser(const ConfigParser &);
-			~ConfigParser();
+			Config(const std::string &configFile = "webserver.conf");
+			Config(const Config &);
+			~Config();
 
-			ConfigParser &operator=(const ConfigParser &other);
+			Config &operator=(const Config &other);
+
+			const std::vector<ft::VirtualHost> &getVirtualHosts() const;
 
 		private:
 			std::vector<ft::VirtualHost>	_virtualHosts;

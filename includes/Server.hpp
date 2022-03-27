@@ -8,7 +8,7 @@
 # include <poll.h>
 # include <signal.h>
 # include "ListeningSocket.hpp"
-# include "ConfigParser.hpp"
+# include "Config.hpp"
 
 /* 
 ** POSIX requires that an #include of <poll.h> define INFTIM, but many
@@ -36,11 +36,10 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server &getInstance(const std::string &configFile = "webserver.conf");
-
+		static Server&	getInstance(const std::vector<ft::VirtualHost> &virtualHosts);
 	private:
 		Server();
-		Server(const std::string &configFile);
+		Server(const std::vector<ft::VirtualHost> &virtualHosts);
 		Server(const Server &other);
 		virtual ~Server();
 		

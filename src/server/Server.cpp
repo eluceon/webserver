@@ -2,9 +2,9 @@
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
 
-ft::Server::Server(const std::string& configFile) {
+
+ft::Server::Server(const std::vector<ft::VirtualHost> &virtualHosts) {
 	registerSignals();
-	// parseConfig(configFile);
 	timestamp("Starting up..");
 	_listeningSocket = new ft::ListeningSocket();
 	initialize();
@@ -15,8 +15,8 @@ ft::Server::~Server() {
 	delete _listeningSocket;
 }
 
-ft::Server&	ft::Server::getInstance(const std::string& configFile) {
-	static Server singleton(configFile);
+ft::Server&	ft::Server::getInstance(const std::vector<ft::VirtualHost> &virtualHosts) {
+	static Server singleton(virtualHosts);
     return singleton;
 }
 

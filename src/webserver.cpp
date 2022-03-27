@@ -2,7 +2,9 @@
 
 int main() {
 	const std::string configFile = "webserver.conf";
-	ft::ConfigParser	config(configFile);
-	ft::Server::getInstance(configFile);
+	ft::Config	config(configFile);
+
+	ft::Server::getInstance(config.getVirtualHosts());
+
     return 0;
 }
