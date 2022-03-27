@@ -110,3 +110,4 @@ void	ft::Config::parse(const std::string& configFile) {
 const std::vector<ft::VirtualHost> &ft::Config::getVirtualHosts() const {
 	return _virtualHosts;
 }
+
