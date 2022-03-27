@@ -20,9 +20,9 @@ namespace ft {
 	public:
 		VirtualHost(const std::string &currentDir = "");
 		~VirtualHost();
-		VirtualHost(const VirtualHost& other);
+		VirtualHost(const VirtualHost &other);
 
-		VirtualHost&	operator=(const VirtualHost & other);
+		VirtualHost &operator=(const VirtualHost &other);
 
 		void	setHost(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);

@@ -36,15 +36,15 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server&	getInstance(const std::string& configFile = "webserver.conf");
+		static Server &getInstance(const std::string &configFile = "webserver.conf");
 
 	private:
 		Server();
-		Server(const std::string& configFile);
-		Server(const Server& other);
+		Server(const std::string &configFile);
+		Server(const Server &other);
 		virtual ~Server();
 		
-		Server&	operator=(const Server & other);
+		Server &operator=(const Server &other);
 
 		ft::ListeningSocket		*_listeningSocket;
 		struct pollfd			_client[OPEN_MAX];

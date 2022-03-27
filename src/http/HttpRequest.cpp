@@ -4,13 +4,67 @@
 #include "utils.hpp"
 
 ft::HttpRequest::HttpRequest()
-	: _requestLine(""), _requestMethod(GET), _requestURI(""), _HTTPVersion(HTTP_1_1),
-	_protocol("http"), _serverName(""), _relativePath(""), _queryString(""),
-	_port(DEFAULT_PORT), _headers(), _body(), _parsed(false), _status(HTTP_OK),
-	_chunked(false), _contentLength(0), _clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+	: _requestLine(""),
+	_requestMethod(GET),
+	_requestURI(""),
+	_HTTPVersion(HTTP_1_1),
+	_protocol("http"),
+	_serverName(""),
+	_relativePath(""),
+	_queryString(""),
+	_port(DEFAULT_PORT), 
+	_headers(),
+	_body(),
+	_parsed(false),
+	_status(HTTP_OK),
+	_chunked(false),
+	_contentLength(0),
+	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+{}
+
+ft::HttpRequest::HttpRequest(const ft::HttpRequest &other)
+	: _requestLine(other._requestLine),
+	_requestMethod(other._requestMethod),
+	_requestURI(other._requestURI),
+	_HTTPVersion(other._HTTPVersion),
+	_protocol(other._protocol),
+	_serverName(other._serverName),
+	_relativePath(other._relativePath),
+	_queryString(other._queryString),
+	_port(other._port),
+	_headers(other._headers),
+	_body(other._body),
+	_parsed(other._parsed),
+	_status(other._status),
+	_chunked(other._chunked),
+	_contentLength(other._contentLength),
+	_clientMaxBodySize(other._clientMaxBodySize)
 {}
 
 ft::HttpRequest::~HttpRequest() {}
+
+ft::HttpRequest &ft::HttpRequest::operator=(const ft::HttpRequest &other) {
+	if (this != &other) {
+		_requestLine = other._requestLine;
+		_requestMethod = other._requestMethod;
+		_requestURI = other._requestURI;
+		_HTTPVersion = other._HTTPVersion;
+		_protocol = other._protocol;
+		_serverName = other._serverName;
+		_relativePath = other._relativePath;
+		_queryString = other._queryString;
+		_port = other._port;
+		_headers = other._headers;
+		_body = other._body;
+		_parsed = other._parsed;
+		_status = other._status;
+		_chunked = other._chunked;
+		_contentLength = other._contentLength;
+		_clientMaxBodySize = other._clientMaxBodySize;
+	}
+	return *this;
+}
+
 
 std::string	ft::HttpRequest::getMethodName() const {
 	switch (_requestMethod)

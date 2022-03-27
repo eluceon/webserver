@@ -12,7 +12,7 @@ namespace ft
 			ListeningSocket(const ListeningSocket& other);
 			virtual ~ListeningSocket();
 
-			ListeningSocket &operator=(const ListeningSocket& other);
+			ListeningSocket &operator=(const ListeningSocket &other);
 
 		private:
 			int	_listeningSocket;

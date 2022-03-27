@@ -61,6 +61,8 @@
 # define DEFAULT_MAX_BODY_SIZE		1048576
 # define MAXIMUM_MAX_BODY_SIZE		104857600
 
+# define DEFAULT_PORT		80
+
 enum e_methods {
 	GET,
 	POST,

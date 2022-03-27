@@ -8,7 +8,6 @@
 
 # define CRLF				"\r\n"
 # define CRLF_CRLF			"\r\n\r\n"
-# define DEFAULT_PORT		80
 # define PROTOCOL			"http"
 
 namespace ft
@@ -16,11 +15,11 @@ namespace ft
 	class HttpRequest {
 		public:
 			HttpRequest();
-			HttpRequest(const HttpRequest& other);
+			HttpRequest(const HttpRequest &other);
 			HttpRequest(const char* str);
 			~HttpRequest();
 
-			HttpRequest& operator=(const HttpRequest other);
+			HttpRequest &operator=(const HttpRequest &other);
 
 			void 				setMethod(std::string requestMethod);
 			std::string			getMethodName() const;

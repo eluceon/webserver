@@ -1,7 +1,7 @@
 #include "VirtualHost.hpp"
 
 ft::VirtualHost::VirtualHost(const std::string &currentDir) 
-	: _root(currentDir + '/'), _host(INADDR_NONE), _port(80),
+	: _root(currentDir + '/'), _host(INADDR_NONE), _port(DEFAULT_PORT),
 	_serverName(""), _clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
 {}
 

@@ -14,7 +14,7 @@ namespace ft
 			BoundSocket(const BoundSocket& other);
 			virtual ~BoundSocket();
 
-			BoundSocket& operator=(const BoundSocket& other);
+			BoundSocket &operator=(const BoundSocket& other);
 			
 		private:
 			// _servAddr is a structure specifies a transport address

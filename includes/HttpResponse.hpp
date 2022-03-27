@@ -9,10 +9,10 @@ namespace ft {
 		public:
 			HttpResponse();
 			HttpResponse(HttpRequest* httpReuest);
-			HttpResponse(const HttpResponse& other);
+			HttpResponse(const HttpResponse &other);
 			~HttpResponse();
 
-			HttpResponse& operator=(const HttpResponse& other);
+			HttpResponse &operator=(const HttpResponse &other);
 			
 			const std::string&	getResponse();
 		protected:

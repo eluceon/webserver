@@ -15,8 +15,12 @@ namespace ft {
 	class ConfigParser
 	{
 		public:
-			ConfigParser(const std::string& configFile = "webserver.conf");
+			ConfigParser(const std::string &configFile = "webserver.conf");
+			ConfigParser(const ConfigParser &);
 			~ConfigParser();
+
+			ConfigParser &operator=(const ConfigParser &other);
+
 		private:
 			std::vector<ft::VirtualHost>	_virtualHosts;
 

@@ -13,7 +13,7 @@ namespace ft {
 			Location(const Location &other);
 			~Location();
 
-			Location&	operator=(const Location & other);
+			Location &operator=(const Location &other);
 
 			void	parseLocation(std::vector<std::string>::const_iterator &it,
 						std::vector<std::string>::const_iterator &end,

@@ -14,10 +14,10 @@ namespace ft
 	class Socket {
 		public:
 			Socket();
-			Socket(const Socket& other);
+			Socket(const Socket &other);
 			virtual ~Socket();
 
-			Socket& operator=(const Socket& other);
+			Socket &operator=(const Socket &other);
 
 			int	getSocket();
 
