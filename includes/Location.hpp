@@ -33,6 +33,14 @@ namespace ft {
 			void	setReturn(std::vector<std::string>::const_iterator &it,
 						std::vector<std::string>::const_iterator &end);
 
+			const std::string				&getRoot() const;
+			const std::string				&getReturn() const;
+			const std::vector<bool>			&getMethods() const;
+			bool							getAutoindex() const;
+			const std::vector<std::string> 	&getIndex() const;
+			const std::string				&getFastcgiPass() const;
+			unsigned long					getClientMaxBodySize() const;
+
 		private:
 			std::string					_root;
 			std::string					_return;
@@ -41,7 +49,6 @@ namespace ft {
 			std::vector<std::string> 	_index;
 			std::string					_fastcgiPass;
 			unsigned long     			_clientMaxBodySize;
-
 	};
 }
 

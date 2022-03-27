@@ -137,3 +137,31 @@ void	ft::Location::setClientMaxBodySize(std::vector<std::string>::const_iterator
 	}
 	ft::skipTokens(it, end, 1, ";");
 }
+
+const std::string				&ft::Location::getRoot() const {
+	return _root;
+}
+
+const std::string				&ft::Location::getReturn() const {
+	return _return;
+}
+
+const std::vector<bool>			&ft::Location::getMethods() const {
+	return _methods;
+}
+
+bool							ft::Location::getAutoindex() const {
+	return _autoindex;
+}
+
+const std::vector<std::string> 	&ft::Location::getIndex() const {
+	return _index;
+}
+
+const std::string				&ft::Location::getFastcgiPass() const {
+	return _fastcgiPass;
+}
+
+unsigned long					ft::Location::getClientMaxBodySize() const {
+	return _clientMaxBodySize;
+}
