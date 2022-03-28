@@ -21,10 +21,10 @@ namespace ft {
 
 			Config &operator=(const Config &other);
 
-			const std::vector<ft::VirtualHost> &getVirtualHosts() const;
+			const std::unordered_map<std::string, ft::VirtualHost> &getVirtualHosts() const;
 
 		private:
-			std::vector<ft::VirtualHost>	_virtualHosts;
+			std::unordered_map<std::string, ft::VirtualHost>	_virtualHosts;
 
 			void	parse(const std::string& configFile);
 			void	splitTokens(const std::string& configFile);

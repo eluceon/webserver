@@ -36,19 +36,19 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server&	getInstance(const std::vector<ft::VirtualHost> &virtualHosts);
+		static Server&	getInstance(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
 	private:
 		Server();
-		Server(const std::vector<ft::VirtualHost> &virtualHosts);
+		Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
 		Server(const Server &other);
 		virtual ~Server();
 		
 		Server &operator=(const Server &other);
 
-		ft::ListeningSocket		*_listeningSocket;
+		std::vector<ft::ListeningSocket *>	_listeningSockets;
 		struct pollfd			_client[OPEN_MAX];
 
-		void		initialize();
+		void		initializeListennersPollfd();
 		void		run();
 		void		checkConnectionsForData(int	maxIdx, int countReadyFd,
 							struct sockaddr_in	*cliaddr, socklen_t	clilen);
@@ -56,6 +56,7 @@ namespace ft
 		static void	handleShutdown(int signal);
 		std::string	sockNtop(const struct sockaddr *sa, socklen_t salen);
 		ssize_t		readn(int fd, std::string& buffer);
+		void		setListeningSockets(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
 	};
 } // namespace ft
 

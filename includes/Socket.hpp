@@ -4,9 +4,10 @@
 # include	<sys/types.h>	// basic system data types
 # include	<sys/socket.h>	// basic socket definitions
 
-# define	SERV_PORT	8080
+# define	SERV_PORT	80
 
 # include <fcntl.h>
+# include <algorithm>
 # include "utils.hpp"
 	
 namespace ft
@@ -22,7 +23,7 @@ namespace ft
 			int	getSocket();
 
 		protected:
-			int					_socket;
+			int	_socket;
 
 			void	createSocket();
 	};	

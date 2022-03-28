@@ -103,10 +103,10 @@ void	ft::Config::parse(const std::string& configFile) {
         if (it == end)
 			ft::errorExit("Invalid config file. Missing }");
 		hasMinimumParameters(virtualHost);
-		_virtualHosts.push_back(virtualHost);
+		_virtualHosts[virtualHost.getServerName()] = virtualHost;
     }
 }
 
-const std::vector<ft::VirtualHost> &ft::Config::getVirtualHosts() const {
+const std::unordered_map<std::string, ft::VirtualHost> &ft::Config::getVirtualHosts() const {
 	return _virtualHosts;
 }

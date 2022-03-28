@@ -3,59 +3,83 @@
 #include "HttpResponse.hpp"
 
 
-ft::Server::Server(const std::vector<ft::VirtualHost> &virtualHosts) {
+ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
 	registerSignals();
 	timestamp("Starting up..");
-	_listeningSocket = new ft::ListeningSocket();
-	initialize();
+	setListeningSockets(virtualHosts);
 	run();
 }
 
 ft::Server::~Server() {
-	delete _listeningSocket;
+	std::vector<ListeningSocket *>::const_iterator it = _listeningSockets.cbegin();
+	std::vector<ListeningSocket *>::const_iterator end = _listeningSockets.cend();
+
+	while (it != end) {
+		delete(*it);
+		++it;
+	}
 }
 
-ft::Server&	ft::Server::getInstance(const std::vector<ft::VirtualHost> &virtualHosts) {
+ft::Server&	ft::Server::getInstance(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
 	static Server singleton(virtualHosts);
     return singleton;
 }
 
-void	ft::Server::initialize() {
-	_client[0].fd = _listeningSocket->getSocket();
-	_client[0].events = POLLRDNORM;
-	for (int i = 1; i < OPEN_MAX; i++)
-		_client[i].fd = -1;		// -1 indicates available entry
+void	ft::Server::setListeningSockets(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
+	std::unordered_map<std::string, ft::VirtualHost>::const_iterator it = virtualHosts.cbegin();
+	std::unordered_map<std::string, ft::VirtualHost>::const_iterator end = virtualHosts.cend();
+
+	while (it != end) {
+		_listeningSockets.push_back(new ft::ListeningSocket(it->second.getPort()));
+		++it;
+	}
+}
+
+void	ft::Server::initializeListennersPollfd() {
+	size_t	n = _listeningSockets.size();
+
+	for (int i = 0; i < n; ++i) {
+		_client[i].fd = _listeningSockets[i]->getSocket();
+		_client[i].events = POLLRDNORM;
+	}
+	for (int i = n; i < OPEN_MAX; i++)
+		_client[i].fd = -1;					// -1 indicates available entry
 }
 
 void	ft::Server::run() {
-	int					countReadyFd;	// count of ready descriptors
-	int					i, connfd;
+	int					countReadyFd;		// count of ready descriptors
+	int					connfd;
 	struct sockaddr_in	cliaddr;
 	socklen_t			clilen;
-	nfds_t				maxIdx = 0;		// max index into _client[] array
-	
+	size_t				countListeningSockets = _listeningSockets.size();
+	nfds_t				j, maxIdx = countListeningSockets - 1;		// max index in _client[] array
+
+	initializeListennersPollfd();
 	while(true) {
 		if ( (countReadyFd = poll(_client, maxIdx + 1, INFTIM)) < 0)
 			systemErrorExit("poll error");
-		if (_client[0].revents & POLLRDNORM) {	// new client connection
-			clilen = sizeof(cliaddr);
-			connfd = Accept(_listeningSocket->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
-			fcntl(connfd, F_SETFL, O_NONBLOCK);
-			timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr, clilen));
-			for (i = 1; i < OPEN_MAX; i++)
-				if (_client[i].fd < 0) {
-					_client[i].fd = connfd;	// save descriptor
-					break;
-				}
-			if (i == OPEN_MAX)
-				errorExit("too many clients");
 
-			_client[i].events = POLLRDNORM;
-			if (i > maxIdx)
-				maxIdx = i;
-			if (--countReadyFd <= 0)
-				continue;					// no more readable descriptors
+		for (int i = 0; i < countListeningSockets && countReadyFd > 0; ++i, --countReadyFd) {
+			if (_client[i].revents & POLLRDNORM) {	// new client connection
+				clilen = sizeof(cliaddr);
+				connfd = Accept(_listeningSockets[i]->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
+				// fcntl(connfd, F_SETFL, O_NONBLOCK);
+				timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr, clilen));
+				for (j = countListeningSockets; j < OPEN_MAX; ++j) {
+					if (_client[j].fd < 0) {
+						_client[j].fd = connfd;		// save descriptor
+						break;
+					}
+				}
+				if (j == OPEN_MAX)
+					errorExit("too many clients");
+				_client[j].events = POLLRDNORM;
+				maxIdx = std::max(maxIdx, j);
+		timestamp("countReadyFd: " + std::to_string(countReadyFd));
+			}
 		}
+		if (countReadyFd <= 0)
+			continue;					// no more readable descriptors
 		checkConnectionsForData(maxIdx, countReadyFd, &cliaddr, clilen);
 	}
 }
@@ -75,13 +99,17 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 						struct sockaddr_in	*cliaddr, socklen_t	clilen) {
 	int		sockfd;
 	ssize_t	n;
-	std::string	buffer;
+	// std::string	buffer;
+	char	buf[MAXLINE + 1];
 
-	for (int i = 1; i <= maxIdx; i++) {		// check all clients for data
+	// check all clients for data
+	for (size_t i = _listeningSockets.size(); i <= maxIdx && countReadyFd > 0; ++i, --countReadyFd) {
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
-			if ( (n = readn(sockfd, buffer)) < 0 && errno != EWOULDBLOCK) {
+			// if ( (n = readn(sockfd, buffer)) < 0 && errno != EWOULDBLOCK) {
+			// if ( (n = readn(sockfd, buffer)) < 0) {
+			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
 					if (close(sockfd) == -1)
@@ -95,8 +123,9 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 					systemErrorExit("close error");
 				_client[i].fd = -1;
 			} else {
+				buf[MAXLINE] = '\0';
 				HttpRequest *httpRequest = new HttpRequest();		
-				httpRequest->parse(buffer);
+				httpRequest->parse(buf);
 				if (!httpRequest->isParsed()) {
 					delete httpRequest;
 					continue;
@@ -107,8 +136,6 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 				delete httpResponse;
 				delete httpRequest;
 			}
-			if (--countReadyFd <= 0)
-				break;						// no more readable descriptors
 		}
 	}
 }
