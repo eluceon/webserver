@@ -8,7 +8,7 @@ CXXFLAGS		=	-g -Wall -Wextra -Werror -std=c++98
 CXXFLAGS		=	-fsanitize=address
 RM				=	rm -rf
 
-NAME_SERVER		=	server
+NAME_SERVER		=	webserv
 
 OBJDIR			=	./obj/
 HEADERDIR		=	./includes/
