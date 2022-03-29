@@ -59,7 +59,7 @@ void	ft::Server::run() {
 		if ( (countReadyFd = poll(_client, maxIdx + 1, INFTIM)) < 0)
 			systemErrorExit("poll error");
 
-		for (int i = 0; i < countListeningSockets && countReadyFd > 0; ++i, --countReadyFd) {
+		for (int i = 0; i < countListeningSockets && countReadyFd > 0; ++i) {
 			if (_client[i].revents & POLLRDNORM) {	// new client connection
 				clilen = sizeof(cliaddr);
 				connfd = Accept(_listeningSockets[i]->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
@@ -75,25 +75,25 @@ void	ft::Server::run() {
 					errorExit("too many clients");
 				_client[j].events = POLLRDNORM;
 				maxIdx = std::max(maxIdx, j);
-		timestamp("countReadyFd: " + std::to_string(countReadyFd));
+				timestamp("countReadyFd: " + std::to_string(countReadyFd));
+				--countReadyFd;
 			}
 		}
-		if (countReadyFd <= 0)
-			continue;					// no more readable descriptors
-		checkConnectionsForData(maxIdx, countReadyFd, &cliaddr, clilen);
+		if (countReadyFd > 0)
+			checkConnectionsForData(maxIdx, countReadyFd, &cliaddr, clilen);
 	}
 }
 
-ssize_t	ft::Server::readn(int fd, std::string& buffer) {
-	ssize_t	nread;
-	char	buf[MAXLINE + 1];
+// ssize_t	ft::Server::readn(int fd, std::string& buffer) {
+// 	ssize_t	nread;
+// 	char	buf[MAXLINE + 1];
 
-	while((nread = recv(fd, buf, MAXLINE, 0)) > 0) {
-		buf[MAXLINE] = '\0';
-		buffer.append(buf);
-	}
-	return nread == 0 ? buffer.size() : nread;
-}
+// 	while((nread = recv(fd, buf, MAXLINE, 0)) > 0) {
+// 		buf[MAXLINE] = '\0';
+// 		buffer.append(buf);
+// 	}
+// 	return nread == 0 ? buffer.size() : nread;
+// }
 
 void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 						struct sockaddr_in	*cliaddr, socklen_t	clilen) {
@@ -123,8 +123,10 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 					systemErrorExit("close error");
 				_client[i].fd = -1;
 			} else {
+				timestamp("send");
+
 				buf[MAXLINE] = '\0';
-				HttpRequest *httpRequest = new HttpRequest();		
+				HttpRequest *httpRequest = new HttpRequest();	
 				httpRequest->parse(buf);
 				if (!httpRequest->isParsed()) {
 					delete httpRequest;

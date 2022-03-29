@@ -1,5 +1,90 @@
-28/03/2022 20:26:25> New client: 127.0.0.1:64062
-28/03/2022 20:26:25> countReadyFd: 1
-28/03/2022 20:26:25> New client: 127.0.0.1:64063
-28/03/2022 20:26:25> countReadyFd: 2
-28/03/2022 20:30:33> Shutting down on signal 2
+29/03/2022 14:20:55> Starting up..
+29/03/2022 14:20:55> System error exit: bind error
+29/03/2022 14:22:55> Starting up..
+29/03/2022 14:23:01> New client: 127.0.0.1:50086
+29/03/2022 14:23:01> countReadyFd: 1
+29/03/2022 14:23:01> New client: 127.0.0.1:50087
+29/03/2022 14:23:01> countReadyFd: 1
+29/03/2022 14:23:01> send
+29/03/2022 14:23:06> New client: 127.0.0.1:50090
+29/03/2022 14:23:06> countReadyFd: 2
+29/03/2022 14:23:06> send
+29/03/2022 14:23:06> _client[2] aborted connection
+29/03/2022 14:23:21> Shutting down on signal 2
+29/03/2022 14:23:33> Starting up..
+29/03/2022 14:23:39> New client: 127.0.0.1:50108
+29/03/2022 14:23:39> countReadyFd: 1
+29/03/2022 14:23:39> New client: 127.0.0.1:50109
+29/03/2022 14:23:39> countReadyFd: 1
+29/03/2022 14:23:39> send
+29/03/2022 14:23:42> New client: 127.0.0.1:50115
+29/03/2022 14:23:42> countReadyFd: 2
+29/03/2022 14:23:42> New client: 127.0.0.1:50116
+29/03/2022 14:23:42> countReadyFd: 3
+29/03/2022 14:23:42> send
+29/03/2022 14:23:42> _client[5] closed connection
+29/03/2022 14:23:52> New client: 127.0.0.1:50123
+29/03/2022 14:23:52> countReadyFd: 2
+29/03/2022 14:23:52> send
+29/03/2022 14:23:52> New client: 127.0.0.1:50124
+29/03/2022 14:23:52> countReadyFd: 2
+29/03/2022 14:24:03> _client[4] closed connection
+29/03/2022 14:24:03> send
+29/03/2022 14:24:03> _client[6] closed connection
+29/03/2022 14:24:07> New client: 127.0.0.1:50131
+29/03/2022 14:24:07> countReadyFd: 3
+29/03/2022 14:24:07> New client: 127.0.0.1:50132
+29/03/2022 14:24:07> countReadyFd: 4
+29/03/2022 14:24:07> send
+29/03/2022 14:24:07> send
+29/03/2022 14:24:07> _client[6] closed connection
+29/03/2022 14:24:16> New client: 127.0.0.1:50138
+29/03/2022 14:24:16> countReadyFd: 3
+29/03/2022 14:24:16> send
+29/03/2022 14:24:16> New client: 127.0.0.1:50139
+29/03/2022 14:24:16> countReadyFd: 3
+29/03/2022 14:24:18> New client: 127.0.0.1:50140
+29/03/2022 14:24:18> countReadyFd: 4
+29/03/2022 14:24:18> New client: 127.0.0.1:50141
+29/03/2022 14:24:18> countReadyFd: 5
+29/03/2022 14:24:18> send
+29/03/2022 14:24:18> _client[7] aborted connection
+29/03/2022 14:24:21> _client[6] closed connection
+29/03/2022 14:24:30> New client: 127.0.0.1:50148
+29/03/2022 14:24:30> countReadyFd: 4
+29/03/2022 14:24:35> New client: 127.0.0.1:50154
+29/03/2022 14:24:35> countReadyFd: 5
+29/03/2022 14:24:35> send
+29/03/2022 14:24:35> send
+29/03/2022 14:24:35> send
+29/03/2022 14:24:35> _client[7] closed connection
+29/03/2022 14:24:35> _client[8] closed connection
+29/03/2022 14:24:45> New client: 127.0.0.1:50162
+29/03/2022 14:24:45> countReadyFd: 4
+29/03/2022 14:24:45> New client: 127.0.0.1:50163
+29/03/2022 14:24:45> countReadyFd: 4
+29/03/2022 14:24:45> send
+29/03/2022 14:24:51> New client: 127.0.0.1:50169
+29/03/2022 14:24:51> countReadyFd: 5
+29/03/2022 14:24:51> send
+29/03/2022 14:24:51> _client[8] closed connection
+29/03/2022 14:25:08> New client: 127.0.0.1:50176
+29/03/2022 14:25:08> countReadyFd: 5
+29/03/2022 14:25:08> send
+29/03/2022 14:25:08> New client: 127.0.0.1:50177
+29/03/2022 14:25:08> countReadyFd: 5
+29/03/2022 14:25:13> _client[7] closed connection
+29/03/2022 14:25:13> send
+29/03/2022 14:25:16> _client[8] closed connection
+29/03/2022 14:25:16> _client[9] aborted connection
+29/03/2022 14:25:19> _client[6] closed connection
+29/03/2022 14:25:22> _client[4] closed connection
+29/03/2022 14:25:23> _client[5] closed connection
+29/03/2022 14:25:27> New client: 127.0.0.1:50191
+29/03/2022 14:25:27> countReadyFd: 5
+29/03/2022 14:25:27> New client: 127.0.0.1:50192
+29/03/2022 14:25:27> countReadyFd: 6
+29/03/2022 14:25:27> send
+29/03/2022 14:25:27> send
+29/03/2022 14:25:27> _client[5] closed connection
+29/03/2022 14:25:38> Shutting down on signal 2
