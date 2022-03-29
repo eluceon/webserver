@@ -13,7 +13,9 @@ ft::VirtualHost::VirtualHost(const ft::VirtualHost &other)
 	_host(other._host),
 	_port(other._port),
 	_serverName(other._serverName),
-	_clientMaxBodySize(other._clientMaxBodySize)
+	_clientMaxBodySize(other._clientMaxBodySize),
+	_errorPages(other._errorPages),
+	_locations(other._locations)
 {}
 
 ft::VirtualHost::~VirtualHost() {}
@@ -25,6 +27,8 @@ ft::VirtualHost &ft::VirtualHost::operator=(const ft::VirtualHost &other) {
 		_port = other._port;
 		_serverName = other._serverName;
 		_clientMaxBodySize = other._clientMaxBodySize;
+		_errorPages = other._errorPages;
+		_locations = other._locations;
 	}
 	return *this;
 }
@@ -68,7 +72,7 @@ void	ft::VirtualHost::setClientMaxBodySize(std::vector<std::string>::const_itera
 
 void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end) {
-	int 		error_code;
+	short 		error_code = 0;
 	struct stat statbuf;
 
 	skipTokens(it, end, 1);
@@ -85,7 +89,7 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 	if (!S_ISREG(statbuf.st_mode))
 		ft::errorExit("error_page :" + std::to_string(error_code) 
 			+ "in config file is not a file");
-	_errorPages.insert(std::make_pair(error_code, fullPath));
+	_errorPages.insert(std::make_pair<short, std::string>(error_code, fullPath));
 	skipTokens(it, end, 1, ";");
 }
 
@@ -97,6 +101,10 @@ void	ft::VirtualHost::setLocation(std::vector<std::string>::const_iterator &it,
 	std::string path = *it;
 	location.parseLocation(it, end, _root);
 	_locations.insert(std::make_pair(path, location));
+}
+
+const std::string	&ft::VirtualHost::getRoot() const {
+	return _root;
 }
 
 in_addr_t	ft::VirtualHost::getHost() const {

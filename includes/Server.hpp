@@ -45,18 +45,18 @@ namespace ft
 		
 		Server &operator=(const Server &other);
 
-		std::vector<ft::ListeningSocket *>	_listeningSockets;
-		struct pollfd			_client[OPEN_MAX];
+		std::unordered_map<std::string, ft::VirtualHost>	_virtualHosts;
+		std::vector<ft::ListeningSocket *>					_listeningSockets;
+		struct pollfd										_client[OPEN_MAX];
 
 		void		initializeListennersPollfd();
 		void		run();
-		void		checkConnectionsForData(int	maxIdx, int countReadyFd,
-							struct sockaddr_in	*cliaddr, socklen_t	clilen);
+		void		checkConnectionsForData(int	maxIdx, int countReadyFd);
 		void		registerSignals();
 		static void	handleShutdown(int signal);
-		std::string	sockNtop(const struct sockaddr *sa, socklen_t salen);
+		std::string	sockNtop(const struct sockaddr *sa);
 		ssize_t		readn(int fd, std::string& buffer);
-		void		setListeningSockets(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
+		void		setListeningSockets();
 	};
 } // namespace ft
 

@@ -351,7 +351,7 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	_parsed = true;
 
 
-	for (int i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
+	for (size_t i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
 		std::cout << segments[i];
 	
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!

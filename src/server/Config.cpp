@@ -18,7 +18,7 @@ void ft::Config::splitTokens(const std::string& configFile,
 	while (std::getline(fin, line)) {
 		token.clear();
 		size_t len = line.size();
-		for (int i = 0; i < len; ++i) {
+		for (size_t i = 0; i < len; ++i) {
 			if (line[i] != ';' && line[i] != '#' && !std::isspace(line[i])) {
 				token += line[i];
 				continue;
@@ -75,7 +75,6 @@ void	ft::Config::parse(const std::string& configFile) {
     splitTokens(configFile, tokens);
 	validateParentheses(tokens, "{", "}");
 	std::string currentDir = Getcwd();
-	size_t size = tokens.size();
 	std::vector<std::string>::const_iterator it = tokens.cbegin();
 	std::vector<std::string>::const_iterator end = tokens.cend();
     for ( ; it < end; ++it) // parsing servers

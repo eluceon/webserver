@@ -3,10 +3,11 @@
 #include "HttpResponse.hpp"
 
 
-ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
+ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts)
+	: _virtualHosts(virtualHosts) {
 	registerSignals();
 	timestamp("Starting up..");
-	setListeningSockets(virtualHosts);
+	setListeningSockets();
 	run();
 }
 
@@ -25,9 +26,9 @@ ft::Server&	ft::Server::getInstance(const std::unordered_map<std::string, ft::Vi
     return singleton;
 }
 
-void	ft::Server::setListeningSockets(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
-	std::unordered_map<std::string, ft::VirtualHost>::const_iterator it = virtualHosts.cbegin();
-	std::unordered_map<std::string, ft::VirtualHost>::const_iterator end = virtualHosts.cend();
+void	ft::Server::setListeningSockets() {
+	std::unordered_map<std::string, ft::VirtualHost>::const_iterator it = _virtualHosts.cbegin();
+	std::unordered_map<std::string, ft::VirtualHost>::const_iterator end = _virtualHosts.cend();
 
 	while (it != end) {
 		_listeningSockets.push_back(new ft::ListeningSocket(it->second.getPort()));
@@ -38,11 +39,11 @@ void	ft::Server::setListeningSockets(const std::unordered_map<std::string, ft::V
 void	ft::Server::initializeListennersPollfd() {
 	size_t	n = _listeningSockets.size();
 
-	for (int i = 0; i < n; ++i) {
+	for (size_t i = 0; i < n; ++i) {
 		_client[i].fd = _listeningSockets[i]->getSocket();
 		_client[i].events = POLLRDNORM;
 	}
-	for (int i = n; i < OPEN_MAX; i++)
+	for (size_t i = n; i < OPEN_MAX; i++)
 		_client[i].fd = -1;					// -1 indicates available entry
 }
 
@@ -59,12 +60,12 @@ void	ft::Server::run() {
 		if ( (countReadyFd = poll(_client, maxIdx + 1, INFTIM)) < 0)
 			systemErrorExit("poll error");
 
-		for (int i = 0; i < countListeningSockets && countReadyFd > 0; ++i) {
+		for (size_t i = 0; i < countListeningSockets && countReadyFd > 0; ++i) {
 			if (_client[i].revents & POLLRDNORM) {	// new client connection
 				clilen = sizeof(cliaddr);
 				connfd = Accept(_listeningSockets[i]->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
 				// fcntl(connfd, F_SETFL, O_NONBLOCK);
-				timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr, clilen));
+				timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr));
 				for (j = countListeningSockets; j < OPEN_MAX; ++j) {
 					if (_client[j].fd < 0) {
 						_client[j].fd = connfd;		// save descriptor
@@ -75,12 +76,11 @@ void	ft::Server::run() {
 					errorExit("too many clients");
 				_client[j].events = POLLRDNORM;
 				maxIdx = std::max(maxIdx, j);
-				timestamp("countReadyFd: " + std::to_string(countReadyFd));
 				--countReadyFd;
 			}
 		}
 		if (countReadyFd > 0)
-			checkConnectionsForData(maxIdx, countReadyFd, &cliaddr, clilen);
+			checkConnectionsForData(maxIdx, countReadyFd);
 	}
 }
 
@@ -95,15 +95,14 @@ void	ft::Server::run() {
 // 	return nread == 0 ? buffer.size() : nread;
 // }
 
-void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
-						struct sockaddr_in	*cliaddr, socklen_t	clilen) {
+void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 	int		sockfd;
 	ssize_t	n;
 	// std::string	buffer;
 	char	buf[MAXLINE + 1];
 
 	// check all clients for data
-	for (size_t i = _listeningSockets.size(); i <= maxIdx && countReadyFd > 0; ++i, --countReadyFd) {
+	for (int i = _listeningSockets.size(); i <= maxIdx && countReadyFd > 0; ++i, --countReadyFd) {
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
@@ -123,8 +122,6 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 					systemErrorExit("close error");
 				_client[i].fd = -1;
 			} else {
-				timestamp("send");
-
 				buf[MAXLINE] = '\0';
 				HttpRequest *httpRequest = new HttpRequest();	
 				httpRequest->parse(buf);
@@ -132,7 +129,7 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd,
 					delete httpRequest;
 					continue;
 				}
-				HttpResponse *httpResponse = new HttpResponse(httpRequest);
+				HttpResponse *httpResponse = new HttpResponse(httpRequest, _virtualHosts);
 				std::string response = httpResponse->getResponse();
 				send(sockfd, response.c_str(), response.size(), 0);
 				delete httpResponse;
@@ -157,7 +154,7 @@ void	ft::Server::registerSignals() {
 * looks inside the structure, return the string presentation
 * of socket address (ip_address:port)
 */
-std::string	ft::Server::sockNtop(const struct sockaddr *sa, socklen_t salen) {
+std::string	ft::Server::sockNtop(const struct sockaddr *sa) {
     char		str[INET6_ADDRSTRLEN];		// IP6 is larger then IP4
 	std::string	socket;
 

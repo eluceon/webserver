@@ -39,7 +39,8 @@ namespace ft {
 		void	setLocation(std::vector<std::string>::const_iterator &it,
 					std::vector<std::string>::const_iterator &end);
 		
-		in_addr_t	getHost() const; 
+		const std::string	&getRoot() const;
+		in_addr_t	getHost() const;
 		int	getPort() const;
 		const std::string &getServerName() const;
 		unsigned long	getClientMaxBodySize() const;
