@@ -1,6 +1,6 @@
 #include "Server.hpp"
-#include "HttpRequest.hpp"
-#include "HttpResponse.hpp"
+#include "HTTPRequest.hpp"
+#include "HTTPResponse.hpp"
 
 
 ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts)
@@ -123,13 +123,13 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				_client[i].fd = -1;
 			} else {
 				buf[MAXLINE] = '\0';
-				HttpRequest *httpRequest = new HttpRequest();	
+				HTTPRequest *httpRequest = new HTTPRequest();	
 				httpRequest->parse(buf);
 				if (!httpRequest->isParsed()) {
 					delete httpRequest;
 					continue;
 				}
-				HttpResponse *httpResponse = new HttpResponse(httpRequest, _virtualHosts);
+				HTTPResponse *httpResponse = new HTTPResponse(httpRequest, _virtualHosts);
 				std::string response = httpResponse->getResponse();
 				send(sockfd, response.c_str(), response.size(), 0);
 				delete httpResponse;

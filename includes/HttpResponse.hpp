@@ -3,29 +3,29 @@
 
 # include <fstream>
 # include <unordered_map>
-# include "HttpRequest.hpp"
+# include "HTTPRequest.hpp"
 # include "VirtualHost.hpp"
 
 namespace ft {
-	class HttpResponse {
+	class HTTPResponse {
 		public:
-			// HttpResponse(HttpRequest* httpReuest);
-			HttpResponse(
-				HttpRequest* httpReuest,
+			// HTTPResponse(HTTPRequest* httpReuest);
+			HTTPResponse(
+				HTTPRequest* httpReuest,
 				std::unordered_map<std::string,ft::VirtualHost>	&_virtualHosts
 			);
-			HttpResponse(const HttpResponse &other);
-			~HttpResponse();
+			HTTPResponse(const HTTPResponse &other);
+			~HTTPResponse();
 
-			HttpResponse &operator=(const HttpResponse &other);
+			HTTPResponse &operator=(const HTTPResponse &other);
 			
 			const std::string&	getResponse();
 		protected:
-			HttpRequest* 											_httpReuest;
+			HTTPRequest* 											_httpReuest;
 			std::unordered_map<std::string,ft::VirtualHost>			&_virtualHosts;
 			std::string												_response;
 
-			HttpResponse();
+			HTTPResponse();
 
 			void	run();
 			void	handleGetResponse();

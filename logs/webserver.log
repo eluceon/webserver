@@ -34,3 +34,14 @@
 30/03/2022 15:08:20> New client: 127.0.0.1:56638
 30/03/2022 15:08:20> _client[6] aborted connection
 30/03/2022 15:08:22> Shutting down on signal 2
+30/03/2022 15:13:33> Starting up..
+30/03/2022 15:13:35> New client: 127.0.0.1:56859
+30/03/2022 15:13:35> New client: 127.0.0.1:56861
+30/03/2022 15:13:37> New client: 127.0.0.1:56863
+30/03/2022 15:13:37> _client[5] closed connection
+30/03/2022 15:13:38> New client: 127.0.0.1:56866
+30/03/2022 15:13:38> New client: 127.0.0.1:56867
+30/03/2022 15:13:39> _client[5] closed connection
+30/03/2022 15:13:39> New client: 127.0.0.1:56869
+30/03/2022 15:13:39> _client[5] closed connection
+30/03/2022 15:13:41> Shutting down on signal 2

@@ -12,14 +12,14 @@
 
 namespace ft
 {
-	class HttpRequest {
+	class HTTPRequest {
 		public:
-			HttpRequest();
-			HttpRequest(const HttpRequest &other);
-			HttpRequest(const char* str);
-			~HttpRequest();
+			HTTPRequest();
+			HTTPRequest(const HTTPRequest &other);
+			HTTPRequest(const char* str);
+			~HTTPRequest();
 
-			HttpRequest &operator=(const HttpRequest &other);
+			HTTPRequest &operator=(const HTTPRequest &other);
 
 			void 				setMethod(std::string requestMethod);
 			std::string			getMethodName() const;

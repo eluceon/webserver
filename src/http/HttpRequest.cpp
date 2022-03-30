@@ -1,9 +1,9 @@
 #include <string>
-#include "HttpRequest.hpp"
-#include "HttpResponse.hpp"
+#include "HTTPRequest.hpp"
+#include "HTTPResponse.hpp"
 #include "utils.hpp"
 
-ft::HttpRequest::HttpRequest()
+ft::HTTPRequest::HTTPRequest()
 	: _requestMethod(GET),
 	_requestURI(""),
 	_HTTPVersion(HTTP_1_1),
@@ -21,7 +21,7 @@ ft::HttpRequest::HttpRequest()
 	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
 {}
 
-ft::HttpRequest::HttpRequest(const ft::HttpRequest &other)
+ft::HTTPRequest::HTTPRequest(const ft::HTTPRequest &other)
 	: _requestMethod(other._requestMethod),
 	_requestURI(other._requestURI),
 	_HTTPVersion(other._HTTPVersion),
@@ -39,9 +39,9 @@ ft::HttpRequest::HttpRequest(const ft::HttpRequest &other)
 	_clientMaxBodySize(other._clientMaxBodySize)
 {}
 
-ft::HttpRequest::~HttpRequest() {}
+ft::HTTPRequest::~HTTPRequest() {}
 
-ft::HttpRequest &ft::HttpRequest::operator=(const ft::HttpRequest &other) {
+ft::HTTPRequest &ft::HTTPRequest::operator=(const ft::HTTPRequest &other) {
 	if (this != &other) {
 		_requestMethod = other._requestMethod;
 		_requestURI = other._requestURI;
@@ -63,7 +63,7 @@ ft::HttpRequest &ft::HttpRequest::operator=(const ft::HttpRequest &other) {
 }
 
 
-std::string	ft::HttpRequest::getMethodName() const {
+std::string	ft::HTTPRequest::getMethodName() const {
 	switch (_requestMethod)
 	{
 	case GET:
@@ -79,7 +79,7 @@ std::string	ft::HttpRequest::getMethodName() const {
 	}
 }
 
-std::string ft::HttpRequest::getHTTPVersion() const {
+std::string ft::HTTPRequest::getHTTPVersion() const {
 	switch (_HTTPVersion)
 	{
 		case HTTP_0_9:
@@ -95,7 +95,7 @@ std::string ft::HttpRequest::getHTTPVersion() const {
 	}
 }
 
-void ft::HttpRequest::setMethod(std::string requestMethod) {
+void ft::HTTPRequest::setMethod(std::string requestMethod) {
 	ft::toUpperString(requestMethod);
 	for(_requestMethod = 0; _requestMethod < NUMBER_OF_METHODS; _requestMethod++) {
 		if(requestMethod.compare(getMethodName()) == 0)
@@ -104,7 +104,7 @@ void ft::HttpRequest::setMethod(std::string requestMethod) {
 	throw HTTP_METHOD_NOT_ALLOWED;
 }
 
-void ft::HttpRequest::setHTTPVersion(std::string HTTPVersion) {
+void ft::HTTPRequest::setHTTPVersion(std::string HTTPVersion) {
 	ft::toUpperString(HTTPVersion);
 	for(_HTTPVersion = 0; _HTTPVersion < NUMBER_OF_VERSIONS; _HTTPVersion++) {
 		if(HTTPVersion.compare(getHTTPVersion()) == 0)
@@ -113,30 +113,30 @@ void ft::HttpRequest::setHTTPVersion(std::string HTTPVersion) {
 	throw HTTP_VERSION_NOT_SUPPORTED;
 }
 
-void	ft::HttpRequest::setStatus(int status) {
+void	ft::HTTPRequest::setStatus(int status) {
 	_status = status;
 }
 
-int 	ft::HttpRequest::getStatus() const {
+int 	ft::HTTPRequest::getStatus() const {
 	return _status;
 }
 
-int	ft::HttpRequest::setBadRequest(int status) {
+int	ft::HTTPRequest::setBadRequest(int status) {
 	setStatus(status);
 	_parsed = true;
 	return status;
 }
 
-bool ft::HttpRequest::setPort(const std::string& port) {
+bool ft::HTTPRequest::setPort(const std::string& port) {
 	return ft::isNumber(port) && port.length() < 6 
 		&& (_port = atoi(port.c_str())) > -1 && _port < 65536;
 }
 
-int ft::HttpRequest::getPort() const {
+int ft::HTTPRequest::getPort() const {
 	return _port;
 }
 
-void	ft::HttpRequest::setURI(const std::string& requestURI) {
+void	ft::HTTPRequest::setURI(const std::string& requestURI) {
 	std::string::size_type	pos;
 	
 	if(requestURI.size() < 1)
@@ -169,46 +169,46 @@ void	ft::HttpRequest::setURI(const std::string& requestURI) {
 	}
 }
 
-const std::string&	ft::HttpRequest::getProtocol() const {
+const std::string&	ft::HTTPRequest::getProtocol() const {
 	return _protocol;
 }
 
 
-const std::string&	ft::HttpRequest::getServerName() const {
+const std::string&	ft::HTTPRequest::getServerName() const {
 	return _serverName;
 }
 
-const std::string&	ft::HttpRequest::getRelativePath() const {
+const std::string&	ft::HTTPRequest::getRelativePath() const {
 	return _relativePath;
 }
 
-const std::string&	ft::HttpRequest::getQueryString() const {
+const std::string&	ft::HTTPRequest::getQueryString() const {
     return _queryString;
 }
 
-std::string ft::HttpRequest::getFullURL() const {
+std::string ft::HTTPRequest::getFullURL() const {
 	return _queryString.length()
 		? _protocol + "://" + _serverName + ':' + std::to_string(_port) + _relativePath + '?' + _queryString
 		: _protocol + "://" + _serverName + ':' + std::to_string(_port) + _relativePath;
 }
 
-bool	ft::HttpRequest::isParsed() const {
+bool	ft::HTTPRequest::isParsed() const {
     return _parsed;
 }
 
-const std::map<std::string, std::string>&	ft::HttpRequest::getHeaders() const {
+const std::map<std::string, std::string>&	ft::HTTPRequest::getHeaders() const {
     return _headers;
 }
 
-const std::string&	ft::HttpRequest::getBody() const {
+const std::string&	ft::HTTPRequest::getBody() const {
 	return _body;
 }
 
-unsigned long	ft::HttpRequest::getContentLength() const {
+unsigned long	ft::HTTPRequest::getContentLength() const {
 	return _contentLength;
 }
 
-void	ft::HttpRequest::parseRequestLine(const std::string& request) {
+void	ft::HTTPRequest::parseRequestLine(const std::string& request) {
 	std::vector<std::string> requestLine = ft::split(request);
 
 	if (requestLine.size() < 3)
@@ -221,7 +221,7 @@ void	ft::HttpRequest::parseRequestLine(const std::string& request) {
 	setURI(requestLine[1]);
 }
 
-void	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) {
+void	ft::HTTPRequest::parseHeaders(const std::vector<std::string>& headerLines) {
 	std::string::size_type pos;
 	std::string headerName, headerValue;
 
@@ -238,7 +238,7 @@ void	ft::HttpRequest::parseHeaders(const std::vector<std::string>& headerLines) 
 	}
 }
 
-void	ft::HttpRequest::processHeaders() {
+void	ft::HTTPRequest::processHeaders() {
 	std::map<std::string, std::string>::const_iterator it;
 	std::string::size_type	pos = 0;
 
@@ -272,7 +272,7 @@ void	ft::HttpRequest::processHeaders() {
 	}
 }
 
-void	ft::HttpRequest::parseBody(const std::string& body) {
+void	ft::HTTPRequest::parseBody(const std::string& body) {
 	
 	std::cout << "Before\n";
 	if (!_chunked) {
@@ -292,7 +292,7 @@ void	ft::HttpRequest::parseBody(const std::string& body) {
 	}
 }
 
-void	ft::HttpRequest::parseChunkedBody(const std::string& body) {
+void	ft::HTTPRequest::parseChunkedBody(const std::string& body) {
 	size_t		pos = 0;
 	size_t		chunkSize = 0;
 	size_t		bodyLen = body.length();
@@ -324,7 +324,7 @@ void	ft::HttpRequest::parseChunkedBody(const std::string& body) {
 	throw HTTP_BAD_REQUEST;
 }
 
-int	ft::HttpRequest::parse(const std::string& messages) {
+int	ft::HTTPRequest::parse(const std::string& messages) {
 	std::vector<std::string> segments = ft::split(messages, CRLF_CRLF);
 	if (segments.size() < 1)
     	return setBadRequest(HTTP_BAD_REQUEST);

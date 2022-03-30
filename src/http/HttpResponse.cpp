@@ -1,7 +1,7 @@
-#include "HttpResponse.hpp"
+#include "HTTPResponse.hpp"
 
-ft::HttpResponse::HttpResponse(
-	HttpRequest* httpReuest,
+ft::HTTPResponse::HTTPResponse(
+	HTTPRequest* httpReuest,
 	std::unordered_map<std::string,ft::VirtualHost>	&virtualHosts
 )
 	: _httpReuest(httpReuest),
@@ -10,15 +10,15 @@ ft::HttpResponse::HttpResponse(
 {
 	run();
 }
-ft::HttpResponse::HttpResponse(const HttpResponse& other)
+ft::HTTPResponse::HTTPResponse(const HTTPResponse& other)
 	: _httpReuest(other._httpReuest),
 	_virtualHosts(other._virtualHosts),
 	_response(other._response)
 {}
 
-ft::HttpResponse::~HttpResponse() {}
+ft::HTTPResponse::~HTTPResponse() {}
 
-ft::HttpResponse &ft::HttpResponse::operator=(const HttpResponse &other) {
+ft::HTTPResponse &ft::HTTPResponse::operator=(const HTTPResponse &other) {
 	if (this != &other) {
 		_httpReuest = other._httpReuest;
 		_virtualHosts = other._virtualHosts;	
@@ -30,7 +30,7 @@ ft::HttpResponse &ft::HttpResponse::operator=(const HttpResponse &other) {
 /*
 * this method for testing configurations. DELETE IT LATER!!!
 */
-void ft::HttpResponse::printConfigurations() {
+void ft::HTTPResponse::printConfigurations() {
 	std::unordered_map<std::string,ft::VirtualHost>::const_iterator cit = _virtualHosts.cbegin();
 	std::unordered_map<std::string,ft::VirtualHost>::const_iterator cend = _virtualHosts.cend();
 	std::cout << "SERVER CONFIGURATIONS:\n";
@@ -85,7 +85,7 @@ void ft::HttpResponse::printConfigurations() {
 	}
 }
 
-void ft::HttpResponse::handleGetResponse() {
+void ft::HTTPResponse::handleGetResponse() {
 	if (_httpReuest->getStatus() == HTTP_OK ) {
 		// _httpReuest->getRelativePath();
 		std::ifstream	siteFile("./www/site1/index.html");
@@ -105,15 +105,15 @@ void ft::HttpResponse::handleGetResponse() {
 }
 
 
-void ft::HttpResponse::handlePostResponse() {
+void ft::HTTPResponse::handlePostResponse() {
 	std::cout << "TEST POST...\n"; 			//  DELETE ME!!!
 }
 
-void ft::HttpResponse::handleDeleteResponse() {
+void ft::HTTPResponse::handleDeleteResponse() {
 	std::cout << "TEST DELETE...\n"; 		//  DELETE ME!!!
 }
 
-void ft::HttpResponse::run() {
+void ft::HTTPResponse::run() {
 	if (!_httpReuest->getMethodName().compare("GET")) {
 		handleGetResponse();
 	} else if (!_httpReuest->getMethodName().compare("POST")) {
@@ -126,7 +126,7 @@ void ft::HttpResponse::run() {
 
 }
 
-void ft::HttpResponse::setErrorResponse(int status, const std::string& description) {
+void ft::HTTPResponse::setErrorResponse(int status, const std::string& description) {
 	std::string	statusCode = std::to_string(status);
 
 	_response =  _httpReuest->getHTTPVersion() + ' ' + statusCode + ' ' + description + "\r\n";
@@ -135,7 +135,7 @@ void ft::HttpResponse::setErrorResponse(int status, const std::string& descripti
 		<body><h1>ERROR " + description + "</h1></body></html>\r\n";
 }
 
-const std::string&	ft::HttpResponse::getResponse() {
+const std::string&	ft::HTTPResponse::getResponse() {
 	return _response;
 }
 
