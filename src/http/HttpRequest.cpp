@@ -4,8 +4,7 @@
 #include "utils.hpp"
 
 ft::HttpRequest::HttpRequest()
-	: _requestLine(""),
-	_requestMethod(GET),
+	: _requestMethod(GET),
 	_requestURI(""),
 	_HTTPVersion(HTTP_1_1),
 	_protocol("http"),
@@ -23,8 +22,7 @@ ft::HttpRequest::HttpRequest()
 {}
 
 ft::HttpRequest::HttpRequest(const ft::HttpRequest &other)
-	: _requestLine(other._requestLine),
-	_requestMethod(other._requestMethod),
+	: _requestMethod(other._requestMethod),
 	_requestURI(other._requestURI),
 	_HTTPVersion(other._HTTPVersion),
 	_protocol(other._protocol),
@@ -45,7 +43,6 @@ ft::HttpRequest::~HttpRequest() {}
 
 ft::HttpRequest &ft::HttpRequest::operator=(const ft::HttpRequest &other) {
 	if (this != &other) {
-		_requestLine = other._requestLine;
 		_requestMethod = other._requestMethod;
 		_requestURI = other._requestURI;
 		_HTTPVersion = other._HTTPVersion;
@@ -80,10 +77,6 @@ std::string	ft::HttpRequest::getMethodName() const {
 	default:
 		return "";
 	}
-}
-
-const std::string& ft::HttpRequest::getRequestLine() const {
-	return _requestLine;
 }
 
 std::string ft::HttpRequest::getHTTPVersion() const {
@@ -336,7 +329,6 @@ int	ft::HttpRequest::parse(const std::string& messages) {
 	if (segments.size() < 1)
     	return setBadRequest(HTTP_BAD_REQUEST);
 	std::vector<std::string> headerLines = ft::split(segments[0], CRLF);
-	_requestLine = headerLines[0];
 	try {
 		parseRequestLine(headerLines[0]);
 		if (headerLines.size() > 1)

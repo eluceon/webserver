@@ -1,0 +1,36 @@
+30/03/2022 15:04:52> Starting up..
+30/03/2022 15:04:54> New client: 127.0.0.1:56453
+30/03/2022 15:04:54> New client: 127.0.0.1:56449
+30/03/2022 15:04:54> New client: 127.0.0.1:56451
+30/03/2022 15:04:57> New client: 127.0.0.1:56455
+30/03/2022 15:04:57> _client[5] aborted connection
+30/03/2022 15:05:01> New client: 127.0.0.1:56463
+30/03/2022 15:05:15> New client: 127.0.0.1:56484
+30/03/2022 15:05:15> _client[6] aborted connection
+30/03/2022 15:05:20> New client: 127.0.0.1:56491
+30/03/2022 15:05:20> _client[6] closed connection
+30/03/2022 15:05:22> Shutting down on signal 2
+30/03/2022 15:06:15> Starting up..
+30/03/2022 15:06:24> New client: 127.0.0.1:56540
+30/03/2022 15:06:24> New client: 127.0.0.1:56541
+30/03/2022 15:06:31> New client: 127.0.0.1:56549
+30/03/2022 15:06:31> New client: 127.0.0.1:56550
+30/03/2022 15:06:31> _client[5] closed connection
+30/03/2022 15:06:34> New client: 127.0.0.1:56553
+30/03/2022 15:06:38> _client[4] closed connection
+30/03/2022 15:06:40> New client: 127.0.0.1:56555
+30/03/2022 15:06:40> _client[6] aborted connection
+30/03/2022 15:06:40> _client[4] closed connection
+30/03/2022 15:06:44> Shutting down on signal 2
+30/03/2022 15:08:00> Starting up..
+30/03/2022 15:08:07> New client: 127.0.0.1:56622
+30/03/2022 15:08:07> New client: 127.0.0.1:56623
+30/03/2022 15:08:08> New client: 127.0.0.1:56626
+30/03/2022 15:08:08> New client: 127.0.0.1:56627
+30/03/2022 15:08:08> _client[5] closed connection
+30/03/2022 15:08:12> _client[4] closed connection
+30/03/2022 15:08:13> New client: 127.0.0.1:56634
+30/03/2022 15:08:20> New client: 127.0.0.1:56637
+30/03/2022 15:08:20> New client: 127.0.0.1:56638
+30/03/2022 15:08:20> _client[6] aborted connection
+30/03/2022 15:08:22> Shutting down on signal 2

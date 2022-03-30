@@ -41,7 +41,6 @@ namespace ft
    			const std::string&	getBody() const;
 			unsigned long		getContentLength() const;
 			int					parse(const std::string& messages);
-			const std::string&	getRequestLine() const;
 
 		protected:
 			enum e_versions
@@ -53,7 +52,6 @@ namespace ft
 				NUMBER_OF_VERSIONS
 			};
 
-			std::string							_requestLine;
 			int									_requestMethod;
 			std::string							_requestURI;
 			int									_HTTPVersion;
