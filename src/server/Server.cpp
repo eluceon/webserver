@@ -64,6 +64,7 @@ void	ft::Server::run() {
 			if (_client[i].revents & POLLRDNORM) {	// new client connection
 				clilen = sizeof(cliaddr);
 				connfd = Accept(_listeningSockets[i]->getSocket(), (struct sockaddr *) &cliaddr, &clilen);
+				_httpClients.insert(std::make_pair(connfd, new ft::HTTPClient(connfd)));
 				// fcntl(connfd, F_SETFL, O_NONBLOCK);
 				timestamp("New client: " + sockNtop((struct sockaddr *) &cliaddr));
 				for (j = countListeningSockets; j < OPEN_MAX; ++j) {
@@ -84,21 +85,9 @@ void	ft::Server::run() {
 	}
 }
 
-// ssize_t	ft::Server::readn(int fd, std::string& buffer) {
-// 	ssize_t	nread;
-// 	char	buf[MAXLINE + 1];
-
-// 	while((nread = recv(fd, buf, MAXLINE, 0)) > 0) {
-// 		buf[MAXLINE] = '\0';
-// 		buffer.append(buf);
-// 	}
-// 	return nread == 0 ? buffer.size() : nread;
-// }
-
 void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 	int		sockfd;
 	ssize_t	n;
-	// std::string	buffer;
 	char	buf[MAXLINE + 1];
 
 	// check all clients for data
@@ -106,37 +95,41 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
-			// if ( (n = readn(sockfd, buffer)) < 0 && errno != EWOULDBLOCK) {
-			// if ( (n = readn(sockfd, buffer)) < 0) {
 			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
 					if (close(sockfd) == -1)
 						systemErrorExit("close error");
-					_client[i].fd = -1;
+					freeClient(i);
 				} else
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
 				timestamp("_client[" + std::to_string(i) +"] closed connection");
 				if (close(sockfd) == -1)
 					systemErrorExit("close error");
-				_client[i].fd = -1;
+				freeClient(i);
 			} else {
 				buf[MAXLINE] = '\0';
-				HTTPRequest *httpRequest = new HTTPRequest();	
-				httpRequest->parse(buf);
-				if (!httpRequest->isParsed()) {
-					delete httpRequest;
-					continue;
-				}
-				HTTPResponse *httpResponse = new HTTPResponse(httpRequest, _virtualHosts);
-				std::string response = httpResponse->getResponse();
-				send(sockfd, response.c_str(), response.size(), 0);
-				delete httpResponse;
-				delete httpRequest;
+
+				ft::HTTPClient  *httpClient = _httpClients.at(sockfd);
+				httpClient->parse(buf);
+				if (httpClient->getHttpRequest()->isParsed())
+					httpClient->response(_virtualHosts);
+
 			}
 		}
 	}
+}
+
+void ft::Server::freeClient(int i) {
+	std::unordered_map<int, ft::HTTPClient *>::iterator it
+		= _httpClients.find(_client[i].fd);
+	
+	if (it != _httpClients.end()) {
+		delete _httpClients.at(_client[i].fd);
+		_httpClients.erase(_client[i].fd);
+	}
+	_client[i].fd = -1;
 }
 
 void ft::Server::handleShutdown(int signal) {

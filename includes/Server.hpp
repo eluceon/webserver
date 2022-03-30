@@ -9,6 +9,7 @@
 # include <signal.h>
 # include "ListeningSocket.hpp"
 # include "Config.hpp"
+# include "HTTPClient.hpp"
 
 /* 
 ** POSIX requires that an #include of <poll.h> define INFTIM, but many
@@ -46,6 +47,7 @@ namespace ft
 		Server &operator=(const Server &other);
 
 		std::unordered_map<std::string, ft::VirtualHost>	_virtualHosts;
+		std::unordered_map<int, ft::HTTPClient *>			_httpClients;
 		std::vector<ft::ListeningSocket *>					_listeningSockets;
 		struct pollfd										_client[OPEN_MAX];
 
@@ -55,8 +57,8 @@ namespace ft
 		void		registerSignals();
 		static void	handleShutdown(int signal);
 		std::string	sockNtop(const struct sockaddr *sa);
-		ssize_t		readn(int fd, std::string& buffer);
 		void		setListeningSockets();
+		void		freeClient(int i);
 	};
 } // namespace ft
 
