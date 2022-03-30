@@ -15,4 +15,9 @@ namespace ft
 		}
 		return n;
 	}
-} // namespace name
+
+	void	Close(int fd) {
+		if (close(fd) == -1)
+			systemErrorExit("close error");
+	}
+}

@@ -98,24 +98,20 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
-					if (close(sockfd) == -1)
-						systemErrorExit("close error");
+					Close(sockfd);
 					freeClient(i);
 				} else
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
 				timestamp("_client[" + std::to_string(i) +"] closed connection");
-				if (close(sockfd) == -1)
-					systemErrorExit("close error");
+				Close(sockfd);
 				freeClient(i);
 			} else {
 				buf[MAXLINE] = '\0';
-
 				ft::HTTPClient  *httpClient = _httpClients.at(sockfd);
 				httpClient->parse(buf);
 				if (httpClient->getHttpRequest()->isParsed())
 					httpClient->response(_virtualHosts);
-
 			}
 		}
 	}

@@ -444,3 +444,25 @@
 30/03/2022 19:16:08> New client: 127.0.0.1:50466
 30/03/2022 19:16:08> _client[5] closed connection
 30/03/2022 19:16:10> Shutting down on signal 2
+30/03/2022 19:34:06> Starting up..
+30/03/2022 19:34:08> New client: 127.0.0.1:51206
+30/03/2022 19:34:08> New client: 127.0.0.1:51207
+30/03/2022 19:34:11> New client: 127.0.0.1:51215
+30/03/2022 19:34:11> _client[5] closed connection
+30/03/2022 19:34:13> New client: 127.0.0.1:51217
+30/03/2022 19:34:13> _client[4] closed connection
+30/03/2022 19:34:13> New client: 127.0.0.1:51219
+30/03/2022 19:34:13> _client[4] closed connection
+30/03/2022 19:34:14> New client: 127.0.0.1:51222
+30/03/2022 19:34:14> _client[5] closed connection
+30/03/2022 19:34:14> New client: 127.0.0.1:51224
+30/03/2022 19:34:14> _client[5] closed connection
+30/03/2022 19:34:16> New client: 127.0.0.1:51226
+30/03/2022 19:34:16> _client[4] closed connection
+30/03/2022 19:34:16> New client: 127.0.0.1:51228
+30/03/2022 19:34:16> _client[4] closed connection
+30/03/2022 19:34:17> New client: 127.0.0.1:51230
+30/03/2022 19:34:17> _client[5] closed connection
+30/03/2022 19:34:17> New client: 127.0.0.1:51232
+30/03/2022 19:34:17> _client[5] closed connection
+30/03/2022 19:34:19> Shutting down on signal 2

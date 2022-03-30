@@ -23,6 +23,7 @@ namespace ft
     void						systemErrorExit(const std::string& mesage);
     void						errorExit(const std::string& mesage);
     int							Accept(int fd, struct sockaddr *sa, socklen_t *salenptr);
+	void						Close(int fd);
 	std::vector<std::string>	split(const std::string& str);
 	std::vector<std::string> 	split(const std::string& str, const std::string& delim);
 	void						toUpperString(std::string& str);
