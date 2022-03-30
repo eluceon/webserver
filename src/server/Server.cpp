@@ -98,13 +98,11 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + std::to_string(i) +"] aborted connection");
-					Close(sockfd);
 					freeClient(i);
 				} else
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
 				timestamp("_client[" + std::to_string(i) +"] closed connection");
-				Close(sockfd);
 				freeClient(i);
 			} else {
 				buf[MAXLINE] = '\0';
@@ -121,6 +119,7 @@ void ft::Server::freeClient(int i) {
 	std::unordered_map<int, ft::HTTPClient *>::iterator it
 		= _httpClients.find(_client[i].fd);
 	
+	Close(_client[i].fd);
 	if (it != _httpClients.end()) {
 		delete _httpClients.at(_client[i].fd);
 		_httpClients.erase(_client[i].fd);
