@@ -5,7 +5,7 @@
 # include <sys/socket.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
-# include <unordered_map>
+# include <map>
 # include <vector>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -44,8 +44,8 @@ namespace ft {
 		int	getPort() const;
 		const std::string &getServerName() const;
 		unsigned long	getClientMaxBodySize() const;
-		const std::unordered_map<short, std::string> &getErrorPages() const;
-		const std::unordered_map<std::string, ft::Location> &getLocations() const;
+		const std::map<short, std::string> &getErrorPages() const;
+		const std::map<std::string, ft::Location> &getLocations() const;
 
 	private:
 		std::string										_root;
@@ -53,8 +53,8 @@ namespace ft {
 		int												_port;
 		std::string										_serverName;
 		unsigned long									_clientMaxBodySize;
-		std::unordered_map<short, std::string>			_errorPages;
-		std::unordered_map<std::string, ft::Location>	_locations;
+		std::map<short, std::string>			_errorPages;
+		std::map<std::string, ft::Location>	_locations;
 	};
 }
 #endif

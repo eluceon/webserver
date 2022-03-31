@@ -6,10 +6,6 @@
 # include <map>
 # include "HTTPConstants.hpp"
 
-# define CRLF				"\r\n"
-# define CRLF_CRLF			"\r\n\r\n"
-# define PROTOCOL			"http"
-
 namespace ft
 {
 	class HTTPRequest {
@@ -36,11 +32,11 @@ namespace ft
 			const std::string&	getRelativePath() const;
 			const std::string&	getQueryString() const;
 			std::string			getFullURL() const;
-			bool				isParsed() const;
+			int					isParsed() const;
 			const std::map<std::string, std::string>&	getHeaders() const;
    			const std::string&	getBody() const;
 			unsigned long		getContentLength() const;
-			int					parse(const std::string& messages);
+			void				parse(const std::string& buf);
 
 		protected:
 			enum e_versions
@@ -62,17 +58,19 @@ namespace ft
 			int									_port;
 			std::map<std::string, std::string>	_headers;
 			std::string							_body;
-			bool								_parsed;
+			int									_parsed;
 			int									_status;
 			bool								_chunked;
 			unsigned long						_contentLength;
 			unsigned long						_clientMaxBodySize;
+			std::string							_buffer;
+			std::string::size_type				_pos;
 
-			void				parseRequestLine(const std::string& request);
-			void				parseHeaders(const std::vector<std::string>& headerLines);
-			void				parseBody(const std::string& body);
+			void				parseRequestLine();
+			void				parseHeaders();
+			void				parseBody();
 			void				parseChunkedBody(const std::string& body);
-			void				processHeaders(void);
+			void				processHeaders();
 	};
 }
 

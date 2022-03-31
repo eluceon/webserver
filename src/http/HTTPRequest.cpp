@@ -14,11 +14,13 @@ ft::HTTPRequest::HTTPRequest()
 	_port(DEFAULT_PORT), 
 	_headers(),
 	_body(),
-	_parsed(false),
+	_parsed(NO),
 	_status(HTTP_OK),
 	_chunked(false),
 	_contentLength(0),
-	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
+	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE),
+	_buffer(""),
+	_pos(0)
 {}
 
 ft::HTTPRequest::HTTPRequest(const ft::HTTPRequest &other)
@@ -36,7 +38,9 @@ ft::HTTPRequest::HTTPRequest(const ft::HTTPRequest &other)
 	_status(other._status),
 	_chunked(other._chunked),
 	_contentLength(other._contentLength),
-	_clientMaxBodySize(other._clientMaxBodySize)
+	_clientMaxBodySize(other._clientMaxBodySize),
+	_buffer(other._buffer),
+	_pos(other._pos)
 {}
 
 ft::HTTPRequest::~HTTPRequest() {}
@@ -58,10 +62,11 @@ ft::HTTPRequest &ft::HTTPRequest::operator=(const ft::HTTPRequest &other) {
 		_chunked = other._chunked;
 		_contentLength = other._contentLength;
 		_clientMaxBodySize = other._clientMaxBodySize;
+		_buffer	= other._buffer;
+		_pos = other._pos;
 	}
 	return *this;
 }
-
 
 std::string	ft::HTTPRequest::getMethodName() const {
 	switch (_requestMethod)
@@ -123,7 +128,7 @@ int 	ft::HTTPRequest::getStatus() const {
 
 int	ft::HTTPRequest::setBadRequest(int status) {
 	setStatus(status);
-	_parsed = true;
+	_parsed = YES;
 	return status;
 }
 
@@ -192,7 +197,7 @@ std::string ft::HTTPRequest::getFullURL() const {
 		: _protocol + "://" + _serverName + ':' + std::to_string(_port) + _relativePath;
 }
 
-bool	ft::HTTPRequest::isParsed() const {
+int	ft::HTTPRequest::isParsed() const {
     return _parsed;
 }
 
@@ -208,33 +213,58 @@ unsigned long	ft::HTTPRequest::getContentLength() const {
 	return _contentLength;
 }
 
-void	ft::HTTPRequest::parseRequestLine(const std::string& request) {
-	std::vector<std::string> requestLine = ft::split(request);
+void	ft::HTTPRequest::parseRequestLine() {
+	std::string::size_type	tmpPos = _pos;
+	std::string 			requestLine;
 
-	if (requestLine.size() < 3)
-    	throw HTTP_BAD_REQUEST;
-	setHTTPVersion(requestLine[2]);
-	setMethod(requestLine[0]);
-	if (requestLine[1].length() > MAX_URI_LENGTH)
-		throw HTTP_URI_TOO_LONG;
-	ft::toLowerString(requestLine[1]);
-	setURI(requestLine[1]);
+	if (ft::parseToken(_buffer, CRLF, tmpPos, requestLine,
+						true, true, MAX_REQUEST_LINE_LENGTH))
+	{
+		std::vector<std::string> requestLines = ft::split(requestLine);
+
+		if (requestLines.size() < 3)
+			throw HTTP_BAD_REQUEST;
+		setHTTPVersion(requestLines[2]);
+		setMethod(requestLines[0]);
+		if (requestLines[1].length() > MAX_URI_LENGTH)
+			throw HTTP_URI_TOO_LONG;
+		ft::toLowerString(requestLines[1]);
+		setURI(requestLines[1]);
+		_pos = tmpPos;
+		_parsed |= REQUEST_LINE;
+	} else if (requestLine.length() > MAX_REQUEST_LINE_LENGTH) {
+		throw HTTP_BAD_REQUEST;
+	}
 }
 
-void	ft::HTTPRequest::parseHeaders(const std::vector<std::string>& headerLines) {
-	std::string::size_type pos;
+void	ft::HTTPRequest::parseHeaders() {
+	std::string::size_type	tmpPos = _pos;
+	std::string 			headers;
 	std::string headerName, headerValue;
 
-	if (headerLines.size() > MAX_HEADER_FIELDS)
-		throw HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE;
-	for (size_t i = 1; i < headerLines.size(); ++i) {
-		pos = 0;
-		if (!ft::parseToken(headerLines[i], ":", pos, headerName, true, true, MAX_HEADER_NAME_LENGTH))
-			throw HTTP_BAD_REQUEST;
-		if (!ft::parseToken(headerLines[i], "\0", pos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH))
-			throw HTTP_BAD_REQUEST;
-		ft::toLowerString(headerName);
-		_headers.insert(std::make_pair(headerName, headerValue));
+	if (!_buffer.compare(_pos, strlen(CRLF), CRLF)) {
+		++_pos;
+		_parsed |= HEADERS;
+		return;
+	}
+	if (ft::parseToken(_buffer, CRLF_CRLF, tmpPos, headers, true, true, MAX_HEADERS_LENGTH)) {
+		std::vector<std::string> headerLines = ft::split(headers, CRLF);
+
+		if (headerLines.size() > MAX_HEADER_FIELDS)
+			throw HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE;
+
+		for (size_t i = 0; i < headerLines.size(); ++i) {
+			tmpPos = 0;
+			if (!ft::parseToken(headerLines[i], ":", tmpPos, headerName, true, true, MAX_HEADER_NAME_LENGTH))
+				throw HTTP_BAD_REQUEST;
+			if (!ft::parseToken(headerLines[i], CRLF, tmpPos, headerValue, true, false, MAX_HEADER_VALUE_LENGTH))
+				throw HTTP_BAD_REQUEST;
+			ft::toLowerString(headerName);
+			_headers.insert(std::make_pair(headerName, headerValue));
+		}
+		_parsed |= HEADERS;
+	} else if (headers.length() > MAX_HEADERS_LENGTH) {
+		throw HTTP_BAD_REQUEST;
 	}
 }
 
@@ -242,11 +272,12 @@ void	ft::HTTPRequest::processHeaders() {
 	std::map<std::string, std::string>::const_iterator it;
 	std::string::size_type	pos = 0;
 
+	_parsed |= PROCESSED_HEADERS;
 	it = _headers.find("host");
 	if (_serverName.empty() && it != _headers.end()) {
 		ft::parseToken(it->second, ":", pos, _serverName, true);
 		std::string strPort;
-		ft::parseToken(it->second, "\0", pos, strPort, true);
+		ft::parseToken(it->second, CRLF, pos, strPort, true);
 		if (!strPort.empty() && !setPort(strPort))
 			throw HTTP_BAD_REQUEST;
 	} else if (_serverName.empty()) {							// server name not found
@@ -270,25 +301,38 @@ void	ft::HTTPRequest::processHeaders() {
 		}
 		_chunked = false;
 	}
+
+	if (_contentLength == 0 && !_chunked) {
+		_parsed = YES;
+		_body.clear();
+	}
+
 }
 
-void	ft::HTTPRequest::parseBody(const std::string& body) {
+void	ft::HTTPRequest::parseBody() {
 	
-	std::cout << "Before\n";
+	// std::cout << "Before\n";
 	if (!_chunked) {
-		std::cout << "NOT CHUNK\n";
-
-		if (body.size() != _contentLength)
-			throw HTTP_BAD_REQUEST;
-		_body = body;
+		// std::cout << "NOT CHUNK\n";
+		std::string::size_type	tmpPos = _pos;
+		
+		if (ft::parseToken(_buffer, CRLF, tmpPos, _body,
+						true, true, _contentLength))
+		{
+			if (_body.size() != _contentLength)
+				throw HTTP_BAD_REQUEST;
+			_parsed = YES;
+			_pos = tmpPos;
+		} else if (_body.length() > _contentLength) {
+			throw HTTP_PAYLOAD_TOO_LARGE;
+		}
 	} else {
-		std::cout << "CHUNK\n";
+		// std::cout << "CHUNK\n";
 
-
-		parseChunkedBody(body);
-		_headers.erase(_headers.find("transfer-encoding"));
-		_headers["content-length"] = std::to_string(_body.size());
-		_contentLength = _body.length();
+		// parseChunkedBody(body);
+		// _headers.erase(_headers.find("transfer-encoding"));
+		// _headers["content-length"] = std::to_string(_body.size());
+		// _contentLength = _body.length();
 	}
 }
 
@@ -324,27 +368,23 @@ void	ft::HTTPRequest::parseChunkedBody(const std::string& body) {
 	throw HTTP_BAD_REQUEST;
 }
 
-int	ft::HTTPRequest::parse(const std::string& messages) {
-	std::vector<std::string> segments = ft::split(messages, CRLF_CRLF);
-	if (segments.size() < 1)
-    	return setBadRequest(HTTP_BAD_REQUEST);
-	std::vector<std::string> headerLines = ft::split(segments[0], CRLF);
+void	ft::HTTPRequest::parse(const std::string& buf) {
+	_buffer.append(buf);
 	try {
-		parseRequestLine(headerLines[0]);
-		if (headerLines.size() > 1)
-			parseHeaders(headerLines);
-		processHeaders();
-		if (segments.size() == 2 && (_chunked || _contentLength > 0))
-        	parseBody(segments[1]);
+		if (!(_parsed & REQUEST_LINE))
+			parseRequestLine();
+		if ((_parsed & REQUEST_LINE) && !(_parsed & HEADERS) && _pos < _buffer.length())
+			parseHeaders();
+		if ((_parsed & HEADERS) && !(_parsed & PROCESSED_HEADERS) && _pos < _buffer.length())
+			processHeaders();
+		if ((_parsed & PROCESSED_HEADERS) && !(_parsed & BODY) && _pos < _buffer.length())
+        	parseBody();
 	} catch (int statusCode) {
-		return setBadRequest(statusCode);			// DELETE return LATER 
-		// setBadRequest(statusCode);
+		setBadRequest(statusCode);
 	}
-	_parsed = true;
 
-
-	for (size_t i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
-		std::cout << segments[i];
+	// for (size_t i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
+	// 	std::cout << segments[i];
 	
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
 				<< ", target: " << _requestURI << ", HTTP version " << getHTTPVersion()
@@ -353,7 +393,7 @@ int	ft::HTTPRequest::parse(const std::string& messages) {
 				<< ", relative path: " << getRelativePath() 
 				<< ", query string: " << getQueryString() 
 				<< "\nfull uri: " << getFullURL()
-				<< "\ncontent-Length: " << getContentLength()
+				<< "\ncontent-length: " << getContentLength()
 				<< "\nChunked: " << _chunked
 				<< "\nParsed: " << isParsed() << ", response status: " << getStatus() << RESET_COLOR << std::endl;
 	
@@ -365,6 +405,5 @@ int	ft::HTTPRequest::parse(const std::string& messages) {
 	}
 	std::cout << "BODY:\n";
 		std::cout << _body << std::endl;
-	return _status; 	// CHANGE ME LATER!!!!!!!
 }
 

@@ -4,8 +4,9 @@ GREEN			=	\033[0;32m
 PURPLE			=	\033[0;35m
 
 CXX				=	clang++
-CXXFLAGS		=	-g -Wall -Wextra -Werror -std=c++98
-CXXFLAGS		=	-fsanitize=address
+CXXFLAGS		=	-g -Wall -Wextra -Werror
+# CXXFLAGS		+=	-std=c++98
+CXXFLAGS		+=	-fsanitize=address
 RM				=	rm -rf
 
 NAME_SERVER		=	webserv

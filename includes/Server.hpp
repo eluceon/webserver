@@ -37,17 +37,17 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server&	getInstance(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
+		static Server&	getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts);
 	private:
 		Server();
-		Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts);
+		Server(const std::map<std::string, ft::VirtualHost> &virtualHosts);
 		Server(const Server &other);
 		virtual ~Server();
 		
 		Server &operator=(const Server &other);
 
-		std::unordered_map<std::string, ft::VirtualHost>	_virtualHosts;
-		std::unordered_map<int, ft::HTTPClient *>			_httpClients;
+		std::map<std::string, ft::VirtualHost>	_virtualHosts;
+		std::map<int, ft::HTTPClient *>			_httpClients;
 		std::vector<ft::ListeningSocket *>					_listeningSockets;
 		struct pollfd										_client[OPEN_MAX];
 

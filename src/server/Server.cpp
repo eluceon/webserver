@@ -3,7 +3,7 @@
 #include "HTTPResponse.hpp"
 
 
-ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts)
+ft::Server::Server(const std::map<std::string, ft::VirtualHost> &virtualHosts)
 	: _virtualHosts(virtualHosts) {
 	registerSignals();
 	timestamp("Starting up..");
@@ -12,8 +12,8 @@ ft::Server::Server(const std::unordered_map<std::string, ft::VirtualHost> &virtu
 }
 
 ft::Server::~Server() {
-	std::vector<ListeningSocket *>::const_iterator it = _listeningSockets.cbegin();
-	std::vector<ListeningSocket *>::const_iterator end = _listeningSockets.cend();
+	std::vector<ListeningSocket *>::iterator it = _listeningSockets.begin();
+	std::vector<ListeningSocket *>::iterator end = _listeningSockets.end();
 
 	while (it != end) {
 		delete(*it);
@@ -21,14 +21,14 @@ ft::Server::~Server() {
 	}
 }
 
-ft::Server&	ft::Server::getInstance(const std::unordered_map<std::string, ft::VirtualHost> &virtualHosts) {
+ft::Server&	ft::Server::getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts) {
 	static Server singleton(virtualHosts);
     return singleton;
 }
 
 void	ft::Server::setListeningSockets() {
-	std::unordered_map<std::string, ft::VirtualHost>::const_iterator it = _virtualHosts.cbegin();
-	std::unordered_map<std::string, ft::VirtualHost>::const_iterator end = _virtualHosts.cend();
+	std::map<std::string, ft::VirtualHost>::iterator it = _virtualHosts.begin();
+	std::map<std::string, ft::VirtualHost>::iterator end = _virtualHosts.end();
 
 	while (it != end) {
 		_listeningSockets.push_back(new ft::ListeningSocket(it->second.getPort()));
@@ -108,15 +108,22 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				buf[MAXLINE] = '\0';
 				ft::HTTPClient  *httpClient = _httpClients.at(sockfd);
 				httpClient->parse(buf);
-				if (httpClient->getHttpRequest()->isParsed())
+				if (httpClient->getHttpRequest()->isParsed() == YES) {
 					httpClient->response(_virtualHosts);
+					if (httpClient->getHttpRequest()->getStatus() != HTTP_OK) {
+						timestamp("closed connection with _client[" 
+							+ std::to_string(i) +"] on error "
+							+ std::to_string(httpClient->getHttpRequest()->getStatus()));
+						freeClient(i);
+					}
+				}
 			}
 		}
 	}
 }
 
 void ft::Server::freeClient(int i) {
-	std::unordered_map<int, ft::HTTPClient *>::iterator it
+	std::map<int, ft::HTTPClient *>::iterator it
 		= _httpClients.find(_client[i].fd);
 	
 	Close(_client[i].fd);

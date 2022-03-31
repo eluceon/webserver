@@ -16,7 +16,7 @@ namespace ft {
 
 			const ft::HTTPRequest	*getHttpRequest() const;
 			int						getFd() const;
-			void					response(std::unordered_map<std::string, ft::VirtualHost>& virtualHosts);
+			void					response(std::map<std::string, ft::VirtualHost>& virtualHosts);
 			void					parse(const char *buf);			
 
 		private:

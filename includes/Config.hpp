@@ -8,7 +8,7 @@
 # include <arpa/inet.h>
 # include <fstream>
 # include "utils.hpp"
-# include <unordered_map>
+# include <map>
 # include "VirtualHost.hpp"
 
 namespace ft {
@@ -21,10 +21,10 @@ namespace ft {
 
 			Config &operator=(const Config &other);
 
-			const std::unordered_map<std::string, ft::VirtualHost> &getVirtualHosts() const;
+			const std::map<std::string, ft::VirtualHost> &getVirtualHosts() const;
 
 		private:
-			std::unordered_map<std::string, ft::VirtualHost>	_virtualHosts;
+			std::map<std::string, ft::VirtualHost>	_virtualHosts;
 
 			void	parse(const std::string& configFile);
 			void	splitTokens(const std::string& configFile);

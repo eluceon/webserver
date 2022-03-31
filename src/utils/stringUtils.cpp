@@ -117,7 +117,7 @@ namespace ft
 			beginPos = src.find_first_not_of(WHITESPACES, beginPos);
 		if (beginPos >= src.length())
 			return false;
-		std::string::size_type endPos = src.find_first_of(delim, beginPos);
+		std::string::size_type endPos = src.find(delim, beginPos);
 		if (endPos == std::string::npos && isExactDelim)
 			return false;
 		if (endPos == std::string::npos)

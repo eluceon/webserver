@@ -32,7 +32,7 @@ void	ft::HTTPClient::parse(const char *buf) {
 }
 
 void	ft::HTTPClient::response(
-		std::unordered_map<std::string, ft::VirtualHost>& virtualHosts
+		std::map<std::string, ft::VirtualHost>& virtualHosts
 	)
 {
 	if (!_httpRequest)

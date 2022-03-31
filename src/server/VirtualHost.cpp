@@ -89,7 +89,7 @@ void	ft::VirtualHost::setErrorPage(std::vector<std::string>::const_iterator &it,
 	if (!S_ISREG(statbuf.st_mode))
 		ft::errorExit("error_page :" + std::to_string(error_code) 
 			+ "in config file is not a file");
-	_errorPages.insert(std::make_pair<short, std::string>(error_code, fullPath));
+	_errorPages.insert(std::make_pair(error_code, fullPath));
 	skipTokens(it, end, 1, ";");
 }
 
@@ -123,10 +123,10 @@ unsigned long	ft::VirtualHost::getClientMaxBodySize() const {
 	return _clientMaxBodySize;
 }
 
-const std::unordered_map<short, std::string> &ft::VirtualHost::getErrorPages() const {
+const std::map<short, std::string> &ft::VirtualHost::getErrorPages() const {
 	return _errorPages;
 }
 
-const std::unordered_map<std::string, ft::Location> &ft::VirtualHost::getLocations() const {
+const std::map<std::string, ft::Location> &ft::VirtualHost::getLocations() const {
 	return _locations;
 }

@@ -82,7 +82,6 @@ void	ft::Config::parse(const std::string& configFile) {
         if (*it != "server" && *(++it) != "{")
             ft::errorExit("Invalid config file");
         ft::VirtualHost virtualHost(currentDir);
-        std::vector<std::string>::iterator check;
         while (++it != end && *it != "}") // parsing inside server
         {
             if (*it == "host") {
@@ -106,6 +105,6 @@ void	ft::Config::parse(const std::string& configFile) {
     }
 }
 
-const std::unordered_map<std::string, ft::VirtualHost> &ft::Config::getVirtualHosts() const {
+const std::map<std::string, ft::VirtualHost> &ft::Config::getVirtualHosts() const {
 	return _virtualHosts;
 }

@@ -2,7 +2,7 @@
 
 ft::HTTPResponse::HTTPResponse(
 	HTTPRequest* httpReuest,
-	std::unordered_map<std::string,ft::VirtualHost>	&virtualHosts
+	std::map<std::string,ft::VirtualHost>	&virtualHosts
 )
 	: _httpReuest(httpReuest),
 	_virtualHosts(virtualHosts),
@@ -31,31 +31,31 @@ ft::HTTPResponse &ft::HTTPResponse::operator=(const HTTPResponse &other) {
 * this method for testing configurations. DELETE IT LATER!!!
 */
 void ft::HTTPResponse::printConfigurations() {
-	std::unordered_map<std::string,ft::VirtualHost>::const_iterator cit = _virtualHosts.cbegin();
-	std::unordered_map<std::string,ft::VirtualHost>::const_iterator cend = _virtualHosts.cend();
+	std::map<std::string,ft::VirtualHost>::iterator it = _virtualHosts.begin();
+	std::map<std::string,ft::VirtualHost>::iterator end = _virtualHosts.end();
 	std::cout << "SERVER CONFIGURATIONS:\n";
-	while(cit != cend) {
-		std::cout << "\nhost_name: " << cit->first << ":\n";
+	while(it != end) {
+		std::cout << "\nhost_name: " << it->first << ":\n";
 
-		std::cout << "root: " << cit->second.getRoot() << std::endl;
-		std::cout << "host: " << cit->second.getHost() << std::endl;
-		std::cout << "port: " << cit->second.getPort() << std::endl;
-		std::cout << "server_name: " << cit->second.getServerName() << std::endl;
-		std::cout << "client_max_body_size: " << cit->second.getClientMaxBodySize() << std::endl;
+		std::cout << "root: " << it->second.getRoot() << std::endl;
+		std::cout << "host: " << it->second.getHost() << std::endl;
+		std::cout << "port: " << it->second.getPort() << std::endl;
+		std::cout << "server_name: " << it->second.getServerName() << std::endl;
+		std::cout << "client_max_body_size: " << it->second.getClientMaxBodySize() << std::endl;
 
 		std::cout << "error pages: \n";
-		std::unordered_map<short, std::string> errorPages = cit->second.getErrorPages();
-		std::unordered_map<short, std::string>::const_iterator cit_er = errorPages.cbegin();
-		std::unordered_map<short, std::string>::const_iterator cend_er = errorPages.cend();
+		std::map<short, std::string> errorPages = it->second.getErrorPages();
+		std::map<short, std::string>::iterator cit_er = errorPages.begin();
+		std::map<short, std::string>::iterator cend_er = errorPages.end();
 		while (cit_er != cend_er) {
 			std::cout << cit_er->first << "\t" << cit_er->second << std::endl;
 			++cit_er;
 		}
 
 		std::cout << "\nlocations:\n";
-		std::unordered_map<std::string, ft::Location> loc = cit->second.getLocations();
-		std::unordered_map<std::string, ft::Location>::const_iterator cit_loc = loc.cbegin();
-		std::unordered_map<std::string, ft::Location>::const_iterator cend_loc = loc.cend();
+		std::map<std::string, ft::Location> loc = it->second.getLocations();
+		std::map<std::string, ft::Location>::iterator cit_loc = loc.begin();
+		std::map<std::string, ft::Location>::iterator cend_loc = loc.end();
 		while (cit_loc != cend_loc) {
 			std::cout << cit_loc->first << "\n";
 			std::cout << " - root: " << cit_loc->second.getRoot() << std::endl;
@@ -81,7 +81,7 @@ void ft::HTTPResponse::printConfigurations() {
 			std::cout << " - client_max_body_size : " << cit_loc->second.getClientMaxBodySize() << std::endl;
 			++cit_loc;
 		}
-		++cit;
+		++it;
 	}
 }
 
@@ -114,7 +114,9 @@ void ft::HTTPResponse::handleDeleteResponse() {
 }
 
 void ft::HTTPResponse::run() {
-	if (!_httpReuest->getMethodName().compare("GET")) {
+	if (_httpReuest->getStatus() != HTTP_OK) {
+		setErrorResponse(_httpReuest->getStatus(), "");
+	} else if (!_httpReuest->getMethodName().compare("GET")) {
 		handleGetResponse();
 	} else if (!_httpReuest->getMethodName().compare("POST")) {
 
@@ -130,7 +132,7 @@ void ft::HTTPResponse::setErrorResponse(int status, const std::string& descripti
 	std::string	statusCode = std::to_string(status);
 
 	_response =  _httpReuest->getHTTPVersion() + ' ' + statusCode + ' ' + description + "\r\n";
-	_response += "Server: Tiny webserver\r\n\r\n";
+	_response += "Server: Ft webserver\r\n\r\n";
 	_response += "<html><head><title> " +  statusCode + ' ' + description + "</title></head>\
 		<body><h1>ERROR " + description + "</h1></body></html>\r\n";
 }

@@ -55,13 +55,28 @@
 
 	/* limits for requets messages */
 # define MAX_URI_LENGTH				2048
+# define MAX_REQUEST_LINE_LENGTH	4096
+
 # define MAX_HEADER_FIELDS			100
 # define MAX_HEADER_NAME_LENGTH		100
 # define MAX_HEADER_VALUE_LENGTH	1000
+# define MAX_HEADERS_LENGTH			MAX_HEADER_FIELDS * (MAX_HEADER_NAME_LENGTH + MAX_HEADER_VALUE_LENGTH + 2)
 # define DEFAULT_MAX_BODY_SIZE		1048576
 # define MAXIMUM_MAX_BODY_SIZE		104857600
 
 # define DEFAULT_PORT		80
+
+# define CRLF				"\r\n"
+# define CRLF_CRLF			"\r\n\r\n"
+# define PROTOCOL			"http"
+
+	/* request flags showing the status */
+# define NO					0b00000000
+# define YES				0b11111111
+# define REQUEST_LINE		0b00000001
+# define HEADERS			0b00000010
+# define PROCESSED_HEADERS	0b00000100
+# define BODY				0b00001000
 
 enum e_methods {
 	GET,

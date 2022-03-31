@@ -2,7 +2,7 @@
 # define HTTP_RESPONSE_HPP
 
 # include <fstream>
-# include <unordered_map>
+# include <map>
 # include "HTTPRequest.hpp"
 # include "VirtualHost.hpp"
 
@@ -12,7 +12,7 @@ namespace ft {
 			// HTTPResponse(HTTPRequest* httpReuest);
 			HTTPResponse(
 				HTTPRequest* httpReuest,
-				std::unordered_map<std::string,ft::VirtualHost>	&_virtualHosts
+				std::map<std::string,ft::VirtualHost>	&_virtualHosts
 			);
 			HTTPResponse(const HTTPResponse &other);
 			~HTTPResponse();
@@ -22,7 +22,7 @@ namespace ft {
 			const std::string&	getResponse();
 		protected:
 			HTTPRequest* 											_httpReuest;
-			std::unordered_map<std::string,ft::VirtualHost>			&_virtualHosts;
+			std::map<std::string,ft::VirtualHost>			&_virtualHosts;
 			std::string												_response;
 
 			HTTPResponse();
