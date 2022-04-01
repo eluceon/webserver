@@ -70,3 +70,59 @@
 01/04/2022 13:03:43> New client: 127.0.0.1:60817
 01/04/2022 13:03:43> _client[4] closed connection
 01/04/2022 13:03:48> Shutting down on signal 2
+01/04/2022 13:45:41> Starting up..
+01/04/2022 13:45:52> New client: 127.0.0.1:62353
+01/04/2022 13:45:52> New client: 127.0.0.1:62356
+01/04/2022 13:45:52> _client[4] closed connection
+01/04/2022 13:45:57> New client: 127.0.0.1:62360
+01/04/2022 13:45:57> _client[4] closed connection
+01/04/2022 13:45:57> New client: 127.0.0.1:62362
+01/04/2022 13:45:57> _client[5] closed connection
+01/04/2022 13:45:57> _client[4] closed connection
+01/04/2022 13:45:57> New client: 127.0.0.1:62364
+01/04/2022 13:45:57> _client[4] closed connection
+01/04/2022 13:45:57> New client: 127.0.0.1:62366
+01/04/2022 13:45:57> _client[4] closed connection
+01/04/2022 13:46:00> New client: 127.0.0.1:62373
+01/04/2022 13:46:00> New client: 127.0.0.1:62375
+01/04/2022 13:46:00> _client[4] closed connection
+01/04/2022 13:46:01> New client: 127.0.0.1:62377
+01/04/2022 13:46:01> _client[4] closed connection
+01/04/2022 13:46:01> New client: 127.0.0.1:62379
+01/04/2022 13:46:01> _client[5] closed connection
+01/04/2022 13:46:01> _client[4] closed connection
+01/04/2022 13:46:01> New client: 127.0.0.1:62381
+01/04/2022 13:46:01> _client[4] closed connection
+01/04/2022 13:46:05> New client: 127.0.0.1:62384
+01/04/2022 13:46:05> New client: 127.0.0.1:62385
+01/04/2022 13:46:05> _client[4] closed connection
+01/04/2022 13:46:08> New client: 127.0.0.1:62387
+01/04/2022 13:46:08> _client[4] closed connection
+01/04/2022 13:46:08> New client: 127.0.0.1:62389
+01/04/2022 13:46:08> _client[5] closed connection
+01/04/2022 13:46:08> _client[4] closed connection
+01/04/2022 13:46:08> New client: 127.0.0.1:62391
+01/04/2022 13:46:08> _client[4] closed connection
+01/04/2022 13:46:16> Shutting down on signal 2
+01/04/2022 13:50:01> Starting up..
+01/04/2022 13:50:05> New client: 127.0.0.1:62532
+01/04/2022 13:50:05> New client: 127.0.0.1:62533
+01/04/2022 13:50:05> _client[4] closed connection
+01/04/2022 13:50:07> New client: 127.0.0.1:62537
+01/04/2022 13:50:07> _client[4] closed connection
+01/04/2022 13:50:07> New client: 127.0.0.1:62539
+01/04/2022 13:50:07> _client[5] closed connection
+01/04/2022 13:50:07> _client[4] closed connection
+01/04/2022 13:50:07> New client: 127.0.0.1:62541
+01/04/2022 13:50:07> _client[4] closed connection
+01/04/2022 13:50:11> New client: 127.0.0.1:62550
+01/04/2022 13:50:11> New client: 127.0.0.1:62551
+01/04/2022 13:50:12> _client[4] closed connection
+01/04/2022 13:50:15> New client: 127.0.0.1:62553
+01/04/2022 13:50:15> _client[4] closed connection
+01/04/2022 13:50:15> _client[5] aborted connection
+01/04/2022 13:50:15> New client: 127.0.0.1:62555
+01/04/2022 13:50:15> _client[4] closed connection
+01/04/2022 13:50:15> New client: 127.0.0.1:62557
+01/04/2022 13:50:15> _client[4] closed connection
+01/04/2022 13:50:18> Shutting down on signal 2

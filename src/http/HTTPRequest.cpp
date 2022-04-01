@@ -13,7 +13,7 @@ ft::HTTPRequest::HTTPRequest()
 	_queryString(""),
 	_port(DEFAULT_PORT), 
 	_headers(),
-	_body(),
+	_body(""),
 	_parsed(NO),
 	_status(HTTP_OK),
 	_chunked(false),
@@ -306,11 +306,9 @@ void	ft::HTTPRequest::processHeaders() {
 		_parsed = YES;
 		_body.clear();
 	}
-
 }
 
 void	ft::HTTPRequest::parseBody() {
-	
 	// std::cout << "Before\n";
 	if (!_chunked) {
 		// std::cout << "NOT CHUNK\n";
@@ -319,8 +317,8 @@ void	ft::HTTPRequest::parseBody() {
 		if (ft::parseToken(_buffer, CRLF, tmpPos, _body,
 						true, true, _contentLength))
 		{
-			if (_body.size() != _contentLength)
-				throw HTTP_BAD_REQUEST;
+			// if (_body.size() != _contentLength)
+			// 	throw HTTP_BAD_REQUEST;
 			_parsed = YES;
 			_pos = tmpPos;
 		} else if (_body.length() > _contentLength) {
@@ -328,44 +326,52 @@ void	ft::HTTPRequest::parseBody() {
 		}
 	} else {
 		// std::cout << "CHUNK\n";
-
-		// parseChunkedBody(body);
-		// _headers.erase(_headers.find("transfer-encoding"));
-		// _headers["content-length"] = ft::to_string(_body.size());
-		// _contentLength = _body.length();
+		parseChunkedBody();
 	}
 }
 
-void	ft::HTTPRequest::parseChunkedBody(const std::string& body) {
-	size_t		pos = 0;
-	size_t		chunkSize = 0;
-	size_t		bodyLen = body.length();
-	std::string	chunkLen;
+void	ft::HTTPRequest::parseChunkedBody() {
+	std::string::size_type	tmpPos = _pos;
+	std::string 			body;
 
-	while (pos < bodyLen) {
-		if (body.find(CRLF, pos) == std::string::npos)
-			throw HTTP_BAD_REQUEST;
-		while (std::isspace(body[pos]))
-			++pos;
-		if (body.find("0\r\n", pos) == pos)
-            return;
-		while (std::isxdigit(body[pos]))
-			chunkLen += body[pos++];
-		if (body[pos] != ';' && body.find(CRLF, pos) != pos)
-        	throw HTTP_BAD_REQUEST;
-		chunkSize = std::strtoul(chunkLen.data(), NULL, 16);
-		chunkLen.clear();
-		if (chunkSize + _body.size() > _clientMaxBodySize)
-			throw HTTP_BAD_REQUEST;
-		pos = body.find(CRLF, pos) + 2;
-		if (pos < bodyLen) {
-			size_t end = chunkSize > bodyLen - pos ? bodyLen - pos : chunkSize;
-			_body.append(body, pos, end); 
-			pos += end;
-			chunkSize -= end;
+	if (ft::parseToken(_buffer, "0\r\n", tmpPos, body, true, true, _clientMaxBodySize)) {
+		std::string::size_type	bodyLen = body.length();
+		std::string::size_type	chunkSize = 0;
+		std::string				chunkLen;
+
+		_pos = tmpPos;
+		tmpPos = 0;
+		while (tmpPos < bodyLen) {
+			if (body.find(CRLF, tmpPos) == std::string::npos)
+				throw HTTP_BAD_REQUEST;
+			while (std::isspace(body[tmpPos]))
+				++tmpPos;
+			// if (body.find("0\r\n", pos) == pos)
+			// 	return;
+			while (std::isxdigit(body[tmpPos]))
+				chunkLen += body[tmpPos++];
+			if (body[tmpPos] != ';' && body.find(CRLF, tmpPos) != tmpPos)
+				throw HTTP_BAD_REQUEST;
+			chunkSize = std::strtoul(chunkLen.data(), NULL, 16);
+			chunkLen.clear();
+			// if (chunkSize + _body.size() > _clientMaxBodySize)
+			// 	throw HTTP_BAD_REQUEST;
+			tmpPos = body.find(CRLF, tmpPos) + 2;
+			if (tmpPos < bodyLen) {
+				size_t end = chunkSize > bodyLen - tmpPos ? bodyLen - tmpPos : chunkSize;
+				_body.append(body, tmpPos, end); 
+				tmpPos += end;
+				chunkSize -= end;
+			}
 		}
+		_parsed = YES;
+		_headers.erase(_headers.find("transfer-encoding"));
+		_headers["content-length"] = ft::to_string(_body.size());
+		_contentLength = _body.length();
+	} else if (body.length() > _clientMaxBodySize) {
+		throw HTTP_BAD_REQUEST;
 	}
-	throw HTTP_BAD_REQUEST;
+
 }
 
 void	ft::HTTPRequest::parse(const std::string& buf) {
@@ -410,5 +416,3 @@ void	ft::HTTPRequest::printParsedDataForTesting() {
 	std::cout << "BODY:\n";
 		std::cout << _body << std::endl;
 }
-
-
