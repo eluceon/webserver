@@ -53,8 +53,8 @@ namespace ft {
 		int												_port;
 		std::string										_serverName;
 		unsigned long									_clientMaxBodySize;
-		std::map<short, std::string>			_errorPages;
-		std::map<std::string, ft::Location>	_locations;
+		std::map<short, std::string>					_errorPages;
+		std::map<std::string, ft::Location>				_locations;
 	};
 }
 #endif

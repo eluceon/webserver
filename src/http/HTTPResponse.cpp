@@ -10,6 +10,7 @@ ft::HTTPResponse::HTTPResponse(
 {
 	run();
 }
+
 ft::HTTPResponse::HTTPResponse(const HTTPResponse& other)
 	: _httpReuest(other._httpReuest),
 	_virtualHosts(other._virtualHosts),

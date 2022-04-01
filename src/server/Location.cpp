@@ -39,7 +39,7 @@ void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
 						const std::string &curDir) {
 	_root = curDir;
 	std::string	path = *it;
-	skipTokens(it, end, 1, "{");
+	goForwardToken(it, end, 1, "{");
 
 	while (++it != end && *it != "}") {
 		if (*it == "root") {
@@ -65,24 +65,24 @@ void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
 void	ft::Location::setReturn(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	_return = *it;
-	ft::skipTokens(it, end, 1, ";");	
+	ft::goForwardToken(it, end, 1, ";");	
 }
 
 void	ft::Location::setRoot(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	validateDirectoryPath(*it);
 	_root = *it;
-	ft::skipTokens(it, end, 1, ";");
+	ft::goForwardToken(it, end, 1, ";");
 }
 
 void	ft::Location::setMethods(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	_methods.assign(NUMBER_OF_METHODS, false);
 	for (int i = 0; *it != ";"; ++i) {
 		if (i == NUMBER_OF_METHODS) {
@@ -96,14 +96,14 @@ void	ft::Location::setMethods(std::vector<std::string>::const_iterator &it,
 		} else if (*it == "PUT" && !_methods[PUT]) {
 			_methods[PUT];
 		}
-		skipTokens(it, end, 1);
+		goForwardToken(it, end, 1);
 	}
 }
 
 void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	if (*it == "on")
 		_autoindex = true;
 	else if (*it == "off")
@@ -115,36 +115,36 @@ void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
 void	ft::Location::setIndex(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	for (int i = 0; *it != ";"; ++i) {
 		if (i == 10) {
 			errorExit("Too many index values in config file");
 		}
 		_index.push_back(*it);
-		skipTokens(it, end, 1);
+		goForwardToken(it, end, 1);
 	}
 }
 
 void	ft::Location::setFastcgiPass(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	_fastcgiPass = *it;
-	ft::skipTokens(it, end, 1, ";");
+	ft::goForwardToken(it, end, 1, ";");
 }
 
 
 void	ft::Location::setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
 			std::vector<std::string>::const_iterator &end)
 {
-	ft::skipTokens(it, end, 1);
+	ft::goForwardToken(it, end, 1);
 	if (!ft::isNumber(*it))
 		ft::errorExit("Invalid format of client_max_body_size in config file");
 	else if (it->length() > 3
 		|| (_clientMaxBodySize = std::stoul(*it) * 1048576) > MAXIMUM_MAX_BODY_SIZE) {
 		ft::errorExit("client_max_body_size in config file exceeds the maximum value");
 	}
-	ft::skipTokens(it, end, 1, ";");
+	ft::goForwardToken(it, end, 1, ";");
 }
 
 const std::string				&ft::Location::getRoot() const {

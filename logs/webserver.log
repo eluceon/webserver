@@ -151,3 +151,15 @@
 01/04/2022 14:38:38> _client[4] closed connection
 01/04/2022 14:38:47> New client: 127.0.0.1:64295
 01/04/2022 14:38:52> Shutting down on signal 2
+01/04/2022 17:16:05> Starting up..
+01/04/2022 17:16:10> New client: 127.0.0.1:52212
+01/04/2022 17:16:10> New client: 127.0.0.1:52213
+01/04/2022 17:16:10> _client[4] closed connection
+01/04/2022 17:16:16> New client: 127.0.0.1:52215
+01/04/2022 17:16:16> _client[4] closed connection
+01/04/2022 17:16:16> New client: 127.0.0.1:52217
+01/04/2022 17:16:16> _client[5] closed connection
+01/04/2022 17:16:16> _client[4] closed connection
+01/04/2022 17:16:16> New client: 127.0.0.1:52219
+01/04/2022 17:16:16> _client[4] closed connection
+01/04/2022 17:16:33> Shutting down on signal 2
