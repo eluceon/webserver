@@ -86,17 +86,21 @@ void ft::HTTPResponse::printConfigurations() {
 }
 
 void ft::HTTPResponse::handleGetResponse() {
+	std::string	body;
+	std::string line;
+
 	if (_httpReuest->getStatus() == HTTP_OK ) {
 		// _httpReuest->getRelativePath();
 		std::ifstream	siteFile("./www/site1/index.html");
 		if ((siteFile.rdstate() & std::ifstream::failbit) != 0 ) {
 			setErrorResponse(HTTP_NOT_FOUND, "NOT FOUND");
 		} else {
-			_response = _httpReuest->getHTTPVersion() + " 200 OK\r\n";
-			_response += "Server: ft_server\r\n\r\n";
-			std::string line;
 			while (getline (siteFile, line))
-				_response.append(line);
+				body.append(line);
+			_response = _httpReuest->getHTTPVersion() + " 200 OK\r\n";
+			_response += "Server: ft_server\r\n";
+			_response += "Content-Length: " + ft::to_string(body.length()) + CRLF_CRLF;
+			_response += body + CRLF; 
 			siteFile.close();
 		}
 	} else {

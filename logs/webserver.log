@@ -15,3 +15,36 @@
 01/04/2022 12:38:57> New client: 127.0.0.1:59815
 01/04/2022 12:38:57> New client: 127.0.0.1:59816
 01/04/2022 12:39:00> Shutting down on signal 2
+01/04/2022 12:52:12> Starting up..
+01/04/2022 12:52:16> New client: 127.0.0.1:60312
+01/04/2022 12:52:16> New client: 127.0.0.1:60313
+01/04/2022 12:52:16> _client[4] closed connection
+01/04/2022 12:52:38> New client: 127.0.0.1:60339
+01/04/2022 12:52:38> _client[4] closed connection
+01/04/2022 12:52:38> _client[5] closed connection
+01/04/2022 12:52:38> New client: 127.0.0.1:60341
+01/04/2022 12:52:38> _client[4] closed connection
+01/04/2022 12:52:38> New client: 127.0.0.1:60343
+01/04/2022 12:52:38> _client[4] closed connection
+01/04/2022 12:52:47> New client: 127.0.0.1:60353
+01/04/2022 12:52:47> New client: 127.0.0.1:60355
+01/04/2022 12:52:47> _client[4] closed connection
+01/04/2022 12:52:48> New client: 127.0.0.1:60357
+01/04/2022 12:52:50> New client: 127.0.0.1:60359
+01/04/2022 12:52:50> New client: 127.0.0.1:60361
+01/04/2022 12:52:50> _client[5] closed connection
+01/04/2022 12:52:55> New client: 127.0.0.1:60368
+01/04/2022 12:52:55> _client[4] closed connection
+01/04/2022 12:52:57> New client: 127.0.0.1:60370
+01/04/2022 12:52:58> _client[5] closed connection
+01/04/2022 12:52:58> _client[4] closed connection
+01/04/2022 12:52:59> New client: 127.0.0.1:60372
+01/04/2022 12:52:59> _client[4] closed connection
+01/04/2022 12:53:02> New client: 127.0.0.1:60379
+01/04/2022 12:53:06> _client[4] closed connection
+01/04/2022 12:53:06> _client[6] aborted connection
+01/04/2022 12:53:06> New client: 127.0.0.1:60381
+01/04/2022 12:53:06> _client[4] closed connection
+01/04/2022 12:53:06> New client: 127.0.0.1:60383
+01/04/2022 12:53:06> _client[4] closed connection
+01/04/2022 12:54:30> Shutting down on signal 2
