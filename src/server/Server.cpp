@@ -97,12 +97,12 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
 			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
-					timestamp("_client[" + std::to_string(i) +"] aborted connection");
+					timestamp("_client[" + ft::to_string(i) +"] aborted connection");
 					freeClient(i);
 				} else
 					systemErrorExit("read error");
 			} else if (n == 0) {			// connection closed by client
-				timestamp("_client[" + std::to_string(i) +"] closed connection");
+				timestamp("_client[" + ft::to_string(i) +"] closed connection");
 				freeClient(i);
 			} else {
 				buf[MAXLINE] = '\0';
@@ -112,8 +112,8 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 					httpClient->response(_virtualHosts);
 					if (httpClient->getHttpRequest()->getStatus() != HTTP_OK) {
 						timestamp("closed connection with _client[" 
-							+ std::to_string(i) +"] on error "
-							+ std::to_string(httpClient->getHttpRequest()->getStatus()));
+							+ ft::to_string(i) +"] on error "
+							+ ft::to_string(httpClient->getHttpRequest()->getStatus()));
 						freeClient(i);
 					}
 				}
@@ -135,7 +135,7 @@ void ft::Server::freeClient(int i) {
 }
 
 void ft::Server::handleShutdown(int signal) {
-	timestamp("Shutting down on signal " + std::to_string(signal));
+	timestamp("Shutting down on signal " + ft::to_string(signal));
     exit(signal);
 }
 
@@ -160,7 +160,7 @@ std::string	ft::Server::sockNtop(const struct sockaddr *sa) {
 			if (inet_ntop(AF_INET, &sin->sin_addr, str, sizeof(str)) == NULL)
 				socket = "not_nown_IP";
 			else
-				socket = std::string(str) + ':' + std::to_string(ntohs(sin->sin_port));
+				socket = std::string(str) + ':' + ft::to_string(ntohs(sin->sin_port));
 			break;
 		}
 		case AF_INET6: {
@@ -169,7 +169,7 @@ std::string	ft::Server::sockNtop(const struct sockaddr *sa) {
 			if (inet_ntop(AF_INET6, &sin6->sin6_addr, str, sizeof(str)) == NULL)
 				socket = "not_nown_IP";
 			else 
-				socket = '[' + std::string(str) + "]:" + std::to_string(ntohs(sin6->sin6_port));
+				socket = '[' + std::string(str) + "]:" + ft::to_string(ntohs(sin6->sin6_port));
 		}
 	}
 	return socket;

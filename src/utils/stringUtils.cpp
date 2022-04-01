@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include <sstream>
 
 namespace ft
 {	
@@ -127,5 +128,50 @@ namespace ft
 		if (token.length() > maxLen || token.length() == 0)
 			return false;
 		return true;
+	}
+	
+	/*
+	**	Converts a numeric value to std::string
+	*/
+	std::string to_string (int val) {
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
+	}
+
+	std::string to_string (long val) {
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
+	}
+
+	std::string to_string (long long val) {
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
+	}
+
+	std::string to_string (unsigned val) {
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
+	}
+
+	std::string to_string (unsigned long val) {
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
+	}
+
+	std::string to_string (unsigned long long val) { 
+		std::stringstream ss;
+		
+		ss << val;
+		return ss.str();
 	}
 }

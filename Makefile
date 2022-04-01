@@ -5,7 +5,7 @@ PURPLE			=	\033[0;35m
 
 CXX				=	clang++
 CXXFLAGS		=	-g -Wall -Wextra -Werror
-# CXXFLAGS		+=	-std=c++98
+CXXFLAGS		+=	-std=c++98
 CXXFLAGS		+=	-fsanitize=address
 RM				=	rm -rf
 

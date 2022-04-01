@@ -1,0 +1,17 @@
+01/04/2022 11:38:01> System error exit: can't open dir: /home/mrdima/21-school/projects/circle-5/ft_webserver/www/site1/
+01/04/2022 11:38:36> Starting up..
+01/04/2022 11:38:43> New client: 127.0.0.1:56872
+01/04/2022 11:38:43> New client: 127.0.0.1:56874
+01/04/2022 11:39:07> New client: 127.0.0.1:56886
+01/04/2022 11:39:07> _client[5] closed connection
+01/04/2022 11:39:12> New client: 127.0.0.1:56893
+01/04/2022 11:39:12> New client: 127.0.0.1:56895
+01/04/2022 11:42:30> Shutting down on signal 2
+01/04/2022 11:56:25> Starting up..
+01/04/2022 11:56:30> New client: 127.0.0.1:57692
+01/04/2022 11:56:30> New client: 127.0.0.1:57693
+01/04/2022 11:56:53> Shutting down on signal 2
+01/04/2022 12:38:50> Starting up..
+01/04/2022 12:38:57> New client: 127.0.0.1:59815
+01/04/2022 12:38:57> New client: 127.0.0.1:59816
+01/04/2022 12:39:00> Shutting down on signal 2

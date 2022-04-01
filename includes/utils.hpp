@@ -42,5 +42,13 @@ namespace ft
 									size_t n, const char *neededToken = NULL);
 	void						validateDirectoryPath(const std::string &dirPath);
 	void						validateFilePath(const std::string &filePath);
+
+	std::string 				to_string (int val);
+	std::string 				to_string (long val);
+	std::string					to_string (long long val);
+	std::string 				to_string (unsigned val);
+	std::string					to_string (unsigned long val);
+	std::string					to_string (unsigned long long val);
+	
 }
 #endif

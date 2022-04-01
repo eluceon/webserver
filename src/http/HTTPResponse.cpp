@@ -129,7 +129,7 @@ void ft::HTTPResponse::run() {
 }
 
 void ft::HTTPResponse::setErrorResponse(int status, const std::string& description) {
-	std::string	statusCode = std::to_string(status);
+	std::string	statusCode = ft::to_string(status);
 
 	_response =  _httpReuest->getHTTPVersion() + ' ' + statusCode + ' ' + description + "\r\n";
 	_response += "Server: Ft webserver\r\n\r\n";
