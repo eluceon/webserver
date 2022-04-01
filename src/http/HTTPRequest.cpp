@@ -284,7 +284,7 @@ void	ft::HTTPRequest::processHeaders() {
 		throw HTTP_BAD_REQUEST;
 	} else if (it == _headers.end()) {
 		_headers.insert(std::pair<std::string, std::string>("host",
-							_serverName + ":" + std::to_string(_port)));
+							_serverName + ":" + ft::to_string(_port)));
 	}
 
  	it = _headers.find("transfer-encoding");
@@ -331,7 +331,7 @@ void	ft::HTTPRequest::parseBody() {
 
 		// parseChunkedBody(body);
 		// _headers.erase(_headers.find("transfer-encoding"));
-		// _headers["content-length"] = std::to_string(_body.size());
+		// _headers["content-length"] = ft::to_string(_body.size());
 		// _contentLength = _body.length();
 	}
 }
@@ -383,9 +383,13 @@ void	ft::HTTPRequest::parse(const std::string& buf) {
 		setBadRequest(statusCode);
 	}
 
-	// for (size_t i = 0; i < segments.size(); ++i)			// DELETE ME LATER!!! It's for testing!!!
-	// 	std::cout << segments[i];
-	
+	printParsedDataForTesting();	// DLEETE ME!!! It's for testing parsed HTTP request data.
+}
+
+/*
+**	This function is for testing parsed data from HTTP requests. Delete it later!
+*/
+void	ft::HTTPRequest::printParsedDataForTesting() {
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
 				<< ", target: " << _requestURI << ", HTTP version " << getHTTPVersion()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
@@ -406,4 +410,5 @@ void	ft::HTTPRequest::parse(const std::string& buf) {
 	std::cout << "BODY:\n";
 		std::cout << _body << std::endl;
 }
+
 

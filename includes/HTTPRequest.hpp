@@ -71,6 +71,7 @@ namespace ft
 			void				parseBody();
 			void				parseChunkedBody(const std::string& body);
 			void				processHeaders();
+			void				printParsedDataForTesting();
 	};
 }
 
