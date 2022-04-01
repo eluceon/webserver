@@ -73,6 +73,7 @@ void ft::HTTPResponse::printConfigurations() {
 					std::cout << "PUT ";
 			}
 			std::cout << "\n - autoindex: " << (cit_loc->second.getAutoindex() ? "on\n" : "off\n");
+			std::cout << " - upload_permission: " << (cit_loc->second.getUploadPermission() ? "on\n" : "off\n");
 			std::cout << " - index: " << std::endl;
 			std::vector<std::string> idx = cit_loc->second.getIndex();
 			for (size_t i = 0; i < idx.size(); ++i) {
@@ -129,7 +130,7 @@ void ft::HTTPResponse::run() {
 
 	} 
 
-	// printConfigurations();			// this is for test. DELETE ME LATER!!!
+	printConfigurations();			// this is for test. DELETE ME LATER!!!
 
 }
 

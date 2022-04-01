@@ -24,6 +24,8 @@ namespace ft {
 						std::vector<std::string>::const_iterator &end);
 			void	setAutoindex(std::vector<std::string>::const_iterator &it,
 						std::vector<std::string>::const_iterator &end);
+			void	setUploadPermission(std::vector<std::string>::const_iterator &it,
+					std::vector<std::string>::const_iterator &end);
 			void	setIndex(std::vector<std::string>::const_iterator &it,
 						std::vector<std::string>::const_iterator &end);
 			void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
@@ -37,6 +39,7 @@ namespace ft {
 			const std::string				&getReturn() const;
 			const std::vector<bool>			&getMethods() const;
 			bool							getAutoindex() const;
+			bool							getUploadPermission() const;
 			const std::vector<std::string> 	&getIndex() const;
 			const std::string				&getFastcgiPass() const;
 			unsigned long					getClientMaxBodySize() const;
@@ -46,6 +49,7 @@ namespace ft {
 			std::string					_return;
 			std::vector<bool>			_methods;
 			bool						_autoindex;
+			bool						_uploadPermission;
 			std::vector<std::string> 	_index;
 			std::string					_fastcgiPass;
 			unsigned long     			_clientMaxBodySize;

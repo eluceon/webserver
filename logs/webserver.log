@@ -163,3 +163,13 @@
 01/04/2022 17:16:16> New client: 127.0.0.1:52219
 01/04/2022 17:16:16> _client[4] closed connection
 01/04/2022 17:16:33> Shutting down on signal 2
+01/04/2022 17:40:03> Starting up..
+01/04/2022 17:40:10> New client: 127.0.0.1:53156
+01/04/2022 17:40:10> New client: 127.0.0.1:53157
+01/04/2022 17:40:10> _client[4] closed connection
+01/04/2022 17:44:15> Shutting down on signal 2
+01/04/2022 17:44:46> Starting up..
+01/04/2022 17:44:49> New client: 127.0.0.1:53333
+01/04/2022 17:44:49> New client: 127.0.0.1:53334
+01/04/2022 17:44:49> _client[4] closed connection
+01/04/2022 17:45:17> Shutting down on signal 2

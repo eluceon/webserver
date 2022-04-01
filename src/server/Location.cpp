@@ -4,6 +4,7 @@ ft::Location::Location(const std::string &currenDir)
 	: _root(currenDir),
 	_return(""),
 	_autoindex(true),
+	_uploadPermission(false),
 	_fastcgiPass(""),
 	_clientMaxBodySize(DEFAULT_MAX_BODY_SIZE)
 {}
@@ -15,6 +16,7 @@ ft::Location::Location(const Location & other)
 	_return(other._return),
 	_methods(other._methods),
 	_autoindex(other._autoindex),
+	_uploadPermission(other._uploadPermission),
 	_index(other._index),
 	_fastcgiPass(other._fastcgiPass),
 	_clientMaxBodySize(other._clientMaxBodySize)
@@ -26,10 +28,10 @@ ft::Location&	ft::Location::operator=(const Location & other) {
 		_return = other._return;
 		_methods = other._methods;
 		_autoindex = other._autoindex;
+		_uploadPermission = other._uploadPermission;
 		_index = other._index;
 		_fastcgiPass = other._fastcgiPass;
 		_clientMaxBodySize = other._clientMaxBodySize;
-
 	}
 	return *this;
 }
@@ -48,6 +50,8 @@ void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
 			setMethods(it, end);
 		} else if (*it == "autoindex") {
 			setAutoindex(it, end);
+		} else if (*it == "upload_permission") {
+			setUploadPermission(it, end);
 		} else if (*it == "return") {
 			setReturn(it, end);
 		} else if (*it == "index") {
@@ -109,7 +113,19 @@ void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
 	else if (*it == "off")
 		_autoindex = false;
 	else
-		errorExit("Invalid autoindex valid in config file");
+		errorExit("Invalid autoindex value in config file");
+}
+
+void	ft::Location::setUploadPermission(std::vector<std::string>::const_iterator &it,
+			std::vector<std::string>::const_iterator &end)
+{
+	ft::goForwardToken(it, end, 1);
+	if (*it == "on")
+		_uploadPermission = true;
+	else if (*it == "off")
+		_uploadPermission = false;
+	else
+		errorExit("Invalid upload permission value in config file");
 }
 
 void	ft::Location::setIndex(std::vector<std::string>::const_iterator &it,
@@ -161,6 +177,10 @@ const std::vector<bool>			&ft::Location::getMethods() const {
 
 bool							ft::Location::getAutoindex() const {
 	return _autoindex;
+}
+
+bool							ft::Location::getUploadPermission() const {
+	return _uploadPermission;
 }
 
 const std::vector<std::string> 	&ft::Location::getIndex() const {
