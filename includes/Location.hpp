@@ -15,25 +15,25 @@ namespace ft {
 
 			Location &operator=(const Location &other);
 
-			void	parseLocation(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end,
+			void	parseLocation(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end,
 						const std::string &curDir);
-			void	setRoot(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setMethods(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setAutoindex(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setUploadPermission(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-			void	setIndex(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setFastcgiPass(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
-			void	setReturn(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end);
+			void	setRoot(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setMethods(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setAutoindex(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setUploadPermission(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+			void	setIndex(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setClientMaxBodySize(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setFastcgiPass(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
+			void	setReturn(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end);
 
 			const std::string				&getRoot() const;
 			const std::string				&getReturn() const;

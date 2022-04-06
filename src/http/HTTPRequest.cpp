@@ -293,7 +293,7 @@ void	ft::HTTPRequest::processHeaders() {
 	} else {
 		it = _headers.find("content-length");
 		if (it != _headers.end()) {
-			_contentLength = std::strtoul(it->second.c_str(), nullptr, 10);
+			_contentLength = std::strtoul(it->second.c_str(), NULL, 10);
 			if (errno == ERANGE || _contentLength > _clientMaxBodySize)
             	throw HTTP_PAYLOAD_TOO_LARGE;
 		} else if (_requestMethod == POST || _requestMethod == PUT) {

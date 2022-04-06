@@ -37,8 +37,8 @@ namespace ft
 										std::string::size_type maxLen = std::string::npos);
 	void						timestamp(const std::string& msg);
 	std::string 				Getcwd();
-	void						goForwardToken(std::vector<std::string>::const_iterator &it,
-									std::vector<std::string>::const_iterator &end,
+	void						goForwardToken(std::vector<std::string>::iterator &it,
+									std::vector<std::string>::iterator &end,
 									size_t n, const char *neededToken = NULL);
 	void						validateDirectoryPath(const std::string &dirPath);
 	void						validateFilePath(const std::string &filePath);

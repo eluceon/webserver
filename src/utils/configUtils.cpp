@@ -2,8 +2,8 @@
 #include "utils.hpp"
 
 namespace ft {
-	void	goForwardToken(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end,
+	void	goForwardToken(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end,
 					size_t n, const char *neededToken)
 	{
 		while (it != end && n-- > 0)

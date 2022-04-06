@@ -30,7 +30,7 @@ namespace ft {
 			void	splitTokens(const std::string& configFile);
 			void	splitTokens(const std::string& configFile,
 						std::vector<std::string>& tokens);
-			void	validateParentheses(const std::vector<std::string> &tokens,
+			void	validateParentheses(std::vector<std::string> &tokens,
 						const std::string &openParenthesis,
 						const std::string &closingParenthesis);
 			void	hasMinimumParameters(const ft::VirtualHost &virtualHost);

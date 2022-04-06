@@ -13,9 +13,13 @@ namespace ft
 		if ((fout.rdstate() & std::ifstream::failbit) != 0 )
 			std::cerr << "Error opening 'webserver.log'" << std::endl;
 		else {
-			std::time_t timer = time(&timer);
-			fout << std::put_time(std::localtime(&timer), "%d/%m/%Y %H:%M:%S> ")
-					<< msg << '\n';
+			time_t timer = time(&timer);
+			// fout << std::put_time(localtime(&timer), "%d/%m/%Y %H:%M:%S> ")			// Since C++11
+			// 		<< msg << '\n';
+			struct tm *tmp = localtime(&timer);						// For c++98 standart
+			fout << tmp->tm_mday << '/' << tmp->tm_mon + 1 << '/' << tmp->tm_year + 1900
+				<< ' ' << tmp->tm_hour << ':' << tmp->tm_min << ':' << tmp->tm_sec << ' '
+				<< msg << '\n';
 		}
 		if ((fout.rdstate() & std::ifstream::badbit) != 0 ) {
 			std::cerr << "Writing 'webserver.log' error" << std::endl;

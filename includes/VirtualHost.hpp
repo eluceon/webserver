@@ -10,6 +10,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <stdlib.h>
 # include "HTTPConstants.hpp"
 # include "Location.hpp"
 # include "utils.hpp"
@@ -24,20 +25,20 @@ namespace ft {
 
 		VirtualHost &operator=(const VirtualHost &other);
 
-		void	setHost(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setPort(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setServerName(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setRoot(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setErrorPage(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
-		void	setLocation(std::vector<std::string>::const_iterator &it,
-					std::vector<std::string>::const_iterator &end);
+		void	setHost(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setPort(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setServerName(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setRoot(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setClientMaxBodySize(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setErrorPage(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
+		void	setLocation(std::vector<std::string>::iterator &it,
+					std::vector<std::string>::iterator &end);
 		
 		const std::string	&getRoot() const;
 		in_addr_t	getHost() const;

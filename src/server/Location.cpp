@@ -36,8 +36,8 @@ ft::Location&	ft::Location::operator=(const Location & other) {
 	return *this;
 }
 
-void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
-						std::vector<std::string>::const_iterator &end,
+void	ft::Location::parseLocation(std::vector<std::string>::iterator &it,
+						std::vector<std::string>::iterator &end,
 						const std::string &curDir) {
 	_root = curDir;
 	std::string	path = *it;
@@ -66,16 +66,16 @@ void	ft::Location::parseLocation(std::vector<std::string>::const_iterator &it,
 		ft::errorExit("Invalid config file. Missing }");
 }
 
-void	ft::Location::setReturn(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setReturn(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	_return = *it;
 	ft::goForwardToken(it, end, 1, ";");	
 }
 
-void	ft::Location::setRoot(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setRoot(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	validateDirectoryPath(*it);
@@ -83,8 +83,8 @@ void	ft::Location::setRoot(std::vector<std::string>::const_iterator &it,
 	ft::goForwardToken(it, end, 1, ";");
 }
 
-void	ft::Location::setMethods(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setMethods(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	_methods.assign(NUMBER_OF_METHODS, false);
@@ -104,8 +104,8 @@ void	ft::Location::setMethods(std::vector<std::string>::const_iterator &it,
 	}
 }
 
-void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setAutoindex(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	if (*it == "on")
@@ -116,8 +116,8 @@ void	ft::Location::setAutoindex(std::vector<std::string>::const_iterator &it,
 		errorExit("Invalid autoindex value in config file");
 }
 
-void	ft::Location::setUploadPermission(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setUploadPermission(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	if (*it == "on")
@@ -128,8 +128,8 @@ void	ft::Location::setUploadPermission(std::vector<std::string>::const_iterator 
 		errorExit("Invalid upload permission value in config file");
 }
 
-void	ft::Location::setIndex(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setIndex(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	for (int i = 0; *it != ";"; ++i) {
@@ -141,8 +141,8 @@ void	ft::Location::setIndex(std::vector<std::string>::const_iterator &it,
 	}
 }
 
-void	ft::Location::setFastcgiPass(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setFastcgiPass(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	_fastcgiPass = *it;
@@ -150,14 +150,16 @@ void	ft::Location::setFastcgiPass(std::vector<std::string>::const_iterator &it,
 }
 
 
-void	ft::Location::setClientMaxBodySize(std::vector<std::string>::const_iterator &it,
-			std::vector<std::string>::const_iterator &end)
+void	ft::Location::setClientMaxBodySize(std::vector<std::string>::iterator &it,
+			std::vector<std::string>::iterator &end)
 {
 	ft::goForwardToken(it, end, 1);
 	if (!ft::isNumber(*it))
 		ft::errorExit("Invalid format of client_max_body_size in config file");
 	else if (it->length() > 3
-		|| (_clientMaxBodySize = std::stoul(*it) * 1048576) > MAXIMUM_MAX_BODY_SIZE) {
+		|| (_clientMaxBodySize = static_cast<unsigned long>(atoi(it->c_str())) * 1048576)
+			> MAXIMUM_MAX_BODY_SIZE)
+	{
 		ft::errorExit("client_max_body_size in config file exceeds the maximum value");
 	}
 	ft::goForwardToken(it, end, 1, ";");

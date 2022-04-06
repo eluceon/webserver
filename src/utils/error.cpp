@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "utils.hpp"
 
 namespace ft
@@ -11,7 +12,7 @@ namespace ft
 	{
 		timestamp("System error exit: " + mesage);
 		std::cerr << RED_COLOR;
-		std::perror(mesage.c_str());
+		perror(mesage.c_str());
 		std::cerr << RESET_COLOR << std::endl;
 		exit(EXIT_FAILURE);
 	}

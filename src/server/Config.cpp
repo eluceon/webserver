@@ -9,7 +9,7 @@ ft::Config::~Config() {}
 void ft::Config::splitTokens(const std::string& configFile,
 		std::vector<std::string>& tokens) {
 
-    std::fstream	fin(configFile, std::ios::in | std::ios::binary);
+    std::fstream	fin(configFile.c_str(), std::ios::in | std::ios::binary);
     std::string		line;
 	std::string 	token;
 
@@ -49,13 +49,13 @@ void	ft::Config::hasMinimumParameters(const ft::VirtualHost &virtualHost) {
 		ft::errorExit(msg);
 }
 
-void	ft::Config::validateParentheses(const std::vector<std::string> &tokens,
+void	ft::Config::validateParentheses(std::vector<std::string> &tokens,
 			const std::string &openParenthesis, const std::string &closingParenthesis)
 {
 	int balance = 0;
 
-	std::vector<std::string>::const_iterator it = tokens.cbegin();
-	std::vector<std::string>::const_iterator end = tokens.cend();
+	std::vector<std::string>::iterator it = tokens.begin();
+	std::vector<std::string>::iterator end = tokens.end();
 	while (it != end) {
 		if (*it == openParenthesis)
 			++balance;
@@ -75,8 +75,8 @@ void	ft::Config::parse(const std::string& configFile) {
     splitTokens(configFile, tokens);
 	validateParentheses(tokens, "{", "}");
 	std::string currentDir = Getcwd();
-	std::vector<std::string>::const_iterator it = tokens.cbegin();
-	std::vector<std::string>::const_iterator end = tokens.cend();
+	std::vector<std::string>::iterator it = tokens.begin();
+	std::vector<std::string>::iterator end = tokens.end();
     for ( ; it < end; ++it) // parsing servers
     {
         if (*it != "server" && *(++it) != "{")
