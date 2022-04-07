@@ -31,7 +31,7 @@ void	ft::Server::setListeningSockets() {
 	std::map<std::string, ft::VirtualHost>::iterator end = _virtualHosts.end();
 
 	while (it != end) {
-		_listeningSockets.push_back(new ft::ListeningSocket(it->second.getPort()));
+		_listeningSockets.push_back(new ft::ListeningSocket(it->second.getHost() ,it->second.getPort()));
 		++it;
 	}
 }

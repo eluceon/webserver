@@ -96,3 +96,33 @@
 7/4/2022 10:48:5 New client: 127.0.0.1:38622
 7/4/2022 10:48:5 _client[4] closed connection
 7/4/2022 10:48:10 Shutting down on signal 2
+7/4/2022 11:24:4 Starting up..
+7/4/2022 11:24:4 System error exit: bind error
+7/4/2022 11:25:35 Starting up..
+7/4/2022 11:25:35 System error exit: bind error
+7/4/2022 11:25:53 Starting up..
+7/4/2022 11:25:53 System error exit: bind error
+7/4/2022 11:28:56 Starting up..
+7/4/2022 11:29:11 Shutting down on signal 2
+7/4/2022 11:29:18 Starting up..
+7/4/2022 11:29:29 Shutting down on signal 2
+7/4/2022 11:32:10 Starting up..
+7/4/2022 11:32:10 System error exit: bind error
+7/4/2022 11:32:25 Starting up..
+7/4/2022 11:32:33 New client: 127.0.0.1:38628
+7/4/2022 11:32:33 New client: 127.0.0.1:38630
+7/4/2022 11:32:33 _client[4] closed connection
+7/4/2022 11:32:39 Shutting down on signal 2
+7/4/2022 11:33:13 Starting up..
+7/4/2022 11:33:31 New client: 127.0.0.1:43726
+7/4/2022 11:33:31 New client: 127.0.0.1:43728
+7/4/2022 11:33:31 _client[4] closed connection
+7/4/2022 11:33:38 New client: 127.0.0.1:38636
+7/4/2022 11:33:46 New client: 127.0.0.1:43730
+7/4/2022 11:33:46 _client[5] closed connection
+7/4/2022 11:33:46 New client: 127.0.0.1:43732
+7/4/2022 11:33:46 _client[5] closed connection
+7/4/2022 11:33:48 New client: 127.0.0.1:43734
+7/4/2022 11:33:48 New client: 127.0.0.1:43736
+7/4/2022 11:33:48 _client[5] closed connection
+7/4/2022 11:33:53 Shutting down on signal 2

@@ -1,7 +1,7 @@
 #include "ListeningSocket.hpp"
 
-ft::ListeningSocket::ListeningSocket(int port)
-	: BoundSocket(port)
+ft::ListeningSocket::ListeningSocket(in_addr_t addr, int port)
+	: BoundSocket(addr, port)
 {
 	startListening();
 }

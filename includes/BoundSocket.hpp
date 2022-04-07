@@ -11,7 +11,7 @@ namespace ft
 	{
 		public:
 			BoundSocket();
-			BoundSocket(int port);
+			BoundSocket(in_addr_t addr, int port);
 			BoundSocket(const BoundSocket& other);
 			virtual ~BoundSocket();
 
@@ -23,7 +23,7 @@ namespace ft
 			// and port for the AF_INET address family
 			struct sockaddr_in	_servAddr;
 			
-			void	setServerAddressStructure(int port);
+			void	setServerAddressStructure(in_addr_t addr, int port);
 			void	bindAddressToSocket();
 	};
 		

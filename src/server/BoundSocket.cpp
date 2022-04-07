@@ -2,8 +2,8 @@
 
 ft::BoundSocket::BoundSocket() {}
 
-ft::BoundSocket::BoundSocket(int port) {
-	setServerAddressStructure(port);
+ft::BoundSocket::BoundSocket(in_addr_t addr, int port) {
+	setServerAddressStructure(addr, port);
 	bindAddressToSocket();
 }
 
@@ -25,9 +25,9 @@ void	ft::BoundSocket::bindAddressToSocket() {
 		ft::systemErrorExit("bind error");
 }
 
-void ft::BoundSocket::setServerAddressStructure(int port) {
+void ft::BoundSocket::setServerAddressStructure(in_addr_t addr, int port) {
    	std::fill_n((char *)&_servAddr, sizeof(_servAddr), '\0');
 	_servAddr.sin_family = AF_INET;
-	_servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	_servAddr.sin_addr.s_addr = addr;
 	_servAddr.sin_port = htons(port);
 }

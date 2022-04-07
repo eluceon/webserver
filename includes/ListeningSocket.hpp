@@ -8,7 +8,7 @@ namespace ft
 {
 	class ListeningSocket : public BoundSocket {
 		public:
-			ListeningSocket(int port = SERV_PORT);
+			ListeningSocket(in_addr_t addr = INADDR_ANY, int port = SERV_PORT);
 			ListeningSocket(const ListeningSocket& other);
 			virtual ~ListeningSocket();
 
