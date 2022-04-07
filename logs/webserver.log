@@ -11,3 +11,37 @@
 6/4/2022 15:29:35 New client: 127.0.0.1:51052
 6/4/2022 15:29:35 _client[4] closed connection
 6/4/2022 15:30:21 Shutting down on signal 2
+7/4/2022 10:18:51 Starting up..
+7/4/2022 10:19:9 New client: 127.0.0.1:38542
+7/4/2022 10:19:9 New client: 127.0.0.1:38544
+7/4/2022 10:19:9 _client[4] closed connection
+7/4/2022 10:19:13 New client: 127.0.0.1:38546
+7/4/2022 10:19:13 _client[4] closed connection
+7/4/2022 10:19:13 New client: 127.0.0.1:38550
+7/4/2022 10:19:13 _client[5] closed connection
+7/4/2022 10:19:13 _client[4] closed connection
+7/4/2022 10:19:13 New client: 127.0.0.1:38552
+7/4/2022 10:19:13 _client[4] closed connection
+7/4/2022 10:19:21 New client: 127.0.0.1:38554
+7/4/2022 10:19:21 New client: 127.0.0.1:38556
+7/4/2022 10:19:21 _client[4] closed connection
+7/4/2022 10:19:24 New client: 127.0.0.1:38558
+7/4/2022 10:19:24 _client[4] closed connection
+7/4/2022 10:19:24 New client: 127.0.0.1:38560
+7/4/2022 10:19:24 _client[5] closed connection
+7/4/2022 10:19:24 _client[4] closed connection
+7/4/2022 10:19:24 New client: 127.0.0.1:38562
+7/4/2022 10:19:24 _client[4] closed connection
+7/4/2022 10:31:28 Shutting down on signal 2
+7/4/2022 10:31:38 Starting up..
+7/4/2022 10:31:41 New client: 127.0.0.1:38564
+7/4/2022 10:31:41 New client: 127.0.0.1:38566
+7/4/2022 10:31:41 _client[4] closed connection
+7/4/2022 10:32:11 New client: 127.0.0.1:38568
+7/4/2022 10:32:11 _client[4] closed connection
+7/4/2022 10:32:11 New client: 127.0.0.1:38570
+7/4/2022 10:32:11 _client[5] closed connection
+7/4/2022 10:32:11 _client[4] closed connection
+7/4/2022 10:32:11 New client: 127.0.0.1:38572
+7/4/2022 10:32:11 _client[4] closed connection
+7/4/2022 10:32:14 Shutting down on signal 2

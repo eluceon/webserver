@@ -66,30 +66,30 @@ namespace ft
 	**	Returns remainder of the string after delimeter
 	*/
 	std::string	getExtension(const std::string& str,
-                                    const std::string& delim)
+                                const std::string& delim, size_t pos)
 	{
-		std::string::size_type		pos;
+		std::string::size_type		found;
 
-		pos = str.find(delim);
-		if (pos == std::string::npos)
+		found = str.find(delim, pos);
+		if (found == std::string::npos)
         	return "";
    		else
-        	return str.substr(pos + delim.length());
+        	return str.substr(pos, found + delim.length());
 	}
 
 	/*
 	**	Returns the begining of the string before delimeter
 	*/
 	std::string	getWithoutExtension(const std::string& str,
-                                    	const std::string& delim)
+                                    	const std::string& delim, size_t pos)
 	{
-		std::string::size_type		pos;
+		std::string::size_type		found;
 
-		pos = str.find(delim);
-		if (pos == std::string::npos)
+		found = str.find(delim, pos);
+		if (found == std::string::npos)
         	return str;
    		else
-        	return str.substr(0, pos);
+        	return str.substr(pos, found);
 	}
 
 	/*

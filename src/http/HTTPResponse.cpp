@@ -130,7 +130,7 @@ void ft::HTTPResponse::run() {
 
 	} 
 
-	printConfigurations();			// this is for test. DELETE ME LATER!!!
+	// printConfigurations();			// this is for test. DELETE ME LATER!!!
 
 }
 
