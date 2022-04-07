@@ -74,7 +74,7 @@ namespace ft
 		if (found == std::string::npos)
         	return "";
    		else
-        	return str.substr(pos, found + delim.length());
+        	return str.substr(pos, found + delim.length() - pos);
 	}
 
 	/*
@@ -86,10 +86,7 @@ namespace ft
 		std::string::size_type		found;
 
 		found = str.find(delim, pos);
-		if (found == std::string::npos)
-        	return str;
-   		else
-        	return str.substr(pos, found);
+        return str.substr(pos, found - pos);
 	}
 
 	/*

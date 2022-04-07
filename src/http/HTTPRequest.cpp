@@ -399,7 +399,7 @@ void	ft::HTTPRequest::printParsedDataForTesting() {
 	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
 				<< ", target: " << _requestURI << ", HTTP version " << getHTTPVersion()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
-				<< ", server name: " << getServerName() << ", port: " << getPort()
+				<< ", host: " << getServerName() << ", port: " << getPort()
 				<< ", relative path: " << getRelativePath() 
 				<< ", query string: " << getQueryString() 
 				<< "\nfull uri: " << getFullURL()
