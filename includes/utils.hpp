@@ -52,5 +52,12 @@ namespace ft
 	std::string					to_string (unsigned long val);
 	std::string					to_string (unsigned long long val);
 	
+	std::string                 readFile(std::string file);
+	std::vector<unsigned char>  readBinaryFile(std::string file);
+    std::string                 ITOS(size_t n);
+	std::string 				replace(std::string source, std::string to_replace, std::string new_value);
+	int 						pathType(std::string path);
+	std::string	getWithoutExtension(const std::string& str, const std::string& delim, size_t pos, short elem);
+	
 }
 #endif
