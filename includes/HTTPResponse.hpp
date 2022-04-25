@@ -19,7 +19,7 @@ namespace ft {
 		std::vector<std::string> 				_index;
 		bool 									_autoindex;
         std::map<std::string, std::string>		_headers;
-		std::string 							_fastGCI;
+		std::string 							_fastCGI;
 
 //        HTTPResponse(const HTTPResponse &x);
 //        HTTPResponse &operator=(const HTTPResponse &x);

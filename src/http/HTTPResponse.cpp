@@ -97,18 +97,6 @@ namespace ft {
 
 		if (_fastCGI.size() == 0)
 			return (false);
-		i = _res_path.size() - 1;
-		while (i > 0 && _res_path[i] != '.')
-			--i;
-		if (i >= _res_path.size())
-			return (false);
-		ext = std::string(_res_path, i + 1, _res_path.size() - i);
-		for (size_t j = 0; j < _fastCGI.size(); ++j)
-		{
-			if (_fastCGI[j] == ext)
-				return (true);
-		}
-		return (false);
 	}
 
 	std::string HTTPResponse::getMIME(std::string file) {
