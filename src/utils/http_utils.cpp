@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 
 namespace ft {
 	std::string readFile(std::string file) {
@@ -14,8 +15,7 @@ namespace ft {
 
 		fd = open(file.c_str(), O_RDONLY);
 		if (fd < -1) {
-			std::cout << "File does not exist" << std::endl;
-			throw;
+			throw FileError("File does not exist\n");
 		}
 		while ((res = read(fd, buffer, BUFFER_SIZE)) > 0) {
 			result += buffer;
@@ -24,8 +24,7 @@ namespace ft {
 				buffer[i++] = 0;
 		}
 		if (res < 0) {
-			std::cout << "Can not read file" << std::endl;
-			throw;
+			throw FileError("Can not read file\n");
 		}
 		close(fd);
 		return (result);
@@ -36,33 +35,6 @@ namespace ft {
 
 		convert << n;
 		return (convert.str());
-	}
-
-	std::vector<unsigned char> readBinaryFile(std::string file) {
-		char buffer[BUFFER_SIZE + 1] = {0};
-		int fd;
-		int i;
-		int res;
-		std::vector<unsigned char> result;
-
-		fd = open(file.c_str(), O_RDONLY);
-		if (fd < -1) {
-			std::cout << "Error: file does not exist" << std::endl;
-			throw;
-		}
-		while ((res = read(fd, buffer, BUFFER_SIZE)) > 0) {
-			for (size_t j = 0; j < (size_t) res; ++j)
-				result.push_back(buffer[j]);
-			i = 0;
-			while (i < BUFFER_SIZE)
-				buffer[i++] = 0;
-		}
-		if (res < 0) {
-			std::cout << "Error: can not read file" << std::endl;
-			throw;
-		}
-		close(fd);
-		return (result);
 	}
 
 	std::string replace(std::string source, std::string to_replace, std::string new_value) {
@@ -86,25 +58,24 @@ namespace ft {
 			return (0);
 	}
 
-	std::string getWithoutExtension(const std::string &str,
-									const std::string &delim, size_t pos, short elem) {
-		std::string::size_type found = 0;
+	std::string TimeToStr(time_t timestamp)
+	{
+		char buffer[33];
+		struct tm *ts;
+		size_t last;
 
+		ts   = localtime(&timestamp);
+		last = strftime(buffer, 32, "%a, %d %b %Y %T GMT", ts);
+		buffer[last] = '\0';
+		return (std::string(buffer));
+	}
 
+	std::string getDate(void)
+	{
+		struct timeval now;
+		struct timezone tz;
 
-		if (elem == 0) {
-			found = str.find(delim, pos);
-			return str.substr(pos, found - pos);
-		}
-		else if (elem == 1) {
-			found = str.find_last_of(delim, str.size());
-			std::cout << "FOUND: " << found << std::endl;
-			std::cout << "POS: " << pos << std::endl;
-			return  str.substr(found + 1, pos);
-		}
-		else {
-			found = str.find(delim, pos);
-			return str.substr(found + 1);
-		}
+		gettimeofday(&now, &tz);
+		return (TimeToStr(now.tv_sec + tz.tz_minuteswest * 60));
 	}
 }

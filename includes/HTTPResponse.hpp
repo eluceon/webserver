@@ -14,21 +14,23 @@ namespace ft {
     private:
         HTTPRequest*							_req;
         std::map<std::string,ft::VirtualHost>	&_vhost;
-        std::string								_resource;
+		std::map<std::string, std::string>		_headers;
+		std::string 							_res;
 		std::string 							_res_path;
+		std::string 							_location;
 		std::vector<std::string> 				_index;
 		bool 									_autoindex;
-        std::map<std::string, std::string>		_headers;
 		std::string 							_fastCGI;
 
 //        HTTPResponse(const HTTPResponse &x);
-//        HTTPResponse &operator=(const HTTPResponse &x);
+        HTTPResponse &operator=(const HTTPResponse &x);
 		void 		init(void);
-		void 		getParams(const std::string &server_name);
+		std::string cleanURI(std::string rel_path);
+		void 		getParams(void);
 		bool 		isCGIRequest(void);
         std::string getMIME(std::string file);
 		bool validMethod(std::string &method);
-		std::string GetResponse(void);
+		std::string GetResponse(size_t code, const char *content, size_t content_size);
 		std::string getError(size_t code);
         std::string getStatus(size_t code);
 		std::string sendGet(void);

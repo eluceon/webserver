@@ -17,6 +17,7 @@
 # define RESET_COLOR 	"\033[0;0m"
 
 # define WHITESPACES	" \t\n\v\f\r"
+# define BUFFER_SIZE 256
 
 namespace ft
 {
@@ -53,11 +54,21 @@ namespace ft
 	std::string					to_string (unsigned long long val);
 	
 	std::string                 readFile(std::string file);
-	std::vector<unsigned char>  readBinaryFile(std::string file);
     std::string                 ITOS(size_t n);
 	std::string 				replace(std::string source, std::string to_replace, std::string new_value);
 	int 						pathType(std::string path);
-	std::string	getWithoutExtension(const std::string& str, const std::string& delim, size_t pos, short elem);
-	
+	std::string 				getDate(void);
+	std::string 				TimeToStr(time_t timestamp);
+
+	class FileError : public std::exception
+	{
+	private:
+		std::string _msg;
+	public:
+		FileError(std::string msg) : _msg(msg) {};
+		~FileError() throw()
+		{};
+		const char *what () const throw () { return (_msg.c_str()); };
+	};
 }
 #endif
