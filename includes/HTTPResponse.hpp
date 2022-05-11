@@ -6,6 +6,7 @@
 # include "VirtualHost.hpp"
 # include "Location.hpp"
 # include "utils.hpp"
+# include "CGI.hpp"
 # include <unistd.h>
 # include <fcntl.h>
 

@@ -107,6 +107,7 @@ namespace ft {
 			return getError(404);
 		if (isCGIRequest()) {
 			try {
+				return ft::CGI(_res, _res_path, _headers, &_req).execCGI();
 			}
 			catch (...) {
 				return getError(500);
