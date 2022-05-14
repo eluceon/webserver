@@ -77,10 +77,10 @@ namespace ft {
 
 	std::string HTTPResponse::getResponse(void) {
 		std::string method = _req->getMethodName();
-		_headers["Content-Type"] = getMIME(".html");
+		_headers["Content-Type"] = getMIME("dummy.html");
 
 		if (!validMethod(method))
-			return (getError(405));
+			return (GetResponse(405, getError(405)));
 		if (_res_path[_res_path.size() - 1] == '/') {
 			_res_path = std::string(_res_path, 0, _res_path.size() - 1);
 		}
@@ -101,18 +101,18 @@ namespace ft {
 					return GetResponse(200, Autoindex());
 				}
 				else {
-					return getError(403);
+					return GetResponse(403, getError(403));
 				}
 			}
 		}
 		if (pathType(_res_path) == 0)
-			return getError(404);
+			return GetResponse(404, getError(404));
 		if (isCGIRequest()) {
 			try {
 				return GetResponse(200, CGI(_res, _res_path, _req).execCGI());
 			}
 			catch (...) {
-				return getError(500);
+				return GetResponse(500, getError(500));
 			}
 		}
 		if (method == "GET")
@@ -207,14 +207,14 @@ namespace ft {
 			else if (type == 0)
 			{
 				if ((fd = open(path.c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644)) == -1)
-					return getError(500);
+					return GetResponse(500, getError(500));
 				write(fd, content.c_str(), content.length());
 				close(fd);
 				rtn = 201;
 				_headers["Location"] = _res_path;
 			}
 			else
-				return getError(500);
+				return GetResponse(500, getError(500));
 		}
 		catch (std::exception & ex)
 		{
@@ -229,7 +229,7 @@ namespace ft {
 			unlink(_res_path.c_str());
 			return (GetResponse(200, ""));
 		}
-		return getError(404);
+		return GetResponse(404, getError(404));
 	}
 
 	std::string HTTPResponse::GetResponse(size_t code, std::string content)
@@ -268,9 +268,12 @@ namespace ft {
 		std::string ext;
 		size_t i;
 
+		std::cout << "FILE " << file << std::endl;
+		std::cout << "FILE size " << file.size() << std::endl;
 		i = file.size() - 1;
 		while (i > 0 && file[i] != '.')
 			--i;
+		std::cout << "I " << i << std::endl;
 		if (i == 0)
 			return ("text/plain");
 		ext = std::string(file, i + 1, file.size() - i);
@@ -402,6 +405,7 @@ namespace ft {
 		DIR *dir;
 
 		res = readFile("./www/autoindex.html");
+		std::cout << "RES: " << _res << std::endl;
 		res = replace(res, "$1", _res);
 		dir = opendir(_res_path.c_str());
 		i = 0;
