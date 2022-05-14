@@ -31,18 +31,18 @@ namespace ft {
 		bool 		isCGIRequest(void);
         std::string getMIME(std::string file);
 		bool validMethod(std::string &method);
-		std::string GetResponse(size_t code, const char *content, size_t content_size);
+		std::string GetResponse(size_t code, std::string content);
 		std::string getError(size_t code);
         std::string getStatus(size_t code);
 		std::string sendGet(void);
 		std::string sendPost(void);
 		std::string sendDelete(void);
+		std::string Autoindex(void);
     public:
         HTTPResponse(HTTPRequest* req, std::map<std::string,ft::VirtualHost> &vhost);
         ~HTTPResponse(void);
         std::string getResponse(void);
     };
 }
-
 
 # endif

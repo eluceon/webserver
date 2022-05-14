@@ -1,4 +1,5 @@
 #include "../../includes/HTTPResponse.hpp"
+#include <dirent.h>
 
 namespace ft {
 	HTTPResponse::HTTPResponse(HTTPRequest* req, std::map<std::string, ft::VirtualHost> &vhost) : _req(req), _vhost(vhost) {
@@ -64,7 +65,8 @@ namespace ft {
 				if (it->first.size() > max_length) {
 					max_length = it->first.size();
 					_location = it->first;
-					_res_path = it->second.getRoot();
+					if (it->second.getReturn().size() > 0) { _res_path = it->second.getReturn(); }
+					else { _res_path = it->second.getRoot(); }
 					_index = it->second.getIndex();
 					_autoindex = it->second.getAutoindex();
 					_fastCGI = it->second.getFastcgiPass();
@@ -96,7 +98,7 @@ namespace ft {
 			}
 			else {
 				if (_autoindex) {
-//					return GetResponse(200, _headers, Autoindex(_res_path));
+					return GetResponse(200, Autoindex());
 				}
 				else {
 					return getError(403);
@@ -107,7 +109,7 @@ namespace ft {
 			return getError(404);
 		if (isCGIRequest()) {
 			try {
-				return ft::CGI(_res, _res_path, _headers, &_req).execCGI();
+				return GetResponse(200, CGI(_res, _res_path, _req).execCGI());
 			}
 			catch (...) {
 				return getError(500);
@@ -159,13 +161,14 @@ namespace ft {
 
 	std::string HTTPResponse::sendGet(void) {
 		std::string content;
+
 		try {
 			content = readFile(_res_path);
 			_headers["Content-Type"] = getMIME(_res_path);
-			return (GetResponse(200, content.c_str(), content.length()));
+			return (GetResponse(200, content));
 		}
 		catch (const std::exception &e) {
-			return (GetResponse(403, "", 0));
+			return (GetResponse(403, ""));
 		}
 	}
 
@@ -217,24 +220,32 @@ namespace ft {
 		{
 			throw ;
 		}
-		return GetResponse(rtn, "", 0);
+		return GetResponse(rtn, "");
 	}
 
 	std::string HTTPResponse::sendDelete() {
 		if (pathType(_res_path) == 1)
 		{
 			unlink(_res_path.c_str());
-			return (GetResponse(200, "", 0));
+			return (GetResponse(200, ""));
 		}
 		return getError(404);
 	}
 
-	std::string HTTPResponse::GetResponse(size_t code, const char *content, size_t content_size)
+	std::string HTTPResponse::GetResponse(size_t code, std::string content)
 	{
+		char *temp;
 		std::string response;
 		std::map<std::string, std::string>::iterator it;
 
-		_headers["Content-Length"] = ft::ITOS(content_size);
+		temp = (char *)malloc(sizeof(char) * content.size() + 1);
+		unsigned long i = 0;
+		while (i < content.size()) {
+			temp[i] = content[i];
+			i++;
+		}
+		temp[i] = 0;
+		_headers["Content-Length"] = ft::ITOS(content.size());
 		_headers["Server"] = "WebServer 21";
 		_headers["Date"] = ft::getDate();
 		response += "HTTP/1.1 ";
@@ -246,8 +257,9 @@ namespace ft {
 			++it;
 		}
 		response += "\r\n";
-		for (size_t i = 0; i < content_size; ++i)
-			response += content[i];
+		for (size_t i = 0; i < content.size(); ++i)
+			response += temp[i];
+		free(temp);
 		return (response);
 	}
 
@@ -379,5 +391,24 @@ namespace ft {
 		s[504] = "Gateway Timeout";
 		s[505] = "HTTP Version Not Supported";
 		return s[code];
+	}
+
+	std::string HTTPResponse::Autoindex() {
+		std::string res;
+		std::string content;
+		std::string link_base;
+		size_t i;
+		struct dirent *entry;
+		DIR *dir;
+
+		res = readFile("./www/autoindex.html");
+		res = replace(res, "$1", _res);
+		dir = opendir(_res_path.c_str());
+		i = 0;
+		while ((entry = readdir(dir)) != 0)
+			content += "<li><a href=\"" + _res_path + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
+		closedir(dir);
+		res = replace(res, "$2", content);
+		return (res);
 	}
 }

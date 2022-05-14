@@ -1,36 +1,37 @@
 #include "../../includes/CGI.hpp"
 
-extern char **environ;
-
 namespace ft {
 	CGI::CGI() {}
-	CGI::CGI(std::string &res, std::string &res_path, std::map<std::string, std::string> &headers, HTTPRequest* req) :
-	_res(res), _res_path(res_path), _headers(headers), _req(req) {}
+	CGI::CGI(std::string &res, std::string &res_path, HTTPRequest* req) :
+	_res(res), _res_path(res_path), _req(req) {}
 	CGI::CGI(const CGI &x) { *this = x; }
+	CGI::~CGI() {}
 
 	CGI &CGI::operator=(const CGI &x) {
 		if (this != &x) {
 			this->_res = x._res;
 			this->_res_path = x._res_path;
-			this->_headers = x._headers;
 		}
 		return *this;
 	}
 
 	std::string CGI::execCGI() {
-		pid_t pid;
 		int res;
 		char **argv;
+		char *file = const_cast<char *>(_res.c_str());
 		int fd;
 		int fds[2];
 
-		argv = argsToArray();
+		if (!(argv = (char **)malloc(sizeof(char *) * 3)))
+			return "";
+		argv[0] = file;
+		argv[1] = const_cast<char *>(_res_path.c_str());
+		argv[2] = NULL;
 		if (pipe(fds) == -1) {
 			std::cout << "Pipe failed\n";
 			throw ;
 		}
-		pid = fork();
-		if (pid == 0) {
+		if (!fork()) {
 			close(fds[1]);
 			dup2(fds[0], 0);
 			fd = open("./www/cgi", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
@@ -40,20 +41,16 @@ namespace ft {
 			}
 			dup2(fd, 1);
 			dup2(fd, 2);
-			res = execve(_res_path.c_str(), argv, _envp);
+			res = execve(file, argv, NULL);
 			close(STDIN_FILENO);
 			close(fd);
 			close(fds[0]);
 			exit(0);
 		}
-		else {
-			close(fds[0]);
-			write(fds[1], _req->getBody().c_str(), _req->getContentLength());
-			close(fds[1]);
-			waitpid(-1, NULL, 0);
-			freeArray(argv);
-			freeArray(envp);
-		}
+		close(fds[0]);
+		write(fds[1], _req->getBody().c_str(), _req->getContentLength());
+		close(fds[1]);
+		wait(&res);
 		return (readFile("./www/cgi"));
 	}
 }

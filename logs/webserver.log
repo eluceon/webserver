@@ -804,3 +804,16 @@
 11/5/2022 0:44:38 Starting up..
 11/5/2022 0:44:40 New client: 127.0.0.1:50809
 11/5/2022 0:44:46 Shutting down on signal 2
+13/5/2022 15:50:59 Starting up..
+13/5/2022 15:51:2 New client: 127.0.0.1:65109
+13/5/2022 15:51:2 New client: 127.0.0.1:65110
+13/5/2022 15:52:3 Starting up..
+13/5/2022 15:52:7 New client: 127.0.0.1:65187
+13/5/2022 15:56:10 Starting up..
+13/5/2022 15:56:13 New client: 127.0.0.1:65297
+13/5/2022 15:57:14 _client[4] closed connection
+13/5/2022 15:57:56 New client: 127.0.0.1:65377
+13/5/2022 15:57:58 New client: 127.0.0.1:65380
+13/5/2022 15:58:3 New client: 127.0.0.1:65387
+13/5/2022 15:58:3 _client[5] aborted connection
+13/5/2022 15:58:56 _client[4] closed connection
