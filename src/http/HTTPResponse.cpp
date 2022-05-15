@@ -54,7 +54,8 @@ namespace ft {
 		std::string server_name = _req->getServerName();
 
 		for (std::map<std::string, ft::VirtualHost>::iterator it = _vhost.begin(); it != _vhost.end(); ++it) {
-			if (!it->first.compare(server_name)) {
+//			if (!it->first.compare(server_name)) {
+			if (it->second.getPort() == _req->getPort()) {
 				locations = it->second.getLocations();
 			}
 		}
@@ -260,6 +261,8 @@ namespace ft {
 		for (size_t i = 0; i < content.size(); ++i)
 			response += temp[i];
 		free(temp);
+		std::cout << "RES: " << _res << std::endl;
+		std::cout << "RES PATH: " << _res_path << std::endl;
 		return (response);
 	}
 
@@ -268,12 +271,9 @@ namespace ft {
 		std::string ext;
 		size_t i;
 
-		std::cout << "FILE " << file << std::endl;
-		std::cout << "FILE size " << file.size() << std::endl;
 		i = file.size() - 1;
 		while (i > 0 && file[i] != '.')
 			--i;
-		std::cout << "I " << i << std::endl;
 		if (i == 0)
 			return ("text/plain");
 		ext = std::string(file, i + 1, file.size() - i);
@@ -399,18 +399,14 @@ namespace ft {
 	std::string HTTPResponse::Autoindex() {
 		std::string res;
 		std::string content;
-		std::string link_base;
-		size_t i;
 		struct dirent *entry;
 		DIR *dir;
 
 		res = readFile("./www/autoindex.html");
-		std::cout << "RES: " << _res << std::endl;
 		res = replace(res, "$1", _res);
 		dir = opendir(_res_path.c_str());
-		i = 0;
 		while ((entry = readdir(dir)) != 0)
-			content += "<li><a href=\"" + _res_path + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
+			content += "<li><a href=\"localhost:8080" + _location + "/" + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
 		closedir(dir);
 		res = replace(res, "$2", content);
 		return (res);

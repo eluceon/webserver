@@ -881,3 +881,123 @@
 14/5/2022 11:1:51 New client: 127.0.0.1:49487
 14/5/2022 11:1:51 New client: 127.0.0.1:49489
 14/5/2022 11:3:29 Shutting down on signal 2
+14/5/2022 21:1:6 Starting up..
+14/5/2022 21:1:13 New client: 127.0.0.1:49553
+14/5/2022 21:1:13 New client: 127.0.0.1:49555
+14/5/2022 21:1:19 New client: 127.0.0.1:49562
+14/5/2022 21:1:19 New client: 127.0.0.1:49563
+14/5/2022 21:2:8 Shutting down on signal 2
+14/5/2022 21:2:12 Starting up..
+14/5/2022 21:2:34 New client: 127.0.0.1:49577
+14/5/2022 21:2:34 New client: 127.0.0.1:49578
+14/5/2022 21:6:16 New client: 127.0.0.1:49593
+14/5/2022 21:6:16 _client[5] aborted connection
+14/5/2022 21:6:31 New client: 127.0.0.1:49595
+14/5/2022 21:6:31 New client: 127.0.0.1:49597
+14/5/2022 21:6:50 New client: 127.0.0.1:49598
+14/5/2022 21:6:50 _client[6] aborted connection
+14/5/2022 21:7:3 New client: 127.0.0.1:49603
+14/5/2022 21:7:3 New client: 127.0.0.1:49605
+14/5/2022 21:7:46 _client[5] closed connection
+14/5/2022 21:7:56 Shutting down on signal 2
+15/5/2022 8:38:15 Starting up..
+15/5/2022 8:38:52 New client: 127.0.0.1:49729
+15/5/2022 8:38:52 New client: 127.0.0.1:49730
+15/5/2022 8:40:0 New client: 127.0.0.1:49735
+15/5/2022 8:40:0 _client[5] closed connection
+15/5/2022 8:40:21 New client: 127.0.0.1:49738
+15/5/2022 8:40:21 New client: 127.0.0.1:49739
+15/5/2022 9:10:53 _client[4] closed connection
+15/5/2022 9:10:53 _client[6] aborted connection
+15/5/2022 9:10:53 _client[5] closed connection
+15/5/2022 11:23:52 Shutting down on signal 2
+15/5/2022 11:49:51 System error exit: can't open dir: ./webserver/www/site1/
+15/5/2022 11:50:14 Starting up..
+15/5/2022 11:50:20 New client: 127.0.0.1:49862
+15/5/2022 11:50:20 New client: 127.0.0.1:49863
+15/5/2022 11:50:45 New client: 127.0.0.1:49867
+15/5/2022 11:50:45 New client: 127.0.0.1:49868
+15/5/2022 12:5:19 _client[5] closed connection
+15/5/2022 12:5:19 New client: 127.0.0.1:49879
+15/5/2022 12:5:19 _client[4] closed connection
+15/5/2022 12:5:19 New client: 127.0.0.1:49880
+15/5/2022 12:5:19 _client[6] aborted connection
+15/5/2022 12:5:50 New client: 127.0.0.1:49885
+15/5/2022 12:5:50 New client: 127.0.0.1:49886
+15/5/2022 12:6:18 Shutting down on signal 2
+15/5/2022 12:6:20 Starting up..
+15/5/2022 12:6:24 New client: 127.0.0.1:49890
+15/5/2022 12:6:24 New client: 127.0.0.1:49891
+15/5/2022 12:8:10 Shutting down on signal 2
+15/5/2022 12:19:18 Starting up..
+15/5/2022 12:19:24 New client: 127.0.0.1:49897
+15/5/2022 12:19:24 New client: 127.0.0.1:49899
+15/5/2022 12:21:14 New client: 127.0.0.1:49902
+15/5/2022 12:21:14 _client[5] closed connection
+15/5/2022 12:22:33 Shutting down on signal 2
+15/5/2022 12:23:20 Starting up..
+15/5/2022 12:23:27 New client: 127.0.0.1:49904
+15/5/2022 12:23:27 New client: 127.0.0.1:49906
+15/5/2022 12:24:36 Shutting down on signal 2
+15/5/2022 12:24:41 Starting up..
+15/5/2022 12:24:47 New client: 127.0.0.1:49911
+15/5/2022 12:24:47 New client: 127.0.0.1:49912
+15/5/2022 12:25:50 New client: 127.0.0.1:49915
+15/5/2022 12:25:50 New client: 127.0.0.1:49916
+15/5/2022 12:25:53 New client: 127.0.0.1:49918
+15/5/2022 12:25:53 _client[5] closed connection
+15/5/2022 12:26:50 Shutting down on signal 2
+15/5/2022 12:31:29 Starting up..
+15/5/2022 12:31:34 New client: 127.0.0.1:49923
+15/5/2022 12:31:34 New client: 127.0.0.1:49924
+15/5/2022 12:32:59 Shutting down on signal 2
+15/5/2022 16:5:19 Starting up..
+15/5/2022 16:5:24 New client: 127.0.0.1:50132
+15/5/2022 16:5:24 New client: 127.0.0.1:50133
+15/5/2022 16:5:24 New client: 127.0.0.1:50135
+15/5/2022 16:5:28 New client: 127.0.0.1:50140
+15/5/2022 16:5:44 Shutting down on signal 2
+15/5/2022 16:5:45 Starting up..
+15/5/2022 16:5:50 New client: 127.0.0.1:50154
+15/5/2022 16:5:50 New client: 127.0.0.1:50156
+15/5/2022 16:17:48 Shutting down on signal 2
+15/5/2022 16:22:56 Starting up..
+15/5/2022 16:23:20 New client: 127.0.0.1:50151
+15/5/2022 16:23:20 New client: 127.0.0.1:50152
+15/5/2022 16:23:43 Shutting down on signal 2
+15/5/2022 16:24:29 Starting up..
+15/5/2022 16:24:33 New client: 127.0.0.1:50353
+15/5/2022 16:24:33 New client: 127.0.0.1:50354
+15/5/2022 16:24:57 Shutting down on signal 2
+15/5/2022 16:24:59 Starting up..
+15/5/2022 16:25:2 Shutting down on signal 2
+15/5/2022 16:25:6 Starting up..
+15/5/2022 16:25:11 New client: 127.0.0.1:50461
+15/5/2022 16:25:11 New client: 127.0.0.1:50462
+15/5/2022 16:25:37 New client: 127.0.0.1:50483
+15/5/2022 16:25:37 New client: 127.0.0.1:50484
+15/5/2022 16:25:55 Shutting down on signal 2
+15/5/2022 16:26:39 Starting up..
+15/5/2022 16:26:48 New client: 127.0.0.1:50510
+15/5/2022 16:26:48 New client: 127.0.0.1:50512
+15/5/2022 16:28:24 Shutting down on signal 2
+15/5/2022 16:28:26 Starting up..
+15/5/2022 16:28:32 New client: 127.0.0.1:50612
+15/5/2022 16:28:32 New client: 127.0.0.1:50614
+15/5/2022 16:28:38 New client: 127.0.0.1:50617
+15/5/2022 16:28:38 New client: 127.0.0.1:50618
+15/5/2022 16:28:46 Shutting down on signal 2
+15/5/2022 16:28:49 Starting up..
+15/5/2022 16:29:22 New client: 127.0.0.1:50638
+15/5/2022 16:29:22 New client: 127.0.0.1:50639
+15/5/2022 16:40:21 _client[4] closed connection
+15/5/2022 16:40:21 _client[5] aborted connection
+15/5/2022 19:37:12 Shutting down on signal 2
+15/5/2022 20:57:9 Starting up..
+15/5/2022 20:57:23 New client: 127.0.0.1:52993
+15/5/2022 20:57:23 New client: 127.0.0.1:52995
+15/5/2022 20:57:28 New client: 127.0.0.1:53003
+15/5/2022 20:57:28 New client: 127.0.0.1:53004
+15/5/2022 21:2:57 _client[5] closed connection
+15/5/2022 21:2:57 _client[4] closed connection
+15/5/2022 21:4:28 Shutting down on signal 2
