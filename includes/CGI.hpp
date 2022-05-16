@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 # include <unistd.h>
+# include <sys/wait.h>
 # include "HTTPResponse.hpp"
 
 namespace ft {

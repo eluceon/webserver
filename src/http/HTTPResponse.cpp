@@ -162,6 +162,9 @@ namespace ft {
 
 	std::string HTTPResponse::sendGet(void) {
 		std::string content;
+		std::cout << "GET Res path: " << _res_path << std::endl;
+		std::cout << "Port: " << _req->getPort() << std::endl;
+		std::cout << "Location: " << _location << std::endl;
 
 		try {
 			content = readFile(_res_path);
@@ -261,8 +264,6 @@ namespace ft {
 		for (size_t i = 0; i < content.size(); ++i)
 			response += temp[i];
 		free(temp);
-		std::cout << "RES: " << _res << std::endl;
-		std::cout << "RES PATH: " << _res_path << std::endl;
 		return (response);
 	}
 
@@ -406,7 +407,7 @@ namespace ft {
 		res = replace(res, "$1", _res);
 		dir = opendir(_res_path.c_str());
 		while ((entry = readdir(dir)) != 0)
-			content += "<li><a href=\"localhost:8080" + _location + "/" + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
+			content += "<li><a href=\"" + _location + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
 		closedir(dir);
 		res = replace(res, "$2", content);
 		return (res);
