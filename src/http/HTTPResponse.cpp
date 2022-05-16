@@ -54,7 +54,6 @@ namespace ft {
 		std::string server_name = _req->getServerName();
 
 		for (std::map<std::string, ft::VirtualHost>::iterator it = _vhost.begin(); it != _vhost.end(); ++it) {
-//			if (!it->first.compare(server_name)) {
 			if (it->second.getPort() == _req->getPort()) {
 				locations = it->second.getLocations();
 			}
@@ -86,8 +85,11 @@ namespace ft {
 			_res_path = std::string(_res_path, 0, _res_path.size() - 1);
 		}
 		_res_path += _res;
+		std::cout << "Res_path initial: " << _res_path << std::endl;
+		std::cout << "Index empty: " << _index.empty() << std::endl;
 		if (pathType(_res_path) == 2) {
 			if (!_index.empty()) {
+				std::cout << "Index found\n";
 				_res_path += ((_res_path[_res_path.length() - 1] == '/') ? "" : "/");
 				for (std::vector<std::string>::iterator it = _index.begin(); it != _index.end(); ++it) {
 					std::string path = _res_path + *it;
@@ -106,8 +108,9 @@ namespace ft {
 				}
 			}
 		}
-		if (pathType(_res_path) == 0)
+		if (pathType(_res_path) == 0) {
 			return GetResponse(404, getError(404));
+		}
 		if (isCGIRequest()) {
 			try {
 				return GetResponse(200, CGI(_res, _res_path, _req).execCGI());
@@ -241,6 +244,10 @@ namespace ft {
 		char *temp;
 		std::string response;
 		std::map<std::string, std::string>::iterator it;
+
+		std::cout << "RESPONSE ON: " << _res_path << std::endl;
+		std::cout << "REQUEST URI: " << _req->getFullURL() << std::endl;
+		std::cout << "RELATIVE PATH: " << _req->getRelativePath() << std::endl;
 
 		temp = (char *)malloc(sizeof(char) * content.size() + 1);
 		unsigned long i = 0;
@@ -400,16 +407,21 @@ namespace ft {
 	std::string HTTPResponse::Autoindex() {
 		std::string res;
 		std::string content;
+		std::string ref_path;
 		struct dirent *entry;
 		DIR *dir;
 
 		res = readFile("./www/autoindex.html");
 		res = replace(res, "$1", _res);
 		dir = opendir(_res_path.c_str());
+		ref_path = _location;
+		if (ref_path[ref_path.size() - 1] != '/')
+			ref_path += '/';
 		while ((entry = readdir(dir)) != 0)
-			content += "<li><a href=\"" + _location + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
+			content += "<li><a href=\"" + ref_path + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
 		closedir(dir);
 		res = replace(res, "$2", content);
+		std::cout << "HREF: " << res << std::endl;
 		return (res);
 	}
 }

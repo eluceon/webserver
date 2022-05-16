@@ -11,7 +11,7 @@ namespace ft {
 		int fd;
 		int i;
 		int res;
-		std::string result;
+		std::string result = "";
 
 		fd = open(file.c_str(), O_RDONLY);
 		if (fd < -1) {
