@@ -248,6 +248,7 @@ namespace ft {
 		std::cout << "RESPONSE ON: " << _res_path << std::endl;
 		std::cout << "REQUEST URI: " << _req->getFullURL() << std::endl;
 		std::cout << "RELATIVE PATH: " << _req->getRelativePath() << std::endl;
+		std::cout << "MIME: " << _headers["Content-Type"] << std::endl;
 
 		temp = (char *)malloc(sizeof(char) * content.size() + 1);
 		unsigned long i = 0;
