@@ -37,6 +37,7 @@ void	ft::HTTPClient::response(
 {
 	if (!_httpRequest)
 		ft::errorExit("HTTPRequest is needed for HTTPResponse class");
+	std::cout << "PATH INIT: " << _httpRequest->getRelativePath() << std::endl;
 	HTTPResponse *httpResponse = new HTTPResponse(_httpRequest, virtualHosts);
 	std::string response = httpResponse->getResponse();
 	send(_fd, response.c_str(), response.size(), 0);

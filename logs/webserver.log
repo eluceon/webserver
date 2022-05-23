@@ -188,3 +188,17 @@
 23/5/2022 17:33:54 New client: 127.0.0.1:57710
 23/5/2022 17:33:54 New client: 127.0.0.1:57711
 23/5/2022 17:35:53 Shutting down on signal 2
+23/5/2022 19:35:34 System error exit: can't open file: webserv.conf
+23/5/2022 19:36:55 System error exit: can't open file: webserv.conf
+23/5/2022 19:36:59 Starting up..
+23/5/2022 19:37:10 New client: 127.0.0.1:49377
+23/5/2022 19:37:10 New client: 127.0.0.1:49378
+23/5/2022 19:39:12 Shutting down on signal 2
+23/5/2022 19:39:17 Starting up..
+23/5/2022 19:39:31 New client: 127.0.0.1:49405
+23/5/2022 19:39:31 New client: 127.0.0.1:49407
+23/5/2022 19:40:28 Shutting down on signal 2
+23/5/2022 19:41:4 Starting up..
+23/5/2022 19:41:7 New client: 127.0.0.1:49485
+23/5/2022 19:41:7 New client: 127.0.0.1:49487
+23/5/2022 19:41:58 Shutting down on signal 2

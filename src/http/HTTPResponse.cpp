@@ -39,7 +39,6 @@ const std::string ft::HTTPResponse::getResponse() {
 	_res_path += _res;
 	if (ft::pathType(_res_path) == 2) {
 		if (!_index.empty()) {
-			std::cout << "Index found\n";
 			_res_path += ((_res_path[_res_path.length() - 1] == '/') ? "" : "/");
 			for (std::vector<std::string>::iterator it = _index.begin(); it != _index.end(); ++it) {
 				std::string path = _res_path + *it;
@@ -106,6 +105,7 @@ std::string& ft::HTTPResponse::GetResponse(size_t code, std::string content) {
 	free(temp);
 	for(std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); ++it)
 		std::cout << "HEADERS: " << it->first << " : " << it->second << std::endl;
+	std::cout << "PATH: " << _httpRequest->getRelativePath() << std::endl;
 	return (_response);
 }
 
@@ -171,7 +171,6 @@ std::string& ft::HTTPResponse::Get() {
 //	catch (const std::exception &e) {
 //		return (GetResponse(403, ""));
 //	}
-
 	std::vector<unsigned char> binary;
 	unsigned char *content;
 	std::string 	result;
@@ -414,7 +413,6 @@ std::string ft::HTTPResponse::Autoindex() {
 		content += "<li><a href=\"" + ref_path + std::string(entry->d_name) +  "\">" + std::string(entry->d_name) + "</a></li>";
 	closedir(dir);
 	res = replace(res, "$2", content);
-	std::cout << "HREF: " << res << std::endl;
 	return (res);
 }
 
