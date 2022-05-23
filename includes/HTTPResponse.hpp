@@ -32,6 +32,7 @@ namespace ft {
 			HTTPResponse(const HTTPResponse &other);
 			std::string& GetResponse(size_t code, std::string content);
 			void 		parseVHOST(void);
+			std::string getResource(std::string rel_path);
 			std::string&	Get();
 			std::string&	Post();
 			std::string&	Delete();

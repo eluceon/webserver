@@ -28,7 +28,7 @@ ft::HTTPResponse &ft::HTTPResponse::operator=(const HTTPResponse &other) {
 const std::string ft::HTTPResponse::getResponse() {
 	std::string method = _httpRequest->getMethodName();
 	_headers["Content-Type"] = getMIME("dummy.html");
-	std::string	empty = "";
+	std::cout << "METHOD: " << method << std::endl;
 
 	parseVHOST();
 	if (!validMethod(method))
@@ -36,6 +36,7 @@ const std::string ft::HTTPResponse::getResponse() {
 	if (_res_path[_res_path.size() - 1] == '/') {
 		_res_path = std::string(_res_path, 0, _res_path.size() - 1);
 	}
+	_res = getResource(_httpRequest->getRelativePath());
 	_res_path += _res;
 	if (ft::pathType(_res_path) == 2) {
 		if (!_index.empty()) {
@@ -68,10 +69,14 @@ const std::string ft::HTTPResponse::getResponse() {
 			return GetResponse(500, Error(500));
 		}
 	}
-	if (method == "GET")
+	if (method == "GET") {
+		std::cout << "GET OK\n";
 		return Get();
-	else if (method == "POST")
+	}
+	else if (method == "POST") {
+		std::cout << "POST OK\n";
 		return Post();
+	}
 	else if (method == "DELETE")
 		return Delete();
 	return ("");
@@ -103,8 +108,8 @@ std::string& ft::HTTPResponse::GetResponse(size_t code, std::string content) {
 	for (size_t i = 0; i < content.size(); ++i)
 		_response += temp[i];
 	free(temp);
-	for(std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); ++it)
-		std::cout << "HEADERS: " << it->first << " : " << it->second << std::endl;
+//	for(std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); ++it)
+//		std::cout << "HEADERS: " << it->first << " : " << it->second << std::endl;
 	std::cout << "PATH: " << _httpRequest->getRelativePath() << std::endl;
 	return (_response);
 }
@@ -134,6 +139,21 @@ void ft::HTTPResponse::parseVHOST(void) {
 			}
 		}
 	}
+}
+
+std::string ft::HTTPResponse::getResource(std::string rel_path)
+{
+	std::string res;
+	size_t i;
+
+	i = 0;
+	res = rel_path;
+	res.replace(0, _location.size(), "/");
+	res = replace(res, "//", "/");
+	while (res[i] && res[i] != '?')
+		++i;
+	res = std::string(res, 0, i);
+	return (res);
 }
 
 //void temp(void){
@@ -174,6 +194,7 @@ std::string& ft::HTTPResponse::Get() {
 	std::vector<unsigned char> binary;
 	unsigned char *content;
 	std::string 	result;
+	std::cout << "PATH TO FILE: " << _res_path << std::endl;
 	try
 	{
 		binary = readBinaryFile(_res_path);
