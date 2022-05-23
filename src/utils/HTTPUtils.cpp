@@ -30,7 +30,7 @@ namespace ft {
 		return (result);
 	}
 
-	std::string ITOS(size_t n) {
+	std::string IntToStr(size_t n) {
 		std::ostringstream convert;
 
 		convert << n;
@@ -77,5 +77,31 @@ namespace ft {
 
 		gettimeofday(&now, &tz);
 		return (TimeToStr(now.tv_sec + tz.tz_minuteswest * 60));
+	}
+
+	std::vector<unsigned char> readBinaryFile(std::string file) {
+		char buffer[BUFFER_SIZE + 1] = {0};
+		int fd;
+		int i;
+		int res;
+		std::vector<unsigned char> result;
+
+		fd = open(file.c_str(), O_RDONLY);
+		if (fd < -1)
+		{
+			throw FileError("File does not exist");
+		}
+		while ((res = read(fd, buffer, BUFFER_SIZE)) > 0)
+		{
+			for (size_t j = 0; j < (size_t)res; ++j)
+				result.push_back(buffer[j]);
+			i = 0;
+			while (i < BUFFER_SIZE)
+				buffer[i++] = 0;
+		}
+		if (res < 0)
+			throw FileError("Can not read file");
+		close(fd);
+		return (result);
 	}
 }

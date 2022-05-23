@@ -3,37 +3,45 @@
 
 # include <fstream>
 # include <map>
+# include <fcntl.h>
+# include <dirent.h>
 # include "HTTPRequest.hpp"
 # include "VirtualHost.hpp"
 
 namespace ft {
 	class HTTPResponse {
 		public:
-			// HTTPResponse(HTTPRequest* httpReuest);
-			HTTPResponse(
-				HTTPRequest* httpReuest,
-				std::map<std::string,ft::VirtualHost>	&_virtualHosts
-			);
-			HTTPResponse(const HTTPResponse &other);
+			HTTPResponse(HTTPRequest* httpRequest, std::map<std::string,ft::VirtualHost> &_virtualHosts);
 			~HTTPResponse();
 
 			HTTPResponse &operator=(const HTTPResponse &other);
-			
-			const std::string&	getResponse();
+			const std::string	getResponse();
 		protected:
-			HTTPRequest* 											_httpReuest;
-			std::map<std::string,ft::VirtualHost>			&_virtualHosts;
-			std::string												_response;
+			HTTPRequest* 							_httpRequest;
+			std::map<std::string,ft::VirtualHost>	&_virtualHosts;
+			std::string								_response;
+			std::map<std::string, std::string>		_headers;
+			std::string 							_res;
+			std::string 							_res_path;
+			std::string 							_location;
+			std::vector<std::string> 				_index;
+			bool 									_autoindex;
+			std::string 							_fastCGI;
 
 			HTTPResponse();
-
-			void	run();
-			void	handleGetResponse();
-			void	handlePostResponse();
-			void	handleDeleteResponse();
-			void	setErrorResponse(int status, const std::string& description);
-
-			void	printConfigurations(); 	// DELETE THIS METHOD!
+			HTTPResponse(const HTTPResponse &other);
+			std::string& GetResponse(size_t code, std::string content);
+			void 		parseVHOST(void);
+			std::string&	Get();
+			std::string&	Post();
+			std::string&	Delete();
+			std::string Error(size_t code);
+			std::string Autoindex(void);
+			const std::string getMIME(std::string file) const;
+			const std::string getStatus(size_t code) const;
+			bool validMethod(std::string &method);
+			bool 		isCGIRequest(void);
+			std::string execCGI();
 	};
 	
 } // namespace ft
