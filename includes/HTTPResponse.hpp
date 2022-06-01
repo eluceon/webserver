@@ -5,6 +5,7 @@
 # include <map>
 # include <fcntl.h>
 # include <dirent.h>
+# include <sys/wait.h>
 # include "HTTPRequest.hpp"
 # include "VirtualHost.hpp"
 
@@ -30,13 +31,13 @@ namespace ft {
 
 			HTTPResponse();
 			HTTPResponse(const HTTPResponse &other);
-			std::string& GetResponse(size_t code, std::string content);
+			std::string GetResponse(size_t code, std::string content);
 			void 		parseVHOST(void);
 			std::string getResource(std::string rel_path);
-			std::string&	Get();
-			std::string&	Post();
-			std::string&	Delete();
-			std::string Error(size_t code);
+			std::string	Get();
+			std::string	Post();
+			std::string	Delete();
+			std::string 	Error(size_t code);
 			std::string Autoindex(void);
 			const std::string getMIME(std::string file) const;
 			const std::string getStatus(size_t code) const;

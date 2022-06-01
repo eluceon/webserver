@@ -28,7 +28,6 @@ ft::HTTPResponse &ft::HTTPResponse::operator=(const HTTPResponse &other) {
 const std::string ft::HTTPResponse::getResponse() {
 	std::string method = _httpRequest->getMethodName();
 	_headers["Content-Type"] = getMIME("dummy.html");
-	std::cout << "METHOD: " << method << std::endl;
 
 	parseVHOST();
 	if (!validMethod(method))
@@ -70,11 +69,9 @@ const std::string ft::HTTPResponse::getResponse() {
 		}
 	}
 	if (method == "GET") {
-		std::cout << "GET OK\n";
 		return Get();
 	}
 	else if (method == "POST") {
-		std::cout << "POST OK\n";
 		return Post();
 	}
 	else if (method == "DELETE")
@@ -82,7 +79,7 @@ const std::string ft::HTTPResponse::getResponse() {
 	return ("");
 }
 
-std::string& ft::HTTPResponse::GetResponse(size_t code, std::string content) {
+std::string ft::HTTPResponse::GetResponse(size_t code, std::string content) {
 	char *temp;
 	std::map<std::string, std::string>::iterator it;
 
@@ -108,9 +105,6 @@ std::string& ft::HTTPResponse::GetResponse(size_t code, std::string content) {
 	for (size_t i = 0; i < content.size(); ++i)
 		_response += temp[i];
 	free(temp);
-//	for(std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); ++it)
-//		std::cout << "HEADERS: " << it->first << " : " << it->second << std::endl;
-	std::cout << "PATH: " << _httpRequest->getRelativePath() << std::endl;
 	return (_response);
 }
 
@@ -180,21 +174,10 @@ std::string ft::HTTPResponse::getResource(std::string rel_path)
 //}
 
 
-std::string& ft::HTTPResponse::Get() {
-//	std::string content;
-//
-//	try {
-//		content = readFile(_res_path);
-//		_headers["Content-Type"] = getMIME(_res_path);
-//		return (GetResponse(200, content));
-//	}
-//	catch (const std::exception &e) {
-//		return (GetResponse(403, ""));
-//	}
+std::string ft::HTTPResponse::Get() {
 	std::vector<unsigned char> binary;
 	unsigned char *content;
 	std::string 	result;
-	std::cout << "PATH TO FILE: " << _res_path << std::endl;
 	try
 	{
 		binary = readBinaryFile(_res_path);
@@ -203,7 +186,7 @@ std::string& ft::HTTPResponse::Get() {
 		pathType(_res_path);
 		for (size_t i = 0; i < binary.size(); ++i)
 			result += content[i];
-		return (GetResponse(200, result));
+		return GetResponse(200, result);
 	}
 	catch (const std::exception &e)
 	{
@@ -211,7 +194,7 @@ std::string& ft::HTTPResponse::Get() {
 	}
 }
 
-std::string& ft::HTTPResponse::Post() {
+std::string ft::HTTPResponse::Post() {
 	int fd;
 	int rtn;
 	int type;
@@ -264,11 +247,11 @@ std::string& ft::HTTPResponse::Post() {
 	return GetResponse(rtn, "");
 }
 
-std::string& ft::HTTPResponse::Delete() {
+std::string ft::HTTPResponse::Delete() {
 	if (pathType(_res_path) == 1)
 	{
 		unlink(_res_path.c_str());
-		return (GetResponse(200, ""));
+		return GetResponse(200, "");
 	}
 	return GetResponse(404, Error(404));
 }
