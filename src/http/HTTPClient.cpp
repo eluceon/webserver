@@ -44,7 +44,7 @@ void	ft::HTTPClient::response(
 	delete httpResponse;
 }
 
-const ft::HTTPRequest	*ft::HTTPClient::getHttpRequest() const {
+ft::HTTPRequest	*ft::HTTPClient::getHttpRequest() {
 	return _httpRequest;
 }
 

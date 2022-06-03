@@ -14,7 +14,7 @@ namespace ft {
 
 			HTTPClient &operator=(const HTTPClient &other);
 
-			const ft::HTTPRequest	*getHttpRequest() const;
+			ft::HTTPRequest	*getHttpRequest();
 			int						getFd() const;
 			void					response(std::map<std::string, ft::VirtualHost>& virtualHosts);
 			void					parse(const char *buf);			

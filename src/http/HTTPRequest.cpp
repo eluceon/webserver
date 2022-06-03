@@ -68,6 +68,26 @@ ft::HTTPRequest &ft::HTTPRequest::operator=(const ft::HTTPRequest &other) {
 	return *this;
 }
 
+void ft::HTTPRequest::setDefault() {
+	_requestMethod = GET;
+	_requestURI = "";
+	_HTTPVersion = HTTP_1_1;
+	_protocol = "http",
+	_serverName = "",
+	_relativePath = "",
+	_queryString = "",
+	_port = DEFAULT_PORT; 
+	_headers.clear();
+	_body = "";
+	_parsed = NO,
+	_status = HTTP_OK;
+	_chunked = false;
+	_contentLength = 0;
+	_clientMaxBodySize = DEFAULT_MAX_BODY_SIZE;
+	_buffer = "";
+	_pos = 0;
+}
+
 std::string	ft::HTTPRequest::getMethodName() const {
 	switch (_requestMethod)
 	{

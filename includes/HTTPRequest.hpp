@@ -17,6 +17,7 @@ namespace ft
 
 			HTTPRequest &operator=(const HTTPRequest &other);
 
+			void				setDefault();
 			void 				setMethod(std::string requestMethod);
 			std::string			getMethodName() const;
 			void				setHTTPVersion(std::string HTTPVersion);

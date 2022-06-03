@@ -115,6 +115,10 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 							+ ft::to_string(i) +"] on error "
 							+ ft::to_string(httpClient->getHttpRequest()->getStatus()));
 						freeClient(i);
+					} else {
+						// timestamp("server closed connection with _client[" + ft::to_string(i) +"] ");
+						// freeClient(i);
+						httpClient->getHttpRequest()->setDefault();
 					}
 				}
 			}

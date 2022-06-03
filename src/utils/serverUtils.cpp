@@ -24,6 +24,7 @@ namespace ft
 		if ((fout.rdstate() & std::ifstream::badbit) != 0 ) {
 			std::cerr << "Writing 'webserver.log' error" << std::endl;
 		}
+		fout.close();
 	}
 
 	std::string	Getcwd() {
