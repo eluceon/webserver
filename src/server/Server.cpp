@@ -91,10 +91,11 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 	char	buf[MAXLINE + 1];
 
 	// check all clients for data
-	for (int i = _listeningSockets.size(); i <= maxIdx && countReadyFd > 0; ++i, --countReadyFd) {
+	for (int i = _listeningSockets.size(); i <= maxIdx && countReadyFd > 0; ++i) {
 		if ( (sockfd = _client[i].fd) < 0)
 			continue;
 		if (_client[i].revents & (POLLRDNORM | POLLERR)) {
+			--countReadyFd;
 			if ( (n = recv(sockfd, buf, MAXLINE, 0)) < 0) {
 				if (errno == ECONNRESET) {	// connection reset by client
 					timestamp("_client[" + ft::to_string(i) +"] aborted connection");
@@ -110,15 +111,28 @@ void	ft::Server::checkConnectionsForData(int	maxIdx, int countReadyFd) {
 				httpClient->parse(buf);
 				if (httpClient->getHttpRequest()->isParsed() == YES) {
 					httpClient->response(_virtualHosts);
-					if (httpClient->getHttpRequest()->getStatus() != HTTP_OK) {
+
+					ft::HTTPRequest *httpRequest = httpClient->getHttpRequest();
+					std::map<std::string, std::string>::const_iterator it = httpRequest->getHeaders().find("connection");
+					std::string connection;
+					it != httpRequest->getHeaders().end() ? connection = it->second : connection = "";
+					
+					if (httpRequest->getStatus() != HTTP_OK) {
 						timestamp("closed connection with _client[" 
 							+ ft::to_string(i) +"] on error "
-							+ ft::to_string(httpClient->getHttpRequest()->getStatus()));
+							+ ft::to_string(httpRequest->getStatus()));
+						freeClient(i);
+					} else if (httpRequest->getHTTPVersion() == "HTTP/0.9"
+							|| (httpRequest->getHTTPVersion() == "HTTP_1_0:"
+							&& connection != "keep-alive")
+							|| (httpRequest->getHTTPVersion() == "HTTP_1_1"
+							&& connection == "close")
+							) 
+					{
+						timestamp("server closed connection with _client[" + ft::to_string(i) +"] ");
 						freeClient(i);
 					} else {
-						// timestamp("server closed connection with _client[" + ft::to_string(i) +"] ");
-						// freeClient(i);
-						httpClient->getHttpRequest()->setDefault();
+						httpRequest->setDefault();
 					}
 				}
 			}
