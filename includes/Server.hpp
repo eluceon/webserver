@@ -37,8 +37,10 @@ namespace ft
 	class Server
 	{
 	public:
-		static Server&	getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts);
+		static Server *getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts);
 	private:
+		static Server *_server;
+
 		Server();
 		Server(const std::map<std::string, ft::VirtualHost> &virtualHosts);
 		Server(const Server &other);

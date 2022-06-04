@@ -2,6 +2,7 @@
 #include "HTTPRequest.hpp"
 #include "HTTPResponse.hpp"
 
+ft::Server* ft::Server::_server = (Server *)0;
 
 ft::Server::Server(const std::map<std::string, ft::VirtualHost> &virtualHosts)
 	: _virtualHosts(virtualHosts) {
@@ -19,11 +20,14 @@ ft::Server::~Server() {
 		delete(*it);
 		++it;
 	}
+	delete _server;
 }
 
-ft::Server&	ft::Server::getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts) {
-	static Server singleton(virtualHosts);
-    return singleton;
+ft::Server	*ft::Server::getInstance(const std::map<std::string, ft::VirtualHost> &virtualHosts) {
+	if (_server == (Server *)0) {
+	    _server = new Server(virtualHosts);
+	}
+	return _server;
 }
 
 void	ft::Server::setListeningSockets() {
