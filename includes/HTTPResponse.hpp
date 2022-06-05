@@ -21,6 +21,7 @@ namespace ft {
 			HTTPRequest* 							_httpRequest;
 			std::map<std::string,ft::VirtualHost>	&_virtualHosts;
 			std::string								_response;
+			short									_redirect;
 			std::map<std::string, std::string>		_headers;
 			std::string 							_res;
 			std::string 							_res_path;
@@ -28,7 +29,7 @@ namespace ft {
 			std::vector<std::string> 				_index;
 			bool 									_autoindex;
 			std::string 							_fastCGI;
-
+			
 			HTTPResponse();
 			HTTPResponse(const HTTPResponse &other);
 			std::string GetResponse(size_t code, std::string content);

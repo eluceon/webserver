@@ -4,12 +4,14 @@ ft::HTTPResponse::HTTPResponse(HTTPRequest* httpRequest, std::map<std::string,ft
 	: _httpRequest(httpRequest),
 	_virtualHosts(virtualHosts),
 	_response(""),
+	_redirect(0),
 	_headers(_httpRequest->getHeaders()) {}
 
 ft::HTTPResponse::HTTPResponse(const HTTPResponse& other)
 	: _httpRequest(other._httpRequest),
 	_virtualHosts(other._virtualHosts),
 	_response(other._response),
+	_redirect(other._redirect),
 	_headers(other._headers)
 {}
 
@@ -20,6 +22,7 @@ ft::HTTPResponse &ft::HTTPResponse::operator=(const HTTPResponse &other) {
 		_httpRequest = other._httpRequest;
 		_virtualHosts = other._virtualHosts;	
 		_response = other._response;
+		_redirect = other._redirect;
 		_headers = other._headers;
 	}
 	return *this;
@@ -36,7 +39,8 @@ const std::string ft::HTTPResponse::getResponse() {
 		_res_path = std::string(_res_path, 0, _res_path.size() - 1);
 	}
 	_res = getResource(_httpRequest->getRelativePath());
-	_res_path += _res;
+	if (!_redirect)
+		_res_path += _res;
 	if (ft::pathType(_res_path) == 2) {
 		if (!_index.empty()) {
 			_res_path += ((_res_path[_res_path.length() - 1] == '/') ? "" : "/");
@@ -125,7 +129,10 @@ void ft::HTTPResponse::parseVHOST(void) {
 			if (it->first.size() > max_length) {
 				max_length = it->first.size();
 				_location = it->first;
-				if (it->second.getReturn().size() > 0) { _res_path = it->second.getReturn(); }
+				if (it->second.getReturn().size() > 0) { 
+					_redirect = 1;
+					_res_path = it->second.getRoot().substr(0, it->second.getRoot().size() - 1) + it->second.getReturn(); 
+				}
 				else { _res_path = it->second.getRoot(); }
 				_index = it->second.getIndex();
 				_autoindex = it->second.getAutoindex();
@@ -149,30 +156,6 @@ std::string ft::HTTPResponse::getResource(std::string rel_path)
 	res = std::string(res, 0, i);
 	return (res);
 }
-
-//void temp(void){
-//	std::string	body;
-//	std::string line;
-//
-//	if (_httpRequest->getStatus() == HTTP_OK ) {
-//		// _httpRequest->getRelativePath();
-//		std::ifstream	siteFile("./www/site1/index.html");
-//		if ((siteFile.rdstate() & std::ifstream::failbit) != 0 ) {
-//			setErrorResponse(HTTP_NOT_FOUND, "NOT FOUND");
-//		} else {
-//			while (getline (siteFile, line))
-//				body.append(line);
-//			_response = _httpRequest->getHTTPVersion() + " 200 OK\r\n";
-//			_response += "Server: ft_server\r\n";
-//			_response += "Content-Length: " + ft::to_string(body.length()) + CRLF_CRLF;
-//			_response += body + CRLF;
-//			siteFile.close();
-//		}
-//	} else {
-//
-//	}
-//}
-
 
 std::string ft::HTTPResponse::Get() {
 	std::vector<unsigned char> binary;
