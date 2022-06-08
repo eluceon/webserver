@@ -329,23 +329,18 @@ void	ft::HTTPRequest::processHeaders() {
 }
 
 void	ft::HTTPRequest::parseBody() {
-	// std::cout << "Before\n";
 	if (!_chunked) {
-		// std::cout << "NOT CHUNK\n";
 		std::string::size_type	tmpPos = _pos;
 		
 		if (ft::parseToken(_buffer, CRLF, tmpPos, _body,
 						true, true, _contentLength))
 		{
-			// if (_body.size() != _contentLength)
-			// 	throw HTTP_BAD_REQUEST;
 			_parsed = YES;
 			_pos = tmpPos;
 		} else if (_body.length() > _contentLength) {
 			throw HTTP_PAYLOAD_TOO_LARGE;
 		}
 	} else {
-		// std::cout << "CHUNK\n";
 		parseChunkedBody();
 	}
 }
@@ -366,16 +361,12 @@ void	ft::HTTPRequest::parseChunkedBody() {
 				throw HTTP_BAD_REQUEST;
 			while (std::isspace(body[tmpPos]))
 				++tmpPos;
-			// if (body.find("0\r\n", pos) == pos)
-			// 	return;
 			while (std::isxdigit(body[tmpPos]))
 				chunkLen += body[tmpPos++];
 			if (body[tmpPos] != ';' && body.find(CRLF, tmpPos) != tmpPos)
 				throw HTTP_BAD_REQUEST;
 			chunkSize = std::strtoul(chunkLen.data(), NULL, 16);
 			chunkLen.clear();
-			// if (chunkSize + _body.size() > _clientMaxBodySize)
-			// 	throw HTTP_BAD_REQUEST;
 			tmpPos = body.find(CRLF, tmpPos) + 2;
 			if (tmpPos < bodyLen) {
 				size_t end = chunkSize > bodyLen - tmpPos ? bodyLen - tmpPos : chunkSize;
@@ -409,14 +400,14 @@ void	ft::HTTPRequest::parse(const std::string& buf) {
 		setBadRequest(statusCode);
 	}
 
-	printParsedDataForTesting();	// DLEETE ME!!! It's for testing parsed HTTP request data.
+	// printParsedDataForTesting();
 }
 
 /*
-**	This function is for testing parsed data from HTTP requests. Delete it later!
+**	This function is for testing parsed data from HTTP requests.
 */
 void	ft::HTTPRequest::printParsedDataForTesting() {
-	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()	// DELETE ME LATER!!!!!!!
+	std::cout << "\n\n" << GREEN_COLOR << "PARSED DATA:\n" << "method: " << getMethodName()
 				<< ", target: " << _requestURI << ", HTTP version " << getHTTPVersion()
 				<< "\nPARSED URI:\n" << "protocol: " << getProtocol()
 				<< ", host: " << getServerName() << ", port: " << getPort()
