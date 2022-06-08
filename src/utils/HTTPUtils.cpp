@@ -79,6 +79,15 @@ namespace ft {
 		return (TimeToStr(now.tv_sec + tz.tz_minuteswest * 60));
 	}
 
+	std::string getExpDate(void)
+	{
+		struct timeval now;
+		struct timezone tz;
+
+		gettimeofday(&now, &tz);
+		return (TimeToStr(now.tv_sec + tz.tz_minuteswest * 60 + 1000000));
+	}
+
 	std::vector<unsigned char> readBinaryFile(std::string file) {
 		char buffer[BUFFER_SIZE + 1] = {0};
 		int fd;

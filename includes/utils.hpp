@@ -59,6 +59,7 @@ namespace ft
 	std::string 				replace(std::string source, std::string to_replace, std::string new_value);
 	int 						pathType(std::string path);
 	std::string 				getDate(void);
+	std::string 				getExpDate(void);
 	std::string 				TimeToStr(time_t timestamp);
 
 	class FileError : public std::exception

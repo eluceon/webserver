@@ -190,3 +190,12 @@
 5/6/2022 21:22:56 New client: 127.0.0.1:38850
 5/6/2022 21:24:52 _client[5] closed connection
 5/6/2022 21:25:12 Shutting down on signal 2
+8/6/2022 16:57:36 Starting up..
+8/6/2022 16:57:42 New client: 127.0.0.1:54598
+8/6/2022 16:57:42 New client: 127.0.0.1:54600
+8/6/2022 16:57:42 New client: 127.0.0.1:54602
+8/6/2022 16:58:10 Shutting down on signal 2
+8/6/2022 16:58:55 Starting up..
+8/6/2022 16:59:0 New client: 127.0.0.1:54623
+8/6/2022 16:59:0 New client: 127.0.0.1:54624
+8/6/2022 16:59:9 Shutting down on signal 2

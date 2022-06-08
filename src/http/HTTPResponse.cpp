@@ -97,6 +97,8 @@ std::string ft::HTTPResponse::GetResponse(size_t code, std::string content) {
 	_headers["Content-Length"] = ft::IntToStr(content.size());
 	_headers["Server"] = "WebServer 21";
 	_headers["Date"] = ft::getDate();
+	_headers["Set-cookie"] = "Expires=" + ft::getExpDate();
+	std::cout << "EXPIRES: " << ft::getExpDate() << std::endl;
 	_response += "HTTP/1.1 ";
 	_response += ft::IntToStr(code) + " ";
 	_response += getStatus(code) + "\r\n";
